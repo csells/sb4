@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asmv1:assemblyIdentity name="TicTacThree.exe" version="1.0.0.0" publicKeyToken="b42e2150704f23fd" language="neutral" processorArchitecture="msil" type="win32" />
+  <entryPoint>
+    <assemblyIdentity name="" version="" />
+    <commandLine file="TicTacThree.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet class="System.Security.PermissionSet" version="1" Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentAssembly codebase="TicTacThree.exe.deploy" size="28672">
+      <assemblyIdentity name="TicTacToe" version="1.0.1941.12232" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>sNBr6LAeOVRw1T9lYg5v2UDwrdc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>fpYjfCzixePMZc3XNUmDhzHr2zU=</DigestValue></Reference></SignedInfo><SignatureValue>CERfRg+52sP4WzDXB0H4zu6KikAbfGRi6y08BzBsaS8TFZvA0owyDIA4wlmGyvBDNfNGtFtUWkhGIt/bnp+oPTfYEh+XLX9eRzCZ3I0EKUMettT2ye6KHe8FfP2ZErT/93IHQSGjGWkRaPIes/hyFzNbm+k3Ei7KxAyW0xEJRnJxUUuCrQukQIN8roTEgjuqmpnqCS+xKp3AcoEREUePzjSuoQpF8pHqWsIGQ0uwMLyt6xejLgtZfQCr2X/IQnC5jq9gnJaIk+wMNEJSpNYTVoi7MSATm2AhXkchOAmKVi4Jx0hfWgagGOEmt5+7mZi8l7qCNQ4FrXJcoAhKszJKHg==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0clwNioIraxzihxvvefWpjj12FaaqEpeecpW7Ud46fQyCOIuEwy6FshAMb/NT1O2o66U50UvSjcwDyiNUN+bcDYWTo1Dvnw8TibtSG3Va9cSsGpyV3qUs9CgvMmvRjQghMJLgUTwuutupqwwNOhVOvn2CjVUCNuOWUp0CPssbLwyZYeK3eo+ps1x2Cr+mxoQ0knmWvhLjSfpejfqC3oN7ECGxrHHGCTNkghA/N1cif3y+3ynaZPZypQQ9cNEqwhKmghzg6/mxkT8B8KgSDn2XrwLn7xWg7UmBQDgmceWS91FA12zrDoWQuWgA7fIW+X1dxin9L+MXP2tfpgWu/uiYQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue></KeyInfo></Signature></asmv1:assembly>

@@ -1,0 +1,19 @@
+﻿@model sb4.ViewModels.WritingIndexViewModel
+
+@section TitleContent {
+
+  Writing & Speaking
+
+}
+
+  @{ foreach (var category in Model.OutputCategories) { 
+  <h1>
+    @category.Name</h1>
+  <ul>
+    @foreach (var item in category.OutputItems.OrderByDescending(i=>i.Date)) { 
+    <li>@Model.GetItemHtml(item)<br style="line-height: 20px" /></li>
+     } 
+  </ul>
+   } }
+
+

@@ -1,0 +1,130 @@
+-I think the categories for the items should be more visible. That would allow people to then drill into the categories more.
+-Blog Converstaions
+-clean up imported data
+-Does it do trackbacks and pings? Pings would be easy - just the call to one or more services. The only gotcha is that it's XML-RPC, but that's what Cook Computing is for. I've never managed to get my head fully around trackbacks (that was D's mental level, as he's built it a number of times). However, I think it should be worth it, as it allows you to better track people commenting on your post on their blogs. 
+-put the post title into the URLs
+	http://www.mikesdotnetting.com/Article/108/Handling-Legacy-URLs-with-ASP.NET-MVC
+-expose service endpoints w/o the extensions: http://blogs.msdn.com/rjacobs/archive/2010/04/05/using-system-web-routing-with-data-services-odata.aspx
+-add wonk articles (as askthewonk category)
+-add interview content (as interview category)
+-fix the "Here" posts that go to sellsbrothers.com
+	http://localhost:10749/Posts/Details/1744
+-clean data for dup subjects
+	select subject, count(subject) as subject_count
+	from mbtopics
+	group by subject
+	order by subject_count desc
++writing and writing/book
+  +update header graphic to include "& speaking"
+  -publish errata as comments
+-SEO toolkit web page checker: http://iis.net
+-Check out ELMAH in NerdDinner (build OData head on it)
+  -custom 404 logging and output with OData head
+  -http://www.hanselman.com/blog/ELMAHErrorLoggingModulesAndHandlersForASPNETAndMVCToo.aspx
+
+
+FIXED:
++turn ISBN into images on writing page
++hook up WLW
++hook up 404 handling, tracking and routing
++RSS for comments, so people can subscribe to the comments on a post if they just want to follow it.
++It's not very obvious where your intro blurb ends and the first post starts (see TopOPage.png)
++It would be nice if the logo in the top left was a hyperlink to the home page.
++fix comment formatting with the dates
++fix layout
+	http://localhost:10749/Posts/Details/2229
++remove the target=_blank on <a> tags
+	http://localhost:10749/Posts/Details/2042
++get amazon associate program working again
+  http://www.amazon.com/exec/obidos/ASIN/{isbn}/chrissells
+  http://www.amazon.com/exec/obidos/ASIN/9780321545619/chrissells
++deploy database to the ISP
++fix validation of comment posts
++remove page title at top of page as redundant
++use some tool to find known bad URLs: http://home.snafu.de/tilman/xenulink.html
++put ads on LHS
++better way of separating topics one from anothers aka computerzen.com, maybe <hr />?
++fix extra thick underlines on links
++test at 1024x768
++fix ::CONTACT mailto link and other external URLs so they doesn't freak out IE8 (only happens on localhost)
++fix spelling of ShouldEmailNotifcations
++make sure "spout,writing" items show up in the "spout" category
++put primary key constraints on everything so I can edit it in Quadrant
++put <br /> into comments for each cr/lf
++fix header choosing
++fix the odata feed
++sub-pages
+	+test matching zone finding (need to be able to get current Request)
+	+pull title for matching zone
+	+pull in content based on category
+	-dump static data into db
+		+clean data for "Discuss" links
+		+clean out bad comments
+		+import multiple topics (from Desktop)
+		+Older Posts
+		+Newer Posts
+		+check data in each category
+		+see about giving everything a category
+		+Put pics where u want em
+		+Put zips where u want em
+		+Check extreme ends of data
+		+Take out sellsbrothers.com from URLs, i.e. <img src='' /> and <a href='' />
+		+find missing comment on study hacks (it's gone)
+    +add writing content (as spout)
++route known bad URLs
+	http://weblogs.asp.net/jgalloway/archive/2010/02/05/using-iis-rewriting-with-mvc-routes-to-keep-your-routes-simple.aspx
+	+default.asp[x] and index.asp[x] handling
+	+the spout/#foo_bar_quux URLs in the database
+		e.g.http://localhost:10749/Posts/Details/1744
+	+news/rss2.aspx[?category=foo]
+	+news/rss.aspx[?category=foo]
+	+news/archive.aspx
+	+conference/*
+	+product/#foo
+	+tools/genghis
++hook up tinysells
+  +e.g. http://tinysells.com/88
++Feed on each appropriate page
+	+find a place for the Atom icon
+	+hooked to that feed
+	+map it to Astoria
+	+show "Older" and "All" items from feed at bottom of each appropriate page
+
++map to live data
++left search and ads
+	+get bing search working again
+	+get google adsense working again
++bottom nav
+	+read ad links from db
+	+read menu items from db
++styles
+	+make the CSS match the artist styles
++make top nav live
+	+align stuff
+	+read menu items from db
+	+read top nav and title from db
++top stripes past right border
+	-common light grey: #ABABAB (RBG 171 171 171)
+	-common dark grey: #626262
+	-footer grey: #999999
+	-colophon green: #CDCC00
+	-fun orange: #FF7A23 (RGB 255 122 35)
+	-home green: #CDFF34 (RGB 205 255 52)
+	-interviews green: #3399FE (RBG 51 153 254)
+	-spout green: #67999A (RGB 103 153 154)
+	-tools blue: #669ACC (RGB 102 154 204)
+	-writing green: #99CC01 (RBG 153 204 1)
++badges under ads on the home page (everywhere?)
++make comment page look like it's supposed to
++comment management
+	+approval
+	+captcha
+
+WON'T FIX:
+-file system on top of SQL Server for browsing, editing HTML and images? (use sync services!)
+-the YouTube posts (which reminds me, how irritated do you think the owners of UTube.com are?)
+-bing search results showing up under youtube video
+-fix data model to use Site.Id
+  -profile site to minimize round-trips to db (ideally just one per page)
+  -make sure we're not using LINQ to Objects on any association properties, e.g. Site.Badges, Category.Posts, etc.
+-Html.EditorFor in scott's ninja tips and tricks talk (asp.net/mvc)

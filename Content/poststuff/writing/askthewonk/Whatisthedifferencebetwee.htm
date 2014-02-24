@@ -1,0 +1,31 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/81 -->
+<html>
+<head>
+	<title>What is the difference between using &quot;String&quot; and &quot;string&quot;?</title>
+</head>
+<body>
+
+		    
+<b>Q. What is the difference between using "String" and "string" ("Object" vs "object" etc.)?</b>
+<p>
+<i>Asked by Aaron Clauson. Answered by the Wonk on February 21, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P>An object of type "String" in C# is an object of type "System.String", and it's bound that way by the compiler if you use a "using System" directive, like so:</P><FONT color=#0000ff size=2>
+<P><STRONG>using</STRONG></FONT><FONT size=2><STRONG> System;<BR></STRONG>...<BR><FONT size=2><STRONG>String s = "Hi";<BR></STRONG>Console.WriteLine(s);</FONT></FONT></P>
+<P>If you were to remove the "using System" statement, I'd have to write the code more explicitly, like so:</P><FONT size=2><FONT size=2><FONT size=3><FONT size=2>
+<P><STRONG>System.String s = "Hi";<BR></STRONG>System.Console.WriteLine(s);</P>
+<P>On the other hand, if you use the "string" type in C#, you could skip the "using System" directive and the namespace prefix:</P><FONT size=3><FONT color=#0000ff size=2>
+<P><STRONG>string</STRONG></FONT><FONT size=2><STRONG> s = "Hi";<BR></STRONG>System.Console.WriteLine(s);</P></FONT></FONT>
+<P>The reason that this works and the reason that "object", "int", etc in C# all work is because they're language-specific aliases to underlying .NET Framework types. Most languages have their own aliases that serve as a short-cut and a bridge to the .NET types that existing programmers in those languages understand.</P>
+<P>Personally, I prefer to use the aliases instead of the .NET versions because, as an old-time C/C++ programmer, I prefer to type "int" instead of "Int32" etc. However, both are exactly equivalent, so pick the one you like best and stick with it.</P></FONT></FONT></FONT></FONT></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'What is the difference between using &quot;String&quot; and &quot;string&quot;?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

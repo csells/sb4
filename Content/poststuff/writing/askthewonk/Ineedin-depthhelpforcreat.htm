@@ -1,0 +1,29 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/55 -->
+<html>
+<head>
+	<title>I need in-depth help for creating custom controls</title>
+</head>
+<body>
+
+		    
+<b>Q. <P>I am very interested in in-depth help for creating custom controls. I have done some work with this in an effort to teach myself, but would like some insight into better ways. In particular I would like to have help in the following areas:</P>
+<P>1) Drag and Drop<BR>2) Hosting other controls<BR>3) Coordinating information between controls or synchronizing information (See requirements below).<BR>4) Painting controls<BR>5) Adding pop up menus to custom or user controls<BR>6) When to use custom and when to use user controls.</P>
+<P>My particular control requirements are as follows:</P>
+<P>I need a container that will hold a variable number of controls that might look similar to a gant chart. The top of this container would have a ruler that would show the position of the start and stop of any shading in the individual controls as each one is selected. I am looking for the best way to implement this. Particular questions would be:</P>
+<P>a) Should the ruler be a separate control or part of the container?<BR>b) How do I take care of the communication between the selected control and the ruler? (See 3 above) Delegates?</P></b>
+<p>
+<i>Asked by Eric Torola. Answered by the Wonk on March 12, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P>In answer to your general plea for help in building custom controls, I've posted <A href="controlsChapterAndSrc.zip">the latest draft of Chapter 8: Controls from my upcoming Windows Forms Programming for C# Programmers</A>, coming in July for Addison-Wesley. This material is copyright (c) 2002-2003 by Chris Sells and not for redistribution.</P>
+<P>In answer to your specific request, I definitely think that your ruler should be a separate control docked to the top of your container. In terms of communication between the container and the control, I recommend delegates and events, which you can read about in <A href="http://www.sellsbrothers.com/writing/delegates.htm">.NET Delegates: A C# Bedtime Story</A>.</P></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'I need in-depth help for creating custom controls'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

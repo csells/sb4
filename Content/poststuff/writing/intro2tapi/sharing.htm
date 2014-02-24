@@ -1,0 +1,192 @@
+<html>
+    <head>
+        <title>Line Sharing</title>
+    </head>
+    <body>
+        <center>
+            <h1>
+                Windows Telephony Overview
+            </h1>
+            <h2>
+                Line Sharing
+            </h2>
+        </center>
+        <hr>
+        <br>
+        The Windows 3.x implementation of the API for accessing COM ports didn't allow 
+        multiple applications to share a single phone line. This makes it impossible, 
+        for example, for one application to wait for an incoming fax call while another 
+        application makes an outgoing voice call. TAPI provides extensive support for 
+        this kind of sharing. Any number of applications can share a single line device 
+        by opening it with one of several privileges:
+        <p>
+        </p>
+        <table border cellspacing="1" bordercolor="#000000" cellpadding="9" width="100%">
+            <tr>
+                <td width="27%" valign="TOP">
+                    None
+                </td>
+                <td width="73%" valign="TOP">
+                    Application can make outbound calls only.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Monitor
+                </td>
+                <td>
+                    Application can watch inbound and outbound calls only.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Owner
+                </td>
+                <td>
+                    Application can make outbound calls and will be given inbound calls that match 
+                    requested media modes.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Owner + Monitor
+                </td>
+                <td>
+                    Application wants to watch inbound calls of media modes other than it has 
+                    requested ownership of.
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
+        A line owner application needs to specify one or more <i>media modes </i>that 
+        it is interested in for inbound calls. The media mode describes the type of 
+        media available on the call. The media modes and who might be interested in 
+        them are:
+        <p>
+        </p>
+        <table border cellspacing="1" bordercolor="#000000" cellpadding="9" width="100%">
+            <tr>
+                <td width="36%" valign="TOP">
+                    Interactive Voice
+                </td>
+                <td width="64%" valign="TOP">
+                    Person or call control application
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Automated Voice
+                </td>
+                <td>
+                    Automated application like an answering machine
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Data Modem
+                </td>
+                <td>
+                    Communications application
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Group 3 Fax
+                    <br>
+                    Group 4 Fax
+                </td>
+                <td>
+                    Fax application
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Digital Data
+                </td>
+                <td>
+                    Communcations application or network driver
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Telephony Devices for the Deaf (TDD):<dir>
+                        <li>
+                            Teletex
+                        </li>
+                        <li>
+                            Videotext
+                        </li>
+                        <li>
+                            Telex
+                        </li>
+                    </dir>
+                </td>
+                <td>
+                    Display application
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mixed
+                </td>
+                <td>
+                    ISDN application
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Analog Display Services
+                    <br>
+                    Interface (ADSI)
+                    <br>
+                    VoiceView
+                </td>
+                <td>
+                    Mixed voice and data application
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Unknown
+                </td>
+                <td>
+                    Any application looking for incoming calls whose media mode has yet to be 
+                    determined
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
+        An application can ask to handle one or more types of media mode. When an 
+        incoming call is available, TAPI has the unfavorable job of working with the 
+        applications to determine the media mode of the incoming call. For the vast 
+        majority of calls, which are analog, the call type can't be determined until it 
+        has been answered. However, a call can't be answered until it has been given to 
+        an application, who will then answer the call. Therefore, all analog calls come 
+        in as media mode unknown.
+        <p>
+            Once the call type has been determined, the answering application has a couple 
+            of options. It can handle the call itself or it can <i>hand-off</i> the call to 
+            TAPI, specifying the new media mode. TAPI will then attempt to give the call to 
+            an application who can handle that media type. When an application performs a 
+            hand-off, it can either give up the call altogether or maintain access to it 
+            for later use.
+        </p>
+        <p>
+            For more information about line ownership and media modes, see Chapter 2, 
+            Assisted Telephony and Chapter 6, Answering a Call.
+        </p>
+        <p>
+            <br>
+        </p>
+        <hr>
+        <br>
+        <center>
+            <font size="4"><a href="platforms.htm">Back</a> | <a href="index.htm">Top</a> | <a href="summary.htm">
+                    Next</a> </font>
+        </center>
+    </body>
+</html>

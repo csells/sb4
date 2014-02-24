@@ -1,0 +1,244 @@
+<html>
+<head>
+    <title>Custom Settings Provider in .NET 2.0</title>
+</head>
+<body>
+    <div class="Section1">
+        <h1>
+            Custom Settings Provider in .NET 2.0</h1>
+        <p class="MsoNormal">
+            <i>Sun, 7/30/06</i></p>
+        <p class="MsoNormal">
+            In .NET 2.0, WinForms (and other) applications got a big boost in ease of use for
+            settings with the settings designer:</p>
+        <p class="MsoNormal">
+            <img width="575" height="480" id="_x0000_i1025" src="dotnet2customsettingsprovider_files/image001.jpg"></p>
+        <p class="MsoNormal">
+            In addition to providing a quick and easy place to define app-wide application-scope
+            and user-scope settings, WinForms makes it easy to bind to the settings in your
+            forms:</p>
+        <p class="MsoNormal">
+            <img width="576" height="382" id="_x0000_i1026" src="dotnet2customsettingsprovider_files/image002.jpg"></p>
+        <p class="MsoNormal">
+            Further, if you’d like to program against the settings directly, you can do so against
+            the type-safe class that the settings designer generates:</p>
+        <p class="MsoNormal">
+            <img width="575" height="434" id="_x0000_i1027" src="dotnet2customsettingsprovider_files/image003.jpg"></p>
+        <p class="MsoNormal">
+            Between the type-safe wrappers on the Settings class that you get by default in
+            a WinForms project and the Default property, you get to write code like this:</p>
+        <p class="MsoNormal">
+            <span style='font-size: 10.0pt; font-family: "Courier New"; color: teal'>MessageBox</span><span
+                style='font-size: 10.0pt; font-family: "Courier New"'>.Show(<b>Properties.<span style='color: teal'>Settings</span>.Default.TextSetting</b>);</span></p>
+        <p class="MsoNormal">
+            This is very nice. So nice, in fact, that’d you’d really love to take advantage
+            of this support in a wide variety of applications. For some of these applications,
+            the default <i>settings provider</i> (the object responsible for loading and storing
+            your settings), the LocalFileSettingProvider (LFSP) will be just fine. It supports
+            application, user and roaming user settings and settings groups.</p>
+        <p class="MsoNormal">
+            Unfortunately, the LFSP stores all of an application’s settings in a file over which
+            you have no control. If you’d prefer your settings to be stored in the Registry
+            or at a centralized server, you need to build your own settings provider. Luckily,
+            the .NET 2.0 settings machinery supports this fully. However, it doesn’t make it
+            easy.</p>
+        <h2>
+            Building a Custom Settings Provider</h2>
+        <p class="MsoNormal">
+            The .NET 2.0 SDK comes with two SDK samples that demonstrate how to build a custom
+            settings provider:</p>
+        <ul style='margin-top: 0in' type="disc">
+            <li class="MsoNormal"><a href="http://msdn2.microsoft.com/en-us/library/ms181001.aspx">
+                RegistrySettingsProvider Sample</a></li><li class="MsoNormal"><a href="http://msdn2.microsoft.com/en-us/library/ms180994.aspx">
+                    Client Settings Web Services Sample</a></li></ul>
+        <p class="MsoNormal">
+            Both of these samples show how to derive from the base SettingsProvider class and
+            implement the SetPropertyValues and GetPropertyValues methods. These methods are
+            where you commit the settings to/from storage, e.g. a file, the Registry or a web
+            service. The way things work out, a settings provider is never handed an instance
+            of the class that exposes the settings. Instead, it’s dealing with a property bag
+            and the settings machinery itself (ApplicationsSettingBase) does the mapping to/from,
+            handles default values, etc.</p>
+        <p class="MsoNormal">
+            Deriving from SettingsProvider is the bare minimum you need to plug a custom settings
+            provider into the settings system and both samples show how to do this. However,
+            neither sample shows how to implement the IApplicationSettingsProvider interface,
+            which is required to support the settings client calling the Reset, Upgrade and
+            GetPreviousVersion methods. Since these are handy methods to support, I read the
+            documentation for <a href="http://msdn2.microsoft.com/en-us/library/system.configuration.iapplicationsettingsprovider.aspx">
+                the IApplicationSettingsProvider interface</a>, but was disappointed that neither
+            it nor the provided samples answered the following questions:</p>
+        <ul style='margin-top: 0in' type="disc">
+            <li class="MsoNormal">What settings should you be managing, the in-memory Settings object
+                or the settings in the store, e.g. file, Registry, etc? If the former, where do
+                I get an instance of the Settings object? If the latter, how does the Settings object
+                get the updated values after a call to Reset or Upgrade?</li>
+            <ul style='margin-top: 0in' type="circle">
+                <li class="MsoNormal">The answer, which took me a while to figure out, is that the settings
+                    provider *only* maps the settings property bag to/from storage, leaving ApplicationSettingsBase
+                    (ASB) to map from the property bag to/from the in-memory Settings object. After
+                    a call to Reset or Upgrade, the ASB calls GetPropertyValues again to get the new
+                    values, notifying data binding clients of the changes.</li></ul>
+            <li class="MsoNormal">In SetPropertyValues, what do we do with an application-scoped
+                setting whose IsDirty flag is set?</li>
+            <ul style='margin-top: 0in' type="circle">
+                <li class="MsoNormal">Because I wanted my settings provider to be drop-in compatible
+                    with the LFSP, the answer is to ignore app-scoped settings instead of throwing an
+                    exception and stopping the storage process.</li></ul>
+            <li class="MsoNormal">How do I answer the GetPreviousVersion for an app-scoped setting?</li>
+            <ul style='margin-top: 0in' type="circle">
+                <li class="MsoNormal">The answer is to create a SettingsPropertyValue and set its PropertyValue
+                    to null to communicate that there is no previous value for a read-only app-scoped
+                    setting. If you just return a null SettingsPropertyValue, the ASB maps to a default
+                    value, which doesn’t match the LFSP behavior.</li></ul>
+        </ul>
+        <p class="MsoNormal">
+            I used intuition (seriously, the model of which copy of the settings I’m updating,
+            the in-memory settings object or the stored settings took me embarrassingly long
+            to discern), the LFSB source (obtained with Reflector), experimentation with LFSB
+            helped me answer these questions, which I used to <a href="RegistrySettingsProvider2.zip">
+                update the RegistrySettingsProvider sample</a> to implement IApplicationSettings
+            and to fix some stuff I considered broken:</p>
+        <ul style='margin-top: 0in' type="disc">
+            <li class="MsoNormal">Not closing Registry keys</li><li class="MsoNormal">Not detecting
+                a setting marked with illegal combinations of attributes (like app-scoped *and*
+                user-scoped)</li><li class="MsoNormal">Not handling null settings values (null is a
+                    perfectly legal settings value which indicates a value that has not been changed
+                    from the default)</li><li class="MsoNormal">Writing app-scoped settings to HKEY_LOCAL_MACHINE
+                        (app-scoped settings don’t change – why write them to the Registry?).</li></ul>
+        <p class="MsoNormal">
+            My updates still don’t support roaming settings (where do you write Registry keys
+            that roam?!?) or settings groups, both of which shouldn’t be too hard if you’re
+            motivated. I have worked hard to add a bunch of commentary to the implementation
+            to document the undoc’d protocol of IApplicationSettings so that you can build your
+            own settings provider.</p>
+        <h2>
+            Using a Custom Settings Provider in the Raw</h2>
+        <p class="MsoNormal">
+            As illustrated by the two SDK samples, you can absolutely write your own settings
+            class, deriving it from the ApplicationSettingsBase and using attributes from the
+            System.Configuration namespace, e.g. UserScopedSettingAttribute, ApplicationScopedSettingAttribute
+            and DefaultSettingValueAttribute, to decorate your properties for serialization
+            by your favorite settings provider and both samples show just how to do that. There
+            are two ways to get ABS to use your custom settings provider in the case that you’re
+            writing your own settings class. If you’d like to allow a settings provider to be
+            designated as a per settings basis, you can use SettingsProviderAttribute on that
+            property, e.g.</p>
+        <p class="MsoNormal" style='text-autospace: none'>
+            <b><span style='font-size: 10.0pt; font-family: "Courier New"; color: blue'>using</span><span
+                style='font-size: 10.0pt; font-family: "Courier New"'> System.Configuration;<br>
+                <br>
+            </span></b><span style='font-size: 10.0pt; font-family: "Courier New"'>[<span style='color: teal'>UserScopedSettingAttribute</span>()]<br>
+                [<span style='color: teal'>DefaultSettingValueAttribute</span>(<span style='color: maroon'>&quot;True&quot;</span>)]<br>
+            </span><b><span style='font-size: 10.0pt; font-family: "Courier New"'>[<span style='color: teal'>SettingsProviderAttribute</span>(<span
+                style='color: blue'>typeof</span>(MyNamespace.<span style='color: teal'>MySettingsProvider</span>))]<br>
+            </span></b><span style='font-size: 10.0pt; font-family: "Courier New"; color: blue'>
+                public</span><span style='font-size: 10.0pt; font-family: "Courier New"'> <span style='color: blue'>
+                    bool</span> CheckSetting2 {<br>
+                    &nbsp; <span style='color: blue'>get</span> { <span style='color: blue'>return</span>
+                    ((<span style='color: blue'>bool</span>)(<span style='color: blue'>this</span>[<span
+                        style='color: maroon'>&quot;CheckSetting2&quot;</span>])); }<br>
+                    &nbsp; <span style='color: blue'>set</span> { <span style='color: blue'>this</span>[<span
+                        style='color: maroon'>&quot;CheckSetting2&quot;</span>] = <span style='color: blue'>
+                            value</span>; }<br>
+                    }</span></p>
+        <p class="MsoNormal" style='text-autospace: none'>
+            You can also specify the settings provider with a string if you like:</p>
+        <p class="MsoNormal" style='text-autospace: none'>
+            <span style='font-size: 10.0pt; font-family: "Courier New"'>[<span style='color: teal'>UserScopedSettingAttribute</span>()]<br>
+                [<span style='color: teal'>DefaultSettingValueAttribute</span>(<span style='color: maroon'>&quot;True&quot;</span>)]<br>
+            </span><b><span style='font-size: 10.0pt; font-family: "Courier New"'>[<span style='color: teal'>SettingsProvider</span>(<span
+                style='color: maroon'>&quot;</span>MyNamespace, <span style='color: teal'>MySettingsProvider</span><span
+                    style='color: maroon'>&quot;</span>)]<br>
+            </span></b><span style='font-size: 10.0pt; font-family: "Courier New"; color: blue'>
+                public</span><span style='font-size: 10.0pt; font-family: "Courier New"'> <span style='color: blue'>
+                    bool</span> CheckSetting2 {<br>
+                    &nbsp; <span style='color: blue'>get</span> { <span style='color: blue'>return</span>
+                    ((<span style='color: blue'>bool</span>)(<span style='color: blue'>this</span>[<span
+                        style='color: maroon'>&quot;CheckSetting2&quot;</span>])); }<br>
+                    &nbsp; <span style='color: blue'>set</span> { <span style='color: blue'>this</span>[<span
+                        style='color: maroon'>&quot;CheckSetting2&quot;</span>] = <span style='color: blue'>
+                            value</span>; }<br>
+                    }</span></p>
+        <p class="MsoNormal">
+            For any property that ABS doesn’t find the SettingsProviderAttribute, it will assume
+            the LFSP. Also, ABS is smart enough to use multiple settings providers for different
+            settings so that you split them as you see fit.</p>
+        <p class="MsoNormal">
+            If you’d prefer to set a customer settings provider on an entire class, you can
+            set the SettingsProviderAttribute on the entire settings class:</p>
+        <p class="MsoNormal" style='text-autospace: none'>
+            <b><span style='font-size: 10.0pt; font-family: "Courier New"'>[<span style='color: teal'>SettingsProviderAttribute</span>(<span
+                style='color: blue'>typeof</span>(MyNamespace.<span style='color: teal'>MySettingsProvider</span>))]<br>
+            </span></b><span style='font-size: 10.0pt; font-family: "Courier New"; color: blue'>
+                class</span><span style='font-size: 10.0pt; font-family: "Courier New"'> <span style='color: teal'>
+                    MySettings </span><b>: </b><span style='color: teal'>ApplicationSettingsBase </span>
+                    {...}</span></p>
+        <p class="MsoNormal">
+            However, if you’re using the settings designer-generated classes, neither of these
+            techniques work in the face of regenerated code. Luckily, VS knows what you want
+            and can help.</p>
+        <h2>
+            Using a Custom Settings Provider in VS</h2>
+        <p class="MsoNormal">
+            To set a provider on a per settings basis, select as many settings as you like in
+            the settings provider and press F4 to set the Provider property in the settings
+            property browser (F4 isn’t the most discoverable way to get to the settings properties,
+            but I haven’t found another way):</p>
+        <p class="MsoNormal">
+            <img border="0" width="576" height="382" id="_x0000_i1028" src="dotnet2customsettingsprovider_files/image004.jpg"></p>
+        <p class="MsoNormal">
+            This generates the per-property attributes that I showed above. If you want to do
+            it on a per-class basis, press the View Code button in the settings design (also
+            not very discoverable), and you’ll get a Settings.cs file containing a partial class:</p>
+        <p class="MsoNormal" style='text-autospace: none'>
+            <span style='font-size: 10.0pt; font-family: "Courier New"; color: blue'>using</span><span
+                style='font-size: 10.0pt; font-family: "Courier New"'> System.Configuration;<br>
+                <br>
+            </span><span style='font-size: 10.0pt; font-family: "Courier New"; color: blue'>namespace</span><span
+                style='font-size: 10.0pt; font-family: "Courier New"'> MyNamespace {<br>
+            </span><b><span style='font-size: 10.0pt; font-family: "Courier New"'>&nbsp; [<span
+                style='color: teal'>SettingsProvider</span>(<span style='color: blue'>typeof</span>(MyNamespace.<span
+                    style='color: teal'>MySettingsProvider</span>))]<br>
+            </span></b><span style='font-size: 10.0pt; font-family: "Courier New"'>&nbsp; <span
+                style='color: blue'>internal</span> <span style='color: blue'>sealed</span> <span
+                    style='color: blue'>partial</span> <span style='color: blue'>class</span> <span style='color: teal'>
+                        Settings </span>{<br>
+                &nbsp;&nbsp;&nbsp; <span style='color: blue'>public</span> Settings() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color: blue'>private</span> <span style='color: blue'>
+                    void</span> SettingChangingEventHandler(<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color: blue'>object</span>
+                sender, <span style='color: teal'>SettingChangingEventArgs</span> e) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color: green'>//
+                    Add code to handle the SettingChangingEvent event here.<br>
+                </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+                &nbsp;<br>
+                &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span style='color: blue'>void</span> SettingsSavingEventHandler(<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color: blue'>object</span>
+                sender, <span style='color: teal'>CancelEventArgs</span> e)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color: green'>// Add code to
+                    handle the SettingsSaving event here.<br>
+                </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+                &nbsp;&nbsp;&nbsp; }<br>
+                &nbsp; }<br>
+                }</span></p>
+        <p class="MsoNormal">
+            On this partial class, which will only be generated once into Settings.cs, you can
+            add SettingsProviderAttribute and it will not be disturbed by the regenerated Settings
+            class code (which lives in Settings.Designer.cs).</p>
+        <h2>
+            Where Are We?</h2>
+        <p class="MsoNormal">
+            To implement a custom settings provider, you’ll want to derive from SettingsProvider,
+            implement the overrides and implement IApplicationSettings. To hook it up to the
+            designer-generated Settings class, use the per-property settings or the Settings
+            partial class you get by pressing the View Code button in the settings designer.
+            You can see this in action with <a href="RegistrySettingsProvider2.zip">the updated
+                RegistrySettingsProvider sample</a> (which I’m working to get into the SDK,
+            but am hosting on my web site ‘til that happens).</p>
+        <p class="MsoNormal">
+            <a href="http://www.sellsbrothers.com/news/showTopic.aspx?ixTopic=2021">Discuss</a></p>
+    </div>
+</body>
+</html>

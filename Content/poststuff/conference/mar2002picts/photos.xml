@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<p:Album xmlns:p="http://www.digitalagility.com/candera/schemas/pictures">
+  <p:Name>Album Name</p:Name>
+  <p:Comment>Album Comment</p:Comment>
+  <p:Pictures>
+    <p:Picture>
+      <p:Path>P3210001.JPG</p:Path>
+      <p:Title>P3210001.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210002.JPG</p:Path>
+      <p:Title>P3210002.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210003.JPG</p:Path>
+      <p:Title>P3210003.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210004.JPG</p:Path>
+      <p:Title>P3210004.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210005.JPG</p:Path>
+      <p:Title>P3210005.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210006.JPG</p:Path>
+      <p:Title>P3210006.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210007.JPG</p:Path>
+      <p:Title>P3210007.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210008-0009.JPG</p:Path>
+      <p:Title>P3210008-0009.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210010.JPG</p:Path>
+      <p:Title>P3210010.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210011.JPG</p:Path>
+      <p:Title>P3210011.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210012.JPG</p:Path>
+      <p:Title>P3210012.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210013.JPG</p:Path>
+      <p:Title>P3210013.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210014.JPG</p:Path>
+      <p:Title>P3210014.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210015.JPG</p:Path>
+      <p:Title>P3210015.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210016.JPG</p:Path>
+      <p:Title>P3210016.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210018.JPG</p:Path>
+      <p:Title>P3210018.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210023.JPG</p:Path>
+      <p:Title>P3210023.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210026.JPG</p:Path>
+      <p:Title>P3210026.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210028.JPG</p:Path>
+      <p:Title>P3210028.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210029.JPG</p:Path>
+      <p:Title>P3210029.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210030.JPG</p:Path>
+      <p:Title>P3210030.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210031.JPG</p:Path>
+      <p:Title>P3210031.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210032.JPG</p:Path>
+      <p:Title>P3210032.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210033.JPG</p:Path>
+      <p:Title>P3210033.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210034.JPG</p:Path>
+      <p:Title>P3210034.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210039.JPG</p:Path>
+      <p:Title>P3210039.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210040.JPG</p:Path>
+      <p:Title>P3210040.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3210041.JPG</p:Path>
+      <p:Title>P3210041.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220042.JPG</p:Path>
+      <p:Title>P3220042.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220045.JPG</p:Path>
+      <p:Title>P3220045.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220048.JPG</p:Path>
+      <p:Title>P3220048.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220049.JPG</p:Path>
+      <p:Title>P3220049.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220050.JPG</p:Path>
+      <p:Title>P3220050.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220052.JPG</p:Path>
+      <p:Title>P3220052.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220054.JPG</p:Path>
+      <p:Title>P3220054.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220055.JPG</p:Path>
+      <p:Title>P3220055.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220056.JPG</p:Path>
+      <p:Title>P3220056.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220057.JPG</p:Path>
+      <p:Title>P3220057.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220058.JPG</p:Path>
+      <p:Title>P3220058.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220059.JPG</p:Path>
+      <p:Title>P3220059.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220060.JPG</p:Path>
+      <p:Title>P3220060.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220061.JPG</p:Path>
+      <p:Title>P3220061.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220063.JPG</p:Path>
+      <p:Title>P3220063.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220066.JPG</p:Path>
+      <p:Title>P3220066.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220067.JPG</p:Path>
+      <p:Title>P3220067.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220068.JPG</p:Path>
+      <p:Title>P3220068.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220069.JPG</p:Path>
+      <p:Title>P3220069.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220070.JPG</p:Path>
+      <p:Title>P3220070.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220072.JPG</p:Path>
+      <p:Title>P3220072.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220076.JPG</p:Path>
+      <p:Title>P3220076.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220077.JPG</p:Path>
+      <p:Title>P3220077.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3220078.JPG</p:Path>
+      <p:Title>P3220078.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3230079.JPG</p:Path>
+      <p:Title>P3230079.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3230080.JPG</p:Path>
+      <p:Title>P3230080.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3230081.JPG</p:Path>
+      <p:Title>P3230081.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3230082.JPG</p:Path>
+      <p:Title>P3230082.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+    <p:Picture>
+      <p:Path>P3230087.JPG</p:Path>
+      <p:Title>P3230087.JPG</p:Title>
+      <p:Comment />
+    </p:Picture>
+  </p:Pictures>
+</p:Album>

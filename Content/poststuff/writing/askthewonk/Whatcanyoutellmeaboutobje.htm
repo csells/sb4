@@ -1,0 +1,63 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/36 -->
+<html>
+<head>
+	<title>What can you tell me about object-relational mapping in .NET today and ObjectSpaces in the future?</title>
+</head>
+<body>
+
+		    
+<b>Q. <P>When I first looked through the .NET framework, it was exciting to see the breadth of the framework and all the “goodies” that were present. One area that I would have liked to have seen standardized are interfaces/classes for object persistence – as opposed to the table oriented nature of ADO.NET.</P>
+<P>So, when starting on my first .NET project the approach that was taken was to use an OO database and build a simple OO persistence API on top of that. The intent is to be able to replace the database with a commercial RDBMS when and if needed. The theory is that this could be achieved using an object relational mapping tool (as more become available in the .NET world). This approach has gone well and I especially enjoy being able to think purely in an object perspective with respect to storage. Regardless, it hasn’t all been smooth sailing. The areas that have slowed me down or are future problem areas with using an OO database approach include:</P>
+<UL>
+<LI>Documentation and understanding. The majority of the documentation available from Microsoft and third party sources is of course heavily oriented towards the ADO.NET way of doing things. This made it difficult to see how aspects such as Windows data binding and IDE integration apply to the data storage world outside of ADO.NET. 
+<LI>The OO database’s admin tools are not up to the quality of something like SQL Server. 
+<LI>As .NET is fairly new, the OO database vendor’s .NET API doesn’t cover all the functionality available for other language mappings (e.g. C, unmanaged C++, Java). This will be remedied as time goes on, but it makes life more difficult in the present. 
+<LI>The object relational tools that are starting to become available all vary in their approach to Object-Relational mapping, their persistence API and their level of code intrusiveness. With the latter I mean how much you have to change your domain class source code to match their way of doing things. 
+<LI>Access to reporting packages to create (possibly user modifiable) reports. Like many third party packages, most .NET reporting packages appear to be oriented towards ADO.NET interaction primarily.</LI></UL>
+<P>Sometimes I wonder if it would have been more time effective to have gone with the purely ADO.NET “way of doing things”.</P>
+<P>So (after the long winded intro), my “ask the wonk” questions are:</P>
+<OL>
+<LI>In your opinion, what are the pro’s and con’s of going with an Object Relational mapping tool as opposed to using a purely ADO.NET approach for database access? 
+<LI>In what development scenarios would you recommend using an OO database instead of an RDBMS? 
+<LI>What do you know about Microsoft’s ObjectSpaces? 
+<LI>In the long term (&gt; 2 years), do you think the ObjectSpaces API will supplant the ADO.NET API with respect to importance for application code? 
+<LI>Is it worthwhile considering the various .NET Object Relational mapping tools now given that Microsoft are going to release such a tool in the future? My main concern here is how dependant a set of source code becomes on the API inherent in using a specific object/relational mapping tool.</LI></OL></b>
+<p>
+<i>Asked by Apolon Ivankovic. Answered by the Wonk on January 8, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P>Now that's a nice, juicy question, Apolon. Thanks!</P>
+<P>You didn't ask about this, but you implied that .NET was missing a standardized set of "interfaces/classes for object persistence". In fact, .NET has not one but two serialization stacks, although both are client-managed, i.e. a client initiates the load and save instead of the objects themselves. This is as opposed to object-managed persistence, where the objects decide when to write themselves, like in an object-oriented database.</P>
+<H1 style="MARGIN: 12pt 0in 3pt"><FONT face=Arial size=5>OO-Relational Tool Pros &amp; Cons</FONT></H1>
+<P>I agree with your assessment of the cons of OO-relational mapping tools, but you missed what I consider the most important lack in OO-relational mapping tools, i.e. exposing the power of the underlying relational model, particularly the query language. While it’s true that I can wrap tables, queries and stored procs in type-safe wrappers, the overhead of the wrappers because an administrative burden, particularly if every single query is wrapped. You could go the other way and always pull out entire hierarchies of objects, like you would in an OO database, writing standard OO code to pull out the data on the client-side you’d like to act on, but the overhead there can be tremendous, as you’ll pulling in everything just to get at a subset of the data. One of the nice things about OO databases is their lazy serialization, i.e. no data is pulled ‘til it’s needed. No OO-relational mapping I’ve seen pulls off that trick.</P>
+<P>The way OORM layers are generally implemented leads to another real downside of OORM layers: a much greater chance to write inefficient code, particularly as related to round-trips to the database. It’s common for OORM layers to need to retrieve multiple levels of hierarchy in multiple round-trips instead of in a single round-trip as would be preferable. When using ADO.NET directly, it’s easier to see the multiple round-trips when compared to OORM layers which hide these details (by design).</P>
+<P>As related to the maintenance chore of wrapping every single query in your system is the ongoing maintenance of the data layer as related to changes in the database, although this has to happen somewhere. If the OORM layer can be automatically generated, this chore can be lessened (although generally not eliminated).</P>
+<P>On the other hand, there are pros for an OO-relational mapping layer as well:</P>
+<UL>
+<LI>Familiar programming model</LI>
+<LI>Type safety (although that’s somewhat of an illusion, since the types can’t really be checked ‘til runtime)</LI>
+<LI>Greater change of database vendor independence (assuming the OORM vendor supports the databases you need)</LI>
+<LI>A layer of isolation between the code and the database, increasing the chance of isolating clients from changes in the database</LI></UL>
+<P>Myself, I tend to use a hybrid between OORM and raw relational data, using some object layer for most things and direct access for ad hoc querying or filtering. The latter is particularly useful when I can get the database to do the work more easily than I can do it in .NET code, e.g. calculations, joins, etc.</P>
+<H1 style="MARGIN: 12pt 0in 3pt"><FONT face=Arial size=5>When to Use OOD?</FONT></H1>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">I think that the way that most OOD systems work moves for a convenient, efficient programming model and it would be even more so if mapped to .NET. However, I can’t recommend OOD. Relational data is so firmly entrenched into the literature, the tools and the very psyche of most developers that I’d have to have a damn good reason to switch to OOD and I’ve yet to see an application where I’ve had that.<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></P>
+<H1 style="MARGIN: 12pt 0in 3pt"><FONT face=Arial size=5>ObjectSpaces</FONT></H1>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">I don’t know much about ObjectSpaces beyond what you can get from a Google search (I use the Microsoft-specific Google search front end for such things: <A href="http://www.google.com/microsoft.html">http://www.google.com/microsoft.html</A>). I know the goal is to provide an OORM layer for .NET and that the real bits have changed dramatically from the alpha bits that they released some time ago.<o:p></o:p></P>
+<H1 style="MARGIN: 12pt 0in 3pt"><FONT face=Arial size=5>ObjectSpaces vs. ADO.NET</FONT></H1>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">Do I see ObjectSpaces replacing ADO.NET? No. ObjectSpaces will be built on top of ADO.NET and, like all layered architectures, you’ll need to know what’s going on at the lower levels to take good advantage of the layer you’re using primarily.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">Will ObjectSpaces become the primary API to relational data? That remains to be seen. When Microsoft gives something away and embeds it into the tools, it tends to have a good chance. However, there have been plenty of technologies that have received this treatment from Microsoft that have never caught on (ActiveDocuments being my favorite example).</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">ObjectSpaces has another strike against it in that OORM layers have been around for decades and they’ve never really taken hold. They tend to be too inflexible, too expensive and too darn slow to make them generally useful. Plus, the OORM problem is a hard one to solve in the general case, just as mapping between objects and XML is hard. Because it’s a <I style="mso-bidi-font-style: normal">really</I> hard problem, OORM layers tend to be inflexible, i.e. simplifying assumptions are made to ship and those assumptions don’t hold for a large enough population. Still, if ObjectSpaces can solve the inflexibility and performance problems like they plan to solve the expense problem, I know I’ll be using it. : )<o:p></o:p></P>
+<H1 style="MARGIN: 12pt 0in 3pt"><FONT face=Arial size=5>OORM Now or ObjectSpaces Later?</FONT></H1>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">I don’t ever recommend waiting on something from anyone when you’ve got a problem to solve now. All software problems can be solved by waiting for someone else to solve them, but a lot of time and opportunity goes by while you wait. Pick a solution now that meets your needs and go serve your customers.<o:p></o:p></P></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'What can you tell me about object-relational mapping in .NET today and ObjectSpaces in the future?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

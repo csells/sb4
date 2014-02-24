@@ -1,0 +1,140 @@
+<html>
+    <head>
+        <title>Media Access via Existing APIs</title>
+        <body>
+            <h1>
+                Windows Telephony Overview
+            </h1>
+            <h2>
+                Media Access via Existing APIs
+            </h2>
+            </center>
+            <hr>
+            <br>
+            While TAPI was designed from the ground up for call control, it has no facility 
+            for direct access to the <i>media</i> available on a call, address, line or 
+            phone. The media is the data available, e.g. modem, fax, network, voice, et 
+            cetera. The designers of TAPI had a choice to make when they decided how to 
+            provide access to media via TAPI. One option was to add whole sub-sets of 
+            functionality to the API for each kind of media. This would require ISVs to 
+            learn these media access sub-APIs. It would also require that TAPI be updated 
+            every time a new kind of media appeared.
+            <p>
+                Another option <font face="Symbol">-</font> the one they chose <font face="Symbol">-</font>
+                was to provide a way of getting at a specific <i>API handle</i> for use with an 
+                existing or future media API. The API handle could then be used in subsequent 
+                calls to the media API. This doesn't require ISVs to learn new APIs nor does it 
+                require TAPI to change when a new media type is developed. Instead, if a device 
+                supports a specific kind of media, it simply provides an API handle for that 
+                media type when asked.
+            </p>
+            <p>
+                Media types are described by <i>device classes</i>. A device class is a 
+                description of a device that provides access to a specific type of media. A <i>device 
+                    class name</i> is simply a string identifying a specific device class. The 
+                device classes defined for TAPI are:
+            </p>
+            <p>
+            </p>
+            <table border cellspacing="1" bordercolor="#000000" cellpadding="9" width="100%">
+                <tr>
+                    <td width="34%" valign="TOP">
+                        comm
+                    </td>
+                    <td width="66%" valign="TOP">
+                        Communications port.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        comm/datamodem
+                    </td>
+                    <td>
+                        Modem through a communications port.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        wave/in
+                    </td>
+                    <td>
+                        Wave audio device for input only.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        wave/out
+                    </td>
+                    <td>
+                        Wave audio device for output only.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        midi/in
+                    </td>
+                    <td>
+                        Midi sequencer for input only.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        midi/out
+                    </td>
+                    <td>
+                        Midi sequencer for output only.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        tapi/line
+                    </td>
+                    <td>
+                        Line device.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        tapi/phone
+                    </td>
+                    <td width="66%" valign="TOP">
+                        <p>
+                            Phone device.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ndis
+                    </td>
+                    <td>
+                        Network device.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        tapi/terminal
+                    </td>
+                    <td>
+                        Terminal device.
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <br>
+            If a telephony device doesn't support a specific class of media, it will simply 
+            fail when asked to provide an API handle. If a telephony vendor wants to 
+            support a device class other than those shown here, it can do so and provide 
+            documentation for that device class.
+            <p>
+                <br>
+            </p>
+            <hr>
+            <br>
+            <center>
+                <font size="4"><a href="callcontrol.htm">Back</a> | <a href="index.htm">Top</a> | <a href="network.htm">
+                        Next</a> </font>
+            </center>
+        </body>
+</html>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly manifestVersion="1.0" xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asmv1:assemblyIdentity name="Wahoo.exe" version="1.0.0.2" publicKeyToken="b42e2150704f23fd" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Wahoo" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="Wahoo.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet class="System.Security.PermissionSet" version="1" ID="Custom" SameSite="site">
+          <IPermission class="System.Security.Permissions.FileDialogPermission, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Access="Open" />
+          <IPermission class="System.Security.Permissions.IsolatedStorageFilePermission, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Allowed="ApplicationIsolationByUser" UserQuota="512000" />
+          <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="Execution" />
+          <IPermission class="System.Security.Permissions.UIPermission, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Window="SafeTopLevelWindows" Clipboard="OwnClipboard" />
+          <IPermission class="System.Drawing.Printing.PrintingPermission, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" version="1" Level="SafePrinting" />
+        </PermissionSet>
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="4" minorVersion="10" buildNumber="0" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="2.0.50727.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Wahoo.exe" size="61440">
+      <assemblyIdentity name="Wahoo" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>IfZzQ/jFZCTIEZGQkdD9DH4rmY4=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WahooControlLibrary.dll" size="28672">
+      <assemblyIdentity name="WahooControlLibrary" version="1.0.2140.12944" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>d82ngyuk+aWbLhTfh0AmuyyOosg=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Wahoo.exe.config" size="848">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>cjqxRbMAem4PEZemYzxtobrWGZE=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=&quot;Sells Brothers, Inc.&quot;, OU=Secure Application Development, O=&quot;Sells Brothers, Inc.&quot;, L=Beaverton, S=Oregon, C=US" issuerKeyHash="c5ed935f2b38477e58d357c7ff45c54441e15fbf" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>0AHDTHHBRySvYW2rO5Pxkk/LoVA=</DigestValue></Reference></SignedInfo><SignatureValue>rsC3/QSVGWDzyVtqRuYy+Kpjfzgi8Ux1Sj61cNnkCA4ZKKzlypwYu24OZFQHlL4U7xldZcLiB5BiTsVGt3b1dmRYp7KitZfJ8ux2EvAGORG6fKVlJMTDRuE+iEPDkO9pRsYPTODfskioHZnfPBpeJwDgvEt4Mha/btZ+85fXHlNHu4hUn3mw3c4Ei3ZxAtQEGNvDPEbl+KNElXPU57WYMfuzarAsY0yfYF3M634GLJAqJpyakffY8ej5ApuiW3YJiL5BYcH0rvne0PvIEHKaoE8NlrSKw/Iq2VQJlL6S06Bsyr6QUNgTkxrMS6nh5V3yaqRh/cFReyMGq+YdarPY1w==</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>0clwNioIraxzihxvvefWpjj12FaaqEpeecpW7Ud46fQyCOIuEwy6FshAMb/NT1O2o66U50UvSjcwDyiNUN+bcDYWTo1Dvnw8TibtSG3Va9cSsGpyV3qUs9CgvMmvRjQghMJLgUTwuutupqwwNOhVOvn2CjVUCNuOWUp0CPssbLwyZYeK3eo+ps1x2Cr+mxoQ0knmWvhLjSfpejfqC3oN7ECGxrHHGCTNkghA/N1cif3y+3ynaZPZypQQ9cNEqwhKmghzg6/mxkT8B8KgSDn2XrwLn7xWg7UmBQDgmceWS91FA12zrDoWQuWgA7fIW+X1dxin9L+MXP2tfpgWu/uiYQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="50a1cb4f92f1933bab6d61af2447c1714cc301d0" Description="" Url=""><as:assemblyIdentity name="Wahoo.exe" version="1.0.0.2" publicKeyToken="b42e2150704f23fd" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN="Sells Brothers, Inc.", OU=Secure Application Development, O="Sells Brothers, Inc.", L=Beaverton, S=Oregon, C=US</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>dytPI09oY0hbjGeul9Z2U78MY3c=</DigestValue></Reference></SignedInfo><SignatureValue>F2Qq+9dwfOVvgJbw4Gda6MpwlKPKC9GFhzblHNvSP9rguO6krY97sYqJ7M3+DRRNqA+q+WbsjxmJWe5LHtT7xUmRBzJkqGU+DJ2UpLuiYy4hAXnNPfJIYWOpyKo3POiz2GXYya3bBKfYlSLjqSf9U0pOFt1zgqf2eSWCi2CLzmZv19n8AtGcfQ26IBHDlD1cQNuu4avs+g+HDTzG4URD9Sd12NheTMZA+YtcXNfSysRgxUUV6C6+l8zLMVXvkZJ9aImN6RY0g/pVI8EH0sb9WPieBGoc/FHC5DazqEVmuFP6TnQGtXFqtZgZM0vCO8Xk+amKH99JTEQU3EnXzcCPeg==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0clwNioIraxzihxvvefWpjj12FaaqEpeecpW7Ud46fQyCOIuEwy6FshAMb/NT1O2o66U50UvSjcwDyiNUN+bcDYWTo1Dvnw8TibtSG3Va9cSsGpyV3qUs9CgvMmvRjQghMJLgUTwuutupqwwNOhVOvn2CjVUCNuOWUp0CPssbLwyZYeK3eo+ps1x2Cr+mxoQ0knmWvhLjSfpejfqC3oN7ECGxrHHGCTNkghA/N1cif3y+3ynaZPZypQQ9cNEqwhKmghzg6/mxkT8B8KgSDn2XrwLn7xWg7UmBQDgmceWS91FA12zrDoWQuWgA7fIW+X1dxin9L+MXP2tfpgWu/uiYQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIID5jCCA0+gAwIBAgIDIRByMA0GCSqGSIb3DQEBBAUAMFUxCzAJBgNVBAYTAlpBMSUwIwYDVQQKExxUaGF3dGUgQ29uc3VsdGluZyAoUHR5KSBMdGQuMR8wHQYDVQQDExZUaGF3dGUgQ29kZSBTaWduaW5nIENBMB4XDTA1MDQxMzE3MzQ0MVoXDTA3MDQxMTE5MDcyNFowgZkxCzAJBgNVBAYTAlVTMQ8wDQYDVQQIEwZPcmVnb24xEjAQBgNVBAcTCUJlYXZlcnRvbjEdMBsGA1UEChMUU2VsbHMgQnJvdGhlcnMsIEluYy4xJzAlBgNVBAsTHlNlY3VyZSBBcHBsaWNhdGlvbiBEZXZlbG9wbWVudDEdMBsGA1UEAxMUU2VsbHMgQnJvdGhlcnMsIEluYy4wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDRyXA2KgitrHOKHG+959amOPXYVpqoSl55ylbtR3jp9DII4i4TDLoWyEAxv81PU7ajrpTnRS9KNzAPKI1Q35twNhZOjUO+fDxOJu1IbdVr1xKwanJXepSz0KC8ya9GNCCEwkuBRPC6626mrDA06FU6+fYKNVQI245ZSnQI+yxsvDJlh4rd6j6mzXHYKv6bGhDSSeZa+EuNJ+l6N+oLeg3sQIbGsccYJM2SCED83VyJ/fL7fKdpk9nKlBD1w0SrCEqaCHODr+bGRPwHwqBIOfZevAufvFaDtSYFAOCZx5ZL3UUDXbOsOhZC5aADt8hb5fV3GKf0v4xc/a1+mBa7+6JhAgMBAAGjgfowgfcwHwYDVR0lBBgwFgYIKwYBBQUHAwMGCisGAQQBgjcCARYwEQYJYIZIAYb4QgEBBAQDAgQQMB0GA1UdBAQWMBQwDjAMBgorBgEEAYI3AgEWAwIHgDAgBgNVHREEGTAXghV3d3cuc2VsbHNicm90aGVycy5jb20wPgYDVR0fBDcwNTAzoDGgL4YtaHR0cDovL2NybC50aGF3dGUuY29tL1RoYXd0ZUNvZGVTaWduaW5nQ0EuY3JsMDIGCCsGAQUFBwEBBCYwJDAiBggrBgEFBQcwAYYWaHR0cDovL29jc3AudGhhd3RlLmNvbTAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBBAUAA4GBAL8MMAd5JHTzL3uVD5XJEeCVs3J8sfzzK0NDqNuLBs81plppNXsc1AdQwbPbLiY/V9rcqyXJ8+Gu810HTRPU/U5KQfrAyIDKQ+TPd7SEQ309Re6M7nY+z2JW3aTsZJIPLBYQABs4GbbZLOlPD9TAJ9cLeqixb7GzsCEpMiUKkGJO</X509Certificate><X509Certificate>MIIDTjCCAregAwIBAgIBCjANBgkqhkiG9w0BAQUFADCBzjELMAkGA1UEBhMCWkExFTATBgNVBAgTDFdlc3Rlcm4gQ2FwZTESMBAGA1UEBxMJQ2FwZSBUb3duMR0wGwYDVQQKExRUaGF3dGUgQ29uc3VsdGluZyBjYzEoMCYGA1UECxMfQ2VydGlmaWNhdGlvbiBTZXJ2aWNlcyBEaXZpc2lvbjEhMB8GA1UEAxMYVGhhd3RlIFByZW1pdW0gU2VydmVyIENBMSgwJgYJKoZIhvcNAQkBFhlwcmVtaXVtLXNlcnZlckB0aGF3dGUuY29tMB4XDTAzMDgwNjAwMDAwMFoXDTEzMDgwNTIzNTk1OVowVTELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xHzAdBgNVBAMTFlRoYXd0ZSBDb2RlIFNpZ25pbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMa4uSdgrwvjkWll236N7ZHmqvG+1e3+bdQsf9Fwd/smmVe03T8wuNwh6miNgZL8LkuRNYQg8tpKurT85tqI8iDFIZIJR5WgCRymeb6xTB388YpuVNJpofFMkzpB/n3UZHtjRfdgYB0xHaTp0w+L+24mJLOo/+XlkNS0wtxQYK5ZAgMBAAGjgbMwgbAwEgYDVR0TAQH/BAgwBgEB/wIBADBABgNVHR8EOTA3MDWgM6Axhi9odHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUHJlbWl1bVNlcnZlckNBLmNybDAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwMwDgYDVR0PAQH/BAQDAgEGMCkGA1UdEQQiMCCkHjAcMRowGAYDVQQDExFQcml2YXRlTGFiZWwyLTE0NDANBgkqhkiG9w0BAQUFAAOBgQB2spzuE58b9i00kpRFczTcjmsuXPxMfYnrw2jx15kPLh0XyLUWi77NigUG8hlJOgNbBckgjm1S4XaBoMNliiJn5BxTUzdGv7zXL+t7ntAURWxAIQjiXXV2ZjAe9N+Cii+986IMvx3bnxSimnI3TbB3SOhKPwnOVRks7+YHJOGv7A==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

@@ -1,0 +1,109 @@
+REGEDIT4
+
+; regsvr.reg, Copyright (c) 1997-2001, Chris Sells.
+; All rights reserved. NO WARRANTIES ARE EXTENDED. USE AT YOUR OWN RISK.
+; This file may not be distributed without the express written permission
+; of the author. Please refer to http://www.sellsbrothers.com/tools
+; for updates.
+; P.S. Enjoy and send comments to csells@sellsbrothers.com.
+;
+; History:
+; 9/3/01:
+;   Added .olb (a .tlb extension variant used by MS Office) as per
+;   Tim Tabor's [tltabor@earthlink.net] suggestion. Thanks, Tim!
+;
+; 8/4/01:
+;   Added "View in OLEVIEW" based on a suggestions from Frank Bakker
+;   [FrankB@infosupport.com] and Tim Tabor [tltabor@earthlink.net].
+;   Thanks, Frank and Tim!
+;
+; 5/11/01:
+;   Updated copyright notice.
+;
+; 5/13/99:
+;   Took out registration for embedded .tlbs in DLLs and EXEs
+;   as it became too annoying.
+;
+; 1/12/98:
+;   Added support for .tlb and .odl files using VC6's regtlib.
+;
+; 10/25/98
+;   Replaced %1 with %L to get long file name support.
+;   (Thanks to Sergey Tetkin <SergeyT@vest.msk.ru> for the suggestion!)
+;
+; Sometime in early 1997: 1st release
+;   Don, Tim, Keith and I were sitting around at a GCOM talking about
+;   what a pain it was to perform self-registeration and couldn't I
+;   add a shell extension to augment the context menu (I had written
+;   the Win95 course)? I said I could do even better than that and
+;   this regfile was born.
+
+; Register and Unregister COM DLLs and OCXs
+[HKEY_CLASSES_ROOT\.dll]
+@="dllfile"
+
+[HKEY_CLASSES_ROOT\.ocx]
+@="dllfile"
+
+[HKEY_CLASSES_ROOT\dllfile\shell\Register COM Server\command]
+@="regsvr32 \"%L\""
+
+[HKEY_CLASSES_ROOT\dllfile\shell\Unregister COM Server\command]
+@="regsvr32 /u \"%L\""
+
+; Register and Unregister COM EXEs
+[HKEY_CLASSES_ROOT\.exe]
+@="exefile"
+
+[HKEY_CLASSES_ROOT\exefile\shell\Register COM Server\command]
+@="\"%L\" /regserver"
+
+[HKEY_CLASSES_ROOT\exefile\shell\Unregister COM Server\command]
+@="\"%L\" /unregserver"
+
+; Register COM TLBs
+[HKEY_CLASSES_ROOT\.tlb]
+@="typelib"
+
+[HKEY_CLASSES_ROOT\.olb]
+@="typelib"
+
+[HKEY_CLASSES_ROOT\typelib\shell\Register TypeLib\command]
+@="regtlib -q \"%L\""
+
+[HKEY_CLASSES_ROOT\typelib\shell\Unregister TypeLib\command]
+@="regtlib -q -u \"%L\""
+
+; Register COM TLBs listed in ODL
+[HKEY_CLASSES_ROOT\.odl]
+@="odlfile"
+
+[HKEY_CLASSES_ROOT\odllib\shell\Register Imported TypeLibs\command]
+@="regtlib -q -o \"%L\""
+
+[HKEY_CLASSES_ROOT\odllib\shell\Unregister Imported TypeLibs\command]
+@="regtlib -q -u -o \"%L\""
+
+; Register COM TLBs in DLLs
+;[HKEY_CLASSES_ROOT\dllfile\shell\Register Bundled TypeLib\command]
+;@="regtlib -q \"%L\""
+
+;[HKEY_CLASSES_ROOT\dllfile\shell\Unregister Bundled TypeLib\command]
+;@="regtlib -q -u \"%L\""
+
+; Register COM TLBs in EXEs
+;[HKEY_CLASSES_ROOT\exefile\shell\Register Bundled TypeLib\command]
+;@="regtlib -q \"%L\""
+
+;[HKEY_CLASSES_ROOT\exefile\shell\Unregister Bundled TypeLib\command]
+;@="regtlib -q -u \"%L\""
+
+; View DLLs, EXEs, OCXs and TLBs in OLEVIEW
+[HKEY_CLASSES_ROOT\dllfile\shell\View in OLEVIEW\command]
+@="oleview %L"
+
+[HKEY_CLASSES_ROOT\typelib\shell\View in OLEVIEW\command]
+@="oleview %L"
+
+[HKEY_CLASSES_ROOT\exefile\shell\View in OLEVIEW\command]
+@="oleview %L"

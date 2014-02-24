@@ -1,0 +1,36 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/53 -->
+<html>
+<head>
+	<title>How do I stop the flicker in my MDI application?</title>
+</head>
+<body>
+
+		    
+<b>Q. My current VB.NET project is MDI-based. When I jump between the child forms (via the standard Window List menu, for example), they flicker very badly -- I can see every textbox being drawn to the screen! Other Windows applications do not suffer from this, so why do VB.NET apps? Is it possible to prevent this?</b>
+<p>
+<i>Asked by vinay753. Answered by the Wonk on January 27, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">The amount of flicker you get on an application is very much dependent on the kind of video hardware and driver software you’ve got running as well as the particular features of your application. However, I’ve found turning on the following control styles in the form’s constructor really helps to reduce flicker:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>public </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: windowtext">MyMdiChildForm</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>() {<o:p></o:p></FONT></SPAN></FONT></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp; </FONT></SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">InitializeComponent</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>();<o:p></o:p></FONT></SPAN></FONT></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt"><o:p><FONT face="Courier New" color=#0000ff>&nbsp;</FONT></o:p></SPAN></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><FONT face="Courier New"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp; </FONT></SPAN></SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: green">// Stop the flicker<o:p></o:p></SPAN></B></FONT></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><FONT face="Courier New"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>this.</FONT></SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: black">SetStyle</SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>(</FONT></SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: black">ControlStyles</SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>.</FONT></SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: black">DoubleBuffer</SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>, true);<o:p></o:p></FONT></SPAN></B></FONT></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><FONT face="Courier New"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>this.</FONT></SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: black">SetStyle</SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>(</FONT></SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: black">ControlStyles</SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>.</FONT></SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: black">AllPaintingInWmPaint</SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>, true);<o:p></o:p></FONT></SPAN></B></FONT></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff><FONT face="Courier New">}<o:p></o:p></FONT></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">The double buffering style causes the form to do all of the drawing into an off-screen buffer that’s drawn to the screen all at once. The all painting in WM_PAINT style disables the normal erase phase of the drawing, making everything happen in a single drawing phase, further reducing flicker. </P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">&nbsp;</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">While double buffering (without the initial erasing of the background) can make all the difference in the user experience, double buffering requires the memory to capture the entire visible region at the current color quality. At 32 bits per pixel, a 200x200 region is 156K in additional memory used per drawing operation for that region. In memory-constrained systems, this extra memory usage could degrade instead of improve the user experience.</P></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'How do I stop the flicker in my MDI application?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

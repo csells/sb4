@@ -1,0 +1,70 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<sb4.ViewModels.MasterViewModel>" %>
+<%@ Import Namespace="sb4" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head id="Head1" runat="server">
+  <title>
+    <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+  </title>
+  <link href="/Content/Site.css" rel="stylesheet" type="text/css" />
+  <link rel="shortcut icon" href="<%= Request.Url.GetLeftPart(UriPartial.Authority) + "/content/favicon.ico" %>" />
+  <asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
+</head>
+<body style="margin: 0px; background-color: silver;">
+  <div id="header" class="container" style="height: 135px; background-image: url(<%= Model.CurrentZone.HeaderImageExtPath %>);
+    background-repeat: repeat-x;">
+    <!-- header graphic -->
+    <div style="width: 852px; height: 135px; white-space: nowrap; background-image: url(<%= Model.CurrentZone.HeaderImagePath %>);">
+      <a href="/">
+        <!-- menu spacing and logo home page link -->
+        <span style="float: left; width: 185px; height: 135px;">&nbsp;</span></a>
+      <!-- menu items -->
+      <div style="padding-top: 5px">
+        <% foreach (var zone in Model.Zones) { %>
+        <a class="menulinkW" href="<%= zone.RelativeUrl %>">:<%= zone.DisplayName.ToUpper() %></a>&nbsp;&nbsp;
+        <% } %>
+        <a class="menulinkW" href="mailto:<%= Model.ContactEmail %>">:CONTACT</a>&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <!-- NOTE: the "overflow: auto" on the content is to keep the children inside the content div so the background color applies -->
+  <div id="content" class="container" style="background-color: White; background-repeat: repeat;
+    overflow: auto;">
+    <div class="leftPadding">
+      <p>
+        &nbsp;</p>
+    </div>
+    <div class="centerContent">
+      <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </div>
+    <div class="rightAds">
+      <!-- search, badges and ads -->
+      <% Html.RenderPartial("BingSearchView"); %>
+      <% Html.RenderPartial("BannerAdView"); %>
+      <% Html.RenderPartial("BadgesView"); %>
+      <% Html.RenderPartial("TextAdsView"); %>
+      <%-- Html.RenderPartial("GoogleAdView"); --%>
+    </div>
+  </div>
+  <!-- NOTE: the "overflow: auto" on the footer is to keep the padding inside the footer div -->
+  <div id="footer" class="container" style="overflow: auto; background-color: #999999;">
+    <div class="leftPadding">
+      &nbsp;</div>
+    <div class="footerContent">
+      <!-- bottom navigation -->
+      <p class="footerText" style="white-space: nowrap">
+        <% foreach (var zone in Model.Zones) { %>
+        <a class="footerText" href="<%= zone.RelativeUrl %>">
+          <%= zone.DisplayName.ToLower() %></a>&nbsp;&nbsp;
+        <% } %>
+        <a class="footerText" href="mailto:<%= Model.ContactEmail %>">contact</a>&nbsp;&nbsp;
+      </p>
+      <% Html.RenderPartial("FooterTextAdsView"); %>
+      <!-- copyright -->
+      <p class="footerText">
+        <%= Model.CopyrightNotice %></p>
+    </div>
+  </div>
+</body>
+</html>

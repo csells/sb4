@@ -1,0 +1,16 @@
+﻿@model sb4.ViewModels.MasterViewModel
+
+@section TitleContent {
+
+  Tiny Sells
+
+}
+
+
+  @using (Html.BeginForm("Index", "TinySells", FormMethod.Get)) {
+  <label for="formcode">Resolve Code:</label>
+  @Html.TextBox("formcode", "", new { style = "width: 128px" })
+  <span class="error">@Html.ValidationMessage("formcode")</span>
+   } 
+
+

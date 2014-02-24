@@ -1,0 +1,46 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/40 -->
+<html>
+<head>
+	<title>When should I edit the designer-generated InitializeComponent function?</title>
+</head>
+<body>
+
+		    
+<b>Q. I wonder if there are any times I shouldn't directly edit in Forms Designer-generated code or other times when you can do nifty and useful things through the .cs file that aren't possible with only the Forms Designer. Also, are there things I SHOULD be able to edit or add but Visual Studio doesn't allow or overwrites on subsequent builds or gives unpredictable results.</b>
+<p>
+<i>Asked by Austin Avrashow. Answered by the Wonk on January 10, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt"><I style="mso-bidi-font-style: normal">Curious Customer: How much is this Porsche Boxster? I’m wondering if I can afford it.<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></I></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><I style="mso-bidi-font-style: normal">Snooty Porsche Salesman: If you have to ask, you can’t afford it.<o:p></o:p></I></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">The InitializeComponent function contains the serialized form of the designer’s state for a component. While it’s true that the InitializeComponent function looks like your language of choice (either C# or VB.NET), that’s merely an implementation detail. Just as you wouldn’t edit a .doc without Word or a .ppt without PowerPoint, the InitializeComponent method is not yours to edit. If you do and you step outside the undocumented lines of what the designer expects to see in that method, you could well lose the entire contents of the method (as I’ve done a number of times). If you want to augment what InitializeComponent does, you should do it in the constructor, as the generated code points out:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">public</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: black">Form1</SPAN>() {<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: green">// Required for Windows Form Designer support<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: black">InitializeComponent</SPAN>();<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: green">// TODO: Add any constructor code after InitializeComponent call<o:p></o:p></SPAN></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">}<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">#region</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> Windows Form Designer generated code<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: gray; FONT-FAMILY: 'Courier New'">///</SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: green; FONT-FAMILY: 'Courier New'"> </SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: gray; FONT-FAMILY: 'Courier New'">&lt;summary&gt;<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: gray; FONT-FAMILY: 'Courier New'">///</SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: green; FONT-FAMILY: 'Courier New'"> Required method for Designer support - do not modify<o:p></o:p></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: gray; FONT-FAMILY: 'Courier New'">///</SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: green; FONT-FAMILY: 'Courier New'"> the contents of this method with the code editor.<o:p></o:p></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: gray; FONT-FAMILY: 'Courier New'">///</SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: green; FONT-FAMILY: 'Courier New'"> </SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: gray; FONT-FAMILY: 'Courier New'">&lt;/summary&gt;<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">private</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">void</SPAN> <SPAN style="COLOR: black">InitializeComponent</SPAN>() {<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>...<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">}<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">#endregion<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">I know the temptation is, because it looks like code, to edit it directly, but you do so at your own risk. If you must edit it directly, I recommend source code control and/or backups before trying it until you get a feel for what the designer is OK with.<o:p></o:p></P></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'When should I edit the designer-generated InitializeComponent function?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

@@ -1,0 +1,169 @@
+<html>
+    <head>
+        <title>The Telephone Network</title>
+    </head>
+    <body>
+        <center>
+            <h1>
+                Windows Telephony Overview
+            </h1>
+            <h2>
+                The Telephone Network
+            </h2>
+        </center>
+        <hr>
+        <br>
+        <p>
+            The existing Public Switched Telephone Network (PSTN) is usually represented in 
+            a picture like this:
+        </p>
+        <center>
+            <img src="Image1.gif" width="578" height="353">
+            <br clear="all">
+            <br>
+            Figure 1: Public Switch Telephone network
+            <br>
+        </center>
+        <br>
+        <br>
+        <br>
+        Most homes are connected to the Central Office (CO) via an analog POTS line. If 
+        you disconnect the wire from the back of your home phone, you're likely see 
+        four wires held in place by a plastic RJ-11 connector. The inner pair of wires 
+        is for line one and the outer pair is for line two. Each wire in the pair has a 
+        name (tip and ring), and the two together provide a complete connection to the 
+        local CO <font face="Symbol">-</font> giving rise to the name of this 
+        connection: the local loop. Each pair of wires transmits voice, tones and 
+        power. The tones consist of both Dual-Tone Multi-Frequency (DTMF) tones you 
+        send by pressing the buttons on your touch-tone keypad and information tones 
+        from the CO. The power is used to ring your phone and keep it working when your 
+        home&#146;s power is out (otherwise, how could you call and complain?). Even 
+        data from a fax machine or a modem is translated into voice energy <font face="Symbol">
+            -</font> which sounds like static <font face="Symbol">-</font> before it's 
+        sent over the line.
+        <p>
+            The connection between the COs around the world inside of the PSTN cloud has 
+            long since been converted from analog to digital. There's just too much 
+            information being sent to leave it all in analog format. Instead, the voice 
+            energy on the line is sampled, turned into 1s and 0s and sent as data via a 
+            protocol called Signaling System 7 (SS7). Once the data reaches the CO on the 
+            other end of the connection, the data is turned back into voice and sent down 
+            the final mile of the local loop.
+        </p>
+        <p>
+            <br>
+            <br>
+        </p>
+        <table border cellspacing="1" bordercolor="#000000" cellpadding="9" width="100%">
+            <tr>
+                <td valign="TOP" height="332">
+                    <b><font face="Arial">To Modulate or Not To Modulate? That Is The Question.</b></font>
+                    <p>
+                        The word modem stands for <u>mo</u>dulation-<u>dem</u>odulation. Modulation 
+                        happens when digital data is translated into analog signals for your POTS phone 
+                        line. Demodulation happens on the receiving side to translate the analog 
+                        signals back into digital data. Modem speeds have continued to rise over the 
+                        years because engineers at the phone company (AT&amp;T mostly <font face="Symbol">-</font>
+                        <u>the</u> phone company) have found ways to increase the speed of the 
+                        modulation-demodulation process.
+                    </p>
+                    <p>
+                        The irony is that because the PSTN cloud is now digital, the local CO must turn 
+                        the modulated data back into bits before sending it to the remote CO. The 
+                        remote CO must then turn it back into an analog signal, send it down the line 
+                        to the modem which then demodulates it back into bits. It's no wonder modern 
+                        modems have so many fancy error correction protocols.
+                    </p>
+                    <p>
+                        So, why have the AT&amp;T engineers been spending all their time making modems 
+                        faster? Shouldn't they be replacing the analog local loop and saving all of the 
+                        unnecessary translating back and forth between analog and digital? 
+                        Unfortunately, it's currently cheaper for them to leave the existing copper 
+                        wire then to replace it with fiber optic cabling. Maybe the cable company can 
+                        help...
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
+        Because the PSTN is all digital, and a digital connection has so much more 
+        bandwidth and capability than an analog connection, businesses have used 
+        various flavors of digital connections in the local loop for years. These are 
+        connections with names like T1, T3 and Switched-56. For businesses with lots of 
+        phone lines and lots of money, these are wonderful inventions. For homes in the 
+        '90s with personal computers, and limited spending capacity, these have been 
+        solutions out of reach. However, one affordable solution has been available for 
+        quite a while now <font face="Symbol">-</font> the Integrated Services Digital 
+        Network (ISDN <font face="Symbol">-</font> sometimes expanded to It Still Does 
+        Nothing or I Still Don't kNow by the bitter proponents of other standards).
+        <p>
+            ISDN is an international standard with two major flavors, BRI-ISDN (Basic Rate 
+            Interface) and PRI-ISDN (Primate Rate Interface). BRI-ISDN consists of 2B+D <font face="Symbol">
+                -</font> two bearer channels and one data channel. Each bearer channel is 
+            for data up to 64 Kbps (kilobits per second), including voice, fax, video, 
+            network packets, et cetera. Combined, the two B-channels can provide up to 128 
+            Kbps, more than four times as much as the 28.8 Kbps analog modem. In addition, 
+            the D-channel can provide 16Kbps, but is usually used only for call-related 
+            information, e.g. announcing a new call, placing a new call, et cetera. 
+            BRI-ISDN is great for a small business or a well-wired home. It's fairly well 
+            supported by computer and phone manufacturers and is relatively inexpensive (at 
+            least when compared to other options). For larger businesses, and more money, 
+            PRI-ISDN provides 23B+D.
+        </p>
+        <p>
+            POTS provides the capability to answer and receive a call and more recently has 
+            provided for Caller-ID. However, to be able to transfer a call, put a call on 
+            hold or place a call with more than one other participant <font face="Symbol">-</font>
+            a conference call <font face="Symbol">-</font> you're going to need more than 
+            POTS. Most COs provide an additional set of advanced call control capabilities 
+            grouped together into a service called Centrex. This service extends the 
+            advanced functionality found on larger business phone lines to your home or 
+            small business. By providing these features on its own switch equipment, the CO 
+            can often provide them more cheaply and more easily than having your own 
+            switch.
+        </p>
+        <p>
+            A switch provides the brains of any phone connection. If you've picked up a 
+            phone and you hear a dial tone, that's the switches signal that it's ready to 
+            do your bidding. With POTS, ISDN and Centrex, the switch is located at the CO. 
+            However, if you'd like, you can have your own switch. Owning your own switch 
+            means that you control it completely. If you'd like an analog connection 
+            between your switch and the phones it supports, you're going to be using a Key 
+            System. A Key System is very much like having your own personal Centrex. 
+            However, because it's analog, and typically doesn't support many phones, a Key 
+            System is fairly limited. If, instead, you'd like a digital connection between 
+            the switch and the phones it supports, and you'd like to support more phones, 
+            you want a PBX (Private Branch eXchange). Because a PBX is digital, it's more 
+            flexible and more full-featured.
+        </p>
+        <p>
+            Each of the switches involved in any of the types of telephone networks I've 
+            mentioned is <font face="Symbol">-</font> surprise, surprise <font face="Symbol">-</font>
+            a computer. These computers typically have a closed architecture, which means 
+            that the only one who can add features or fix bugs is the manufacturer of the 
+            switch. However, the features provided by switches are limited by the fact that 
+            they are implemented on proprietary computers. Other companies are beginning to 
+            realize this and provide switches based on general purpose computers, i.e. PCs.
+        </p>
+        <p>
+            Using standard interfaces for hardware and software, switches can be controlled 
+            via network protocols of all kinds. This includes traditional telephone 
+            networks like POTS, ISDN and Centrex as well as PC networks using protocols 
+            like TCP/IP (the language of the Internet) and IPX/SPX (the protocol used by 
+            Novell's Netware product). The software programming standard that makes all of 
+            these protocols available for telephony applications under Windows is TAPI, the 
+            Telephony Application Programming Interface.
+        </p>
+        <p>
+            <br>
+        </p>
+        <hr>
+        <br>
+        <center>
+            <font size="4"><a href="index.htm">Back</a> | <a href="index.htm">Top</a> | <a href="wosa.htm">
+                    Next</a> </font>
+        </center>
+    </body>
+</html>

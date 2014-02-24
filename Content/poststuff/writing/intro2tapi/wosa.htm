@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>Windows Open Services Architecture</title>
+    </head>
+    <body>
+        <center>
+            <h1>
+                Windows Telephony Overview
+            </h1>
+            <h2>
+                Windows Open Services Architecture
+            </h2>
+        </center>
+        <hr>
+        <br>
+        TAPI is based on the principles of the Windows Open Services Architecture 
+        (WOSA). TAPI provides some central services and holds some global state. Its 
+        main purpose, however, is to provide connections between TAPI Service Providers 
+        (TSPs) and TAPI applications. Applications are programmed using TAPI. TSPs 
+        implement the Telephony Service Provider Interface (TSPI) functions that are 
+        used by the TAPI implementation. Each TSP then uses whatever interface is 
+        appropriate to control its telephony hardware. Together, it looks like this:
+        <p>
+            <center>
+                <img src="Image2.gif" width="551" height="546">
+                <br clear="all">
+                <br>
+                Figure 2: TAPI architecture
+                <br>
+            </center>
+            <br>
+            <br>
+            <br>
+            This layered approach makes it possible for an application to be developed 
+            without worrying about the specific hardware provided on a particular machine. 
+            Any telephony hardware vendor can then implement the appropriate parts of the 
+            TSPI without worrying about what telephony applications have been installed. 
+            This separation gives both applications and hardware independence from each 
+            other. Applications and hardware can come and go without directly affecting one 
+            another.
+        </p>
+        <p>
+            The WOSA model is used to achieve the goals of the TAPI, which are:
+        </p>
+        <ol>
+            <li>
+                Call control focused.
+            </li>
+            <li>
+                Access to data via existing standard APIs.
+            </li>
+            <li>
+                Network independence.
+            </li>
+            <li>
+                Connection model independence.
+            </li>
+            <li>
+                Platform independence where possible.
+            </li>
+            <li>
+                Sharing of lines between multiple applications.
+            </li>
+        </ol>
+        <p>
+            <br>
+        </p>
+        <hr>
+        <br>
+        <center>
+            <font size="4"><a href="pstn.htm">Back</a> | <a href="index.htm">Top</a> | <a href="callcontrol.htm">
+                    Next</a> </font>
+        </center>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<html>
+<body>
+    <h1>
+        .NET Image Re-Coloring</h1>
+    <p>
+        <i>This article was originally published in the <a target="_blank" href="http://www.windevnet.com/newsletters/sells/">
+            &quot;Chris Sells on .NET&quot; newsletter</a></i></p>
+    <p>
+        .NET provides extensive support for all kinds of fancy drawing techniques in the
+        System.Drawing.Imaging namespace. For example, with the ImageAttributes class, you
+        can map colors as the image is drawn:</p>
+    <pre>using System.Drawing;
+using System.Drawing.Imaging;
+
+void panel2_Paint(object sender, PaintEventArgs e) {
+  Graphics g = e.Graphics;
+  using( Bitmap bmp = new Bitmap(@&quot;INTL_NO.BMP&quot;) ) {
+    // Set the image attribute's color mappings
+    ColorMap[] colorMap = new ColorMap[1];
+    colorMap[0] = new ColorMap();
+    colorMap[0].OldColor = Color.Lime;
+    colorMap[0].NewColor = Color.White;
+    ImageAttributes attr = new ImageAttributes();
+    attr.SetRemapTable(colorMap);
+
+    // Draw using the color map
+    Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+    rect.Offset(...); // Center the image
+    g.DrawImage(bmp, rect, 0, 0, rect.Width, rect.Height,
+    g.PageUnit, attr);
+  }
+}</pre>
+    <p>
+        This code first sets up an array of ColorMap objects, each of which contain the
+        old color to transform from and the new color to transform to. The color map is
+        passed to a new ImageAttribute class via the SetRemapTable. The ImageAttribute object
+        is then passed to the DrawImage function, which does the color mapping as the image
+        is drawn. Figure 1 shows an example.<br>
+        <br>
+        <img border="0" src="image001.png" width="225" height="155"></p>
+    <p>
+        Figure 1: An example of mapping Color.Lime to Color.White</p>
+    <h2>
+        Transparency</h2>
+    <p>
+        Of course, just mapping to white or any other color isn’t useful if the image needs
+        to be drawn on top of something else that you’d like to show through. For this case,
+        there’s a special color called Transparent that will allow the mapped color to disappear
+        instead of being replaced with another color:</p>
+    <pre>ColorMap[] colorMap = new ColorMap[1];
+colorMap[0] = new ColorMap();
+colorMap[0].OldColor = bmp.GetPixel(0, bmp.Height - 1);
+colorMap[0].NewColor = Color.Transparent;</pre>
+    <p>
+        The effects of using Color.Transparent can be seen in Figure 2.</p>
+    <p>
+        <img border="0" src="image003.png" width="360" height="136"><br>
+        Figure 2: Using Color.Transparent in a color map</p>
+    <p>
+        This time, instead of hard-coding a color, the code used the color at the bottom
+        left pixel as the color to replace, which is the convention used by other part so
+        .NET. In fact, if you’re going to always draw a bitmap with a transparent color,
+        and the color to be made transparent is in the bitmap itself in the bottom left
+        pixel, you can save yourself the trouble of building a color map and use the MakeTransparent
+        method instead:</p>
+    <pre>// Make the bottom left pixel the transparent color
+bmp.MakeTransparent();
+g.DrawImage(bmp, rect);</pre>
+    <p>
+        If the pixel you’d like to use as the transparency color isn’t in the bottom left
+        of the bitmap, you can also use the MakeTransparent overload that takes a color
+        as an argument. Calling MakeTransparent actually replaces the pixels of the transparency
+        color with the Color.Transparent value. Some raster formats allow that color value
+        to be specified as one of their legal values, like the GIF and Windows Icon formats,
+        but all Bitmap objects, regardless of the raster format, support the MakeTransparent
+        method.</p>
+    <p>
+        <i>This material is excerpted from the forthcoming Addison-Wesley title: Programming
+            Windows Forms Applications with C# by Chris Sells (0321116208). Please note the
+            material presented here is an initial DRAFT of what will appear in the published
+            book.<br>
+            &nbsp;</i></p>
+</body>
+</html>

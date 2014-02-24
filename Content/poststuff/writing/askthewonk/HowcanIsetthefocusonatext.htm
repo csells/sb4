@@ -1,0 +1,27 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/23 -->
+<html>
+<head>
+	<title>How can I set the focus on a text field based upon input criteria?</title>
+</head>
+<body>
+
+		    
+<b>Q. <SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">How can I set the focus on a text field based upon input criteria, instead of manually clicking in desired field or tabbing over to it?</SPAN></b>
+<p>
+<i>Asked by reader. Answered by the Wonk on November 18, 2002</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">You can do this using the ActiveControl property of the Form or Control class. For example, the following Load event handler sets the active control to be the second TextBox on the Form instead of the first TextBox control:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">void</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: black">Form1_Load</SPAN>(<SPAN style="COLOR: blue">object</SPAN> <SPAN style="COLOR: black">sender</SPAN>, <SPAN style="COLOR: black">EventArgs</SPAN> <SPAN style="COLOR: black">e</SPAN>) {<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: blue">this</SPAN>.<SPAN style="COLOR: black">ActiveControl</SPAN> = <SPAN style="COLOR: black">textBox2</SPAN>;<o:p></o:p></SPAN></P><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">}</SPAN></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'How can I set the focus on a text field based upon input criteria?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

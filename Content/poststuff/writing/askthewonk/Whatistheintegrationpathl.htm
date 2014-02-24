@@ -1,0 +1,33 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/83 -->
+<html>
+<head>
+	<title>What is the integration path likely to be for Internet Explorer and the .Net framework?</title>
+</head>
+<body>
+
+		    
+<b>Q. <P>My last few years were spent developing applications using ASP and browsers. The .Net framework allows you to write desktop applications using a more powerful GUI and compiled assemblies as well as leveraging web services, HTTP requests to an even greater extent than a browser (although a compact HTML renderer would be nice).</P>
+<P>In your opinion what is the integration path likely to be for Internet Explorer and the .Net framework? I know you can load a form in IE but when I tried it it took ages and seemed to be missing a bit of functionality.</P>
+<P>Is IE going to become a sandbox for all .Net framework applications? Or is the browser going to be used for vieiwng web pages only and .Net framework apps for everything else? </P></b>
+<p>
+<i>Asked by Aaron Clauson. Answered by the Wonk on February 18, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P>When Microsoft first released .NET, I was surprised that they missed the opportunity to unique the forms models between Trinity (the IE Document Object Model) and Ruby (the VB6 forms engine). In fact, in talking to one of the WinForms engineers, Microsoft spent months trying to unique the two engines but weren't able to come to an agreement as to the basic philosophies of the two teams, given the vastly different usages of the two models. So, we have WinForms, which is based on the J++ Windows Forms Classes (WFC) and WebForms, which is meant to generate HTML for existing browsers.</P>
+<P>In fact, I haven't heard much out of Microsoft as related to new browsers for quite a while. They don't seem to be interested in keeping up with HTML standards or extending the Dynamic HTML DOM or anything along those lines to make IE a more capable application runtime. Instead, they seem to be focusing their efforts in HTML on the server-side by making ASP.NET generate HTML at the lowest level possible while still providing a nice programming model using server-side controls and server-side events.</P>
+<P>On the other hand, I have seen a lot of activity in the area of zero-touch and one-touch deployment. Zero-touch deployment is the ability to launch a managed executable using an URL and have it download and execute on the fly. One-touch deployment is the ability to install an application once and have it automatically updated as new bits are available. .NET supports the first version of zero-touch deployment out of the box and the WinForms team has posted the AppUpdater component as an example of the one-touch deployment (check the References for more information about both).</P>
+<P>My prediction is that Microsoft is going to push even further into the zero-touch and one-touch deployment models with .NET. Frankly, HTML is great for certain kinds of content, but terrible for applications. Instead of limiting your users, especially Internet users, to the simple capabilities of web pages, I recommend using the full power of the .NET Framework, which is a far more capable runtime for building applications. You can still gain the benefits of the server-side by packaging your business services as web services, eliminating the need for HTML as the client-side presentation mechanism. You're stuck with HTML if you need the largest reach, but if your clients are running Windows and can run .NET, building zero or one-touch deployed WinForms applications gives them a much richer experience.</P>
+<H1>References</H1>
+<UL>
+<LI><A href="http://msdn.microsoft.com/msdnmag/issues/02/07/NetSmartClients/default.asp" target=_blank>.NET Zero Deployment: Security and Versioning Models in the Windows Forms Engine Help You Create and Deploy Smart Clients</A>, Chris Sells, MSDN Magazine, July, 2002 
+<LI><A href="http://www.gotdotnet.com/team/windowsforms/appupdater.aspx" target=_blank>.NET Application Updater Component</A><SPAN>, Jamie Cool, WindowsForms.NET</SPAN></LI></UL></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'What is the integration path likely to be for Internet Explorer and the .Net framework?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

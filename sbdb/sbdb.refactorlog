@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0">
+  <Operation Name="Rename Refactor" Key="2d5190aa-77b1-4bf0-93d7-8e68accc5d45" ChangeDateTime="01/08/2010 15:17:27">
+    <Property Name="ElementName" Value="[dbo].[ContentItems]" />
+    <Property Name="ElementType" Value="ISql100Table" />
+    <Property Name="ParentElementName" Value="[dbo]" />
+    <Property Name="ParentElementType" Value="ISql90Schema" />
+    <Property Name="NewName" Value="Items" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="338d2418-ce99-4ba6-a382-d81373aa70a2" ChangeDateTime="01/09/2010 17:01:01">
+    <Property Name="ElementName" Value="[dbo].[LandingZones].[RelativePath]" />
+    <Property Name="ElementType" Value="ISql100SimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[LandingZones]" />
+    <Property Name="ParentElementType" Value="ISql100Table" />
+    <Property Name="NewName" Value="Path" />
+  </Operation>
+</Operations>

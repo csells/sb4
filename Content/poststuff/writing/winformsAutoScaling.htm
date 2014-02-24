@@ -1,0 +1,66 @@
+<html>
+
+<head>
+<title>WinForms Auto-Scaling</title>
+
+</head>
+
+<body>
+
+<h1>WinForms Auto-Scaling</h1>
+
+<p><i>This article was originally published in the
+            <a target="_blank" href="http://www.windevnet.com/newsletters/sells/">
+            &quot;Chris Sells on .NET&quot; newsletter</a></i></p>
+
+<p>If you lay out a form with system font size set to Normal (96 DPI) in the 
+Display control panel, what happens when your users are using Large (120 DPI) or 
+one of the custom settings? You’d certainly prefer that a form like Figure 1 
+show properly at all font sizes.<br>
+<br>
+<img border="0" src="WinFormsAutoScalingFiles/image001.jpg" width="304" height="88"><br>
+Figure 1: An example form at Normal size fonts<br>
+<br>
+If you’re the curious type, you might attempt to simulate this move to Large 
+fonts by changing the form’s font size from 8.25 (the default) to 10, preserving 
+approximately the same proportion as between 96 and 120 DPI. Unfortunately, this 
+wouldn’t leave you feeling confident as that yields a form that looks like 
+Figure 2.<br>
+<br>
+<img border="0" src="WinFormsAutoScalingFiles/image002.jpg" width="304" height="88"><br>
+Figure 2: Increasing the form's font size at Normal size fonts</p>
+<p>Notice that increasing the font size does increase the height of the TextBox 
+control, but not the size of the form overall to maintain the same proportional 
+spacing that would show the entire label. However, if you perform the actual 
+test by changing from Normal to Large fonts and restarting, you may be pleased 
+to notice that, without a recompilation, showing your form at this new font size 
+looks like Figure 3.<br>
+<br>
+<img border="0" src="WinFormsAutoScalingFiles/image003.jpg" width="386" height="106"><br>
+Figure 3: The example form at Large size fonts</p>
+<p>The secret to making this work is a form property called AutoScale. When a 
+form is first loaded, if AutoScale is set to true (the default), it uses another 
+property called AutoScaleBaseSize. This property is actually set by the Designer 
+and specifies the average width and height of characters in the form’s font. If 
+you leave the default font alone, it will be 8.25pt MS Sans Serif under Windows 
+XP Normal fonts, which will be encoded into the InitializeComponent function 
+like so:</p>
+<pre>this.AutoScaleBaseSize = new Size(5, 13);</pre>
+<p>Under Large fonts, the default font will be 7.8pt MS Sans Serif, but the 
+average width and height of the font has now increased to 6x15 (which is why 
+they call it “Large” fonts). At load time, the form will notice the difference 
+between the scale it was designed with and the current scale by calling 
+Form.GetAutoScaleSize and adjust the height and width of itself and its controls 
+along with the positions of the controls. This keeps the “feel” of the form 
+roughly the same, no matter what the system font settings are.</p>
+<p>In our example, the form’s client area width increased from 296 to 378 (~27%) 
+as the width of the font when from 5 to 6 (~20%). Likewise, the height increased 
+from 54 to 66 (~22%) as the height of the font went from 13 to 16 (~23%). Of 
+course, rounding errors make the scaling imperfect and it’s obvious that 
+WinForms uses a little fudge factor to make sure that things are big enough, but 
+in general, the auto-scaling should yield forms that look pretty good given the 
+amount of work you had to do to achieve the effect (~0%).</p>
+
+</body>
+
+</html>

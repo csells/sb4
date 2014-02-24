@@ -1,0 +1,191 @@
+<html>
+    <head>
+        <title>A Young Person's Guide To COM Programming Style</title>
+    </head>
+    <body>
+        <h1>
+            A Young Person's Guide To COM Programming Style
+        </h1>
+        <p>
+            When I was just a lad and COM programming was new to me, I was given to writing 
+            code like the following:
+        </p>
+        <pre>STDMETHODIMP CFoo::DoSomething()
+{
+    HRESULT hr = S_OK;
+    IBar* pBar = 0;
+    hr = CoCreateInstance(CLSID_Bar, ..., (void**)&pBar);
+    if( SUCCEEDED(hr) )
+    {
+        hr = pBar-&gt;DoSomething();
+        if( SUCCEEDED(hr) )
+        {
+            IBarEx* pBarEx = 0;
+            hr = pBar-&gt;QueryInterface(IID_IBarEx, (void**)&pBarEx);
+            if( SUCCEEDED(hr) )
+            {
+                hr = pBarEx-&gt;DoSomethingEx();
+            }
+            pBarEx-&gt;Release();
+        }
+        pBar-&gt;Release();
+    }
+    return hr;
+}</pre>
+        <p>
+            This lived up to Steve McConnel's immortal advice in &quot;Code Complete&quot; 
+            to always write the nominal (normal) case first and to only return from a 
+            single point in a function. Unfortunately, I had lots of Releases that were 
+            easy to forget and lots of nested if blocks, which made reading the code 
+            difficult. Luckily, the Releases were easy to take care of with smart pointers, 
+            like so:
+        </p>
+        <pre>STDMETHODIMP CFoo::DoSomething()
+{
+    HRESULT hr = S_OK;
+
+    CComPtr&lt;IBar&gt; pBar;
+    hr = pBar.CoCreateInstance(CLSID_Bar);
+    if( SUCCEEDED(hr) )
+    {
+        hr = pBar-&gt;DoSomething();
+        if( SUCCEEDED(hr) )
+        {
+            CComPtr&lt;IBarEx&gt; pBarEx;
+            hr = pBar-&gt;QueryInterface(&pBarEx);
+            if( SUCCEEDED(hr) )
+            {
+                hr = pBarEx-&gt;DoSomethingEx();
+            }
+        }
+    }
+
+    return hr;
+}
+</pre>
+        <p>
+            ATL's smart pointer class is especially nice, since it has not only a Release 
+            built into the destructor, but also has helpers like CoCreateInstance. Further, 
+            common QueryInterface bugs can be avoided in VC6 because of the new 
+            IUnknown::QueryInterface member function template :
+        </p>
+        <pre>template &lt;class Q&gt;
+HRESULT STDMETHODCALLTYPE QueryInterface(Q** pp)
+{
+    return QueryInterface(__uuidof(Q), (void**)pp);
+}
+</pre>
+        <p>
+            Even so, Steve's advise to write the nominal case first and to only have a 
+            single point of return from a function lead to practically unreadable code, so 
+            it took quite a lot of putting up with nested if statements before I could 
+            force myself to write the following:
+        </p>
+        <p>
+            <pre>STDMETHODIMP CFoo::DoSomething()
+{
+    HRESULT hr = S_OK;
+
+    CComPtr&lt;IBar&gt; pBar;
+    hr = pBar.CoCreateInstance(CLSID_Bar);
+    if( FAILED(hr) ) return hr;
+
+    hr = pBar-&gt;DoSomething();
+    if( FAILED(hr) ) return hr;
+
+    CComPtr&lt;IBarEx&gt; pBarEx;
+    hr = pBar-&gt;QueryInterface(&pBarEx);
+    if( FAILED(hr) ) return hr;
+
+    hr = pBarEx-&gt;DoSomethingEx();
+    if( FAILED(hr) ) return hr;
+
+    return S_OK;
+}
+</pre>
+            Once I did learn to write my code this way, Halleluiah, I had seen the light. 
+            Suddenly, what my code was actually trying to accomplish leapt out at me. 
+            Still, I could improve it. I hated writing all of those if(FAILED(hr)) blocks, 
+            so, inspired by Tim Ewald, I wrote the following macro:
+            <pre>#define HR(_ex) { HRESULT _hr = _ex; if(FAILED(_hr)) return _hr; }</pre>
+            This allowed me to rewrite my code thusly:
+            <pre>STDMETHODIMP CFoo::DoSomething()
+{
+    CComPtr&lt;IBar&gt; pBar;
+    HR(pBar.CoCreateInstance(CLSID_Bar));
+    HR(pBar-&gt;DoSomething());
+
+    CComPtr&lt;IBarEx&gt; pBarEx;
+    HR(pBar-&gt;QueryInterface(&pBarEx));
+    HR(pBarEx-&gt;DoSomethingEx());
+
+    return S_OK;
+}
+</pre>
+            At this point, I'd almost reached nirvana, but being a critic at heart, I still 
+            found room for improvement. I observed that most errors occur at development 
+            time, but I didn't have a good way to track them. When a COM method fails n 
+            levels deep, I wanted to know the file and the line of code.
+        </p>
+        <p>
+            Luckily, because I was using a macro, I could augment it with the __FILE__ and 
+            __LINE__ symbols and dump the results to debug out using the following:
+        </p>
+        <p>
+            <pre>#define lengthof(rg) (sizeof(rg)/sizeof(*rg))
+
+inline const char* StringFromError(char* szErr, long nSize, long nErr)
+{
+    _ASSERTE(szErr);
+    *szErr = 0;
+    DWORD cb = FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, 0, nErr, 0, szErr, nSize, 0);
+    char szUnk[] = "&lt;unknown&gt;";
+    if( !cb && nSize &gt;= lengthof(szUnk) ) lstrcpyA(szErr, szUnk);
+    return szErr;
+}
+
+inline HRESULT TraceHR(const char* pszFile, long nLine, HRESULT hr)
+{
+    if( FAILED(hr) )
+    {
+        char szErr[128];
+        char sz[_MAX_PATH + lengthof(szErr) + 64];
+        wsprintfA(sz, "%s(%d) : error 0x%x: %s\n", pszFile, nLine, hr,
+            StringFromError(szErr, lengthof(szErr), hr));
+        OutputDebugStringA(sz);
+    }
+    return hr;
+}
+
+#ifdef _DEBUG
+#define TRACEHR(_hr) TraceHR(__FILE__, __LINE__, _hr)
+#else
+#define TRACEHR(_hr) _hr
+#endif
+
+#define HR(ex) { HRESULT _hr = ex; if(FAILED(_hr)) return TRACEHR(_hr), _hr; }</pre>
+            Now if I had an error while running under the debugger, I would see the output 
+            like so:
+        </p>
+        <p>
+            <pre>foo.cpp(452) : error 0x80004002: No such interface supported<br>client.cpp(222): error 0x80004002: No such interface supported</pre>
+            Not only did a have a complete stack dump of the call failure, but because I 
+            used VC's output format, I could navigate to the offending file and line with a 
+            single press of my F4 key. At this point, I felt an overwhelming feeling of COM 
+            come over me...
+        </p>
+        <p>
+            You may worry about so drastically violating Steve's two principles, but I 
+            don't. Writing the nominal case first is all about making the true intent of 
+            your code evident to readers. I think it's clear that my HR macro does just 
+            that. Further, having a single point of return from a function is about 
+            maintainability and resource management. Certainly we've achieved a higher 
+            degree of maintainability via readability and expressly allowing multiple 
+            points of return from a function. As far as resource management goes, smart 
+            pointers are but one kind of smart type class that ATL provides and that I 
+            always use when I'm coding in this style (which is all the time). Since smart 
+            types are necessary in the face of C++ exceptions anyway, this technique fits 
+            right in. Enjoy.
+        </p>
+    </body>
+</html>

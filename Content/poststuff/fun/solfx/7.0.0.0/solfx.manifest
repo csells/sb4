@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asmv1:assemblyIdentity name="SolFx.exe" version="7.0.0.0" publicKeyToken="d043527f1816b15a" language="neutral" processorArchitecture="msil" type="win32" />
+  <entryPoint>
+    <assemblyIdentity name="solfx" version="1.0.1832.2186" language="neutral" processorArchitecture="msil" />
+    <commandLine file="solfx.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet class="System.Security.PermissionSet" version="1" Unrestricted="true" ID="Custom" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentAssembly codebase="CardControls.dll" size="3596288">
+      <assemblyIdentity name="CardControls" version="1.0.1832.2185" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>ggYr4xYYXTeJnPyyUn7P4exKQjM=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly codebase="solfx.exe" size="28672">
+      <assemblyIdentity name="solfx" version="1.0.1832.2186" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>VeXJ8i3VTFkJE75auuK63I6Va8k=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly codebase="Solitaire.Domain.dll" size="28672">
+      <assemblyIdentity name="Solitaire.Domain" version="1.0.1832.2173" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>9lxrh0zhLYvqSiigM0TaTAcCVuc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+<Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>gIbRvS6w2oq2xfXQ3axdhfhcdfI=</DigestValue></Reference></SignedInfo><SignatureValue>Upo547SY7+dp3smZHgL1vdDH/GmFYEy3m3YHy2BS95AVMqENniayu3Xukj9tr8LhwkCJ3TNxMVguKe25aFa9OHNWy4eryo5wsMaP8yTuyPCdlOANX0c+Wak8MySsd3IXe3wyjPXOW7t1FidSf5kZzeM5ppxUwkt9zRroSYkiSv8=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>tZZ1O/5L5NBvpOqWrUpOtz3xX4VGUiW7leenelS/TalK7RwrQd0SVxDEtFtYY0Gojx8gaWSV4pdDE+5Q0PcOhrLDHOUEVGPFYqNNyHthMmghDRE4NVe/cOOLcSLQiWtzsqYBjHNsO1/zGK0e9EPwcPQcXsTti+szOTJR7Eq7Vu8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue></KeyInfo></Signature></asmv1:assembly>

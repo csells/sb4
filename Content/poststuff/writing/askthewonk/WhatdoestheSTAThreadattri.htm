@@ -1,0 +1,29 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/65 -->
+<html>
+<head>
+	<title>What does the STAThread attribute really do?</title>
+</head>
+<body>
+
+		    
+<b>Q. When I create a c# project from scratch in VS.NET, the generated code always have a [STAThread] attribute above the main routine. What does the STAThread attribute really do? Can I change it to MTAThread instead? I have searched website and books, no one seems to explain this well.</b>
+<p>
+<i>Asked by anon. Answered by the Wonk on February 17, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P>The STAThreadAttribute marks a thread to use the Single-Threaded COM Apartment if COM is needed. By default, .NET won't initialize COM at all. It's only when COM is needed, like when a COM object or COM Control is created or when drag 'n' drop is needed, that COM is initialized. When that happens, .NET calls the underlying CoInitializeEx function, which takes a flag indicating whether to join the thread to a multi-threaded or single-threaded apartment.</P>
+<P>A multi-threaded apartment (MTA) in COM is more efficient, since any of a number of RPC threads from a pool can be used to handle a request. However, an object on the MTA thread needs to protect itself from multiple threads accessing it at the same time, so that efficiency comes at a cost.</P>
+<P>The single-thread apartment (STA) in COM is inherently single-threaded and therefore no additional thread synchronization is needed. The STA is implemented using the thread's Windows message queue, which is how requests to objects on an STA are serialized. Because of how the STA thread is implemented, calls to objects on that thread are serialized with Windows message handling on that thread, making sure that everything, both the COM objects and the underlying windowing objects, e.g. HWNDs, are all synchronized. This is necessary for UI-oriented COM objects, like controls and drag 'n' drop, which must also be synchronized together with the UI.</P>
+<P>When COM is needed .NET will call CoInitializeEx, picking the MTA by default because it's more efficient. However, to get the synchronization needed for controls, windows and drag 'n' drop, you need to mark a thread's entry point with the STAThreadAttribute to let .NET know to initialize the UI thread on the STA. All of the VS.NET project templates put that attribute in to make sure you don't forget:</P>
+<P><STRONG>[STAThread]<BR></STRONG><FONT color=#0000ff size=2>static</FONT><FONT size=2> </FONT><FONT color=#0000ff size=2>void</FONT><FONT size=2> Main()&nbsp; {...}</FONT></P>
+<P>Be very careful to leave that STAThreadAttribute just where it is, or things can go all wacky and you won't know why.</P></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'What does the STAThread attribute really do?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

@@ -1,0 +1,780 @@
+<html>
+
+    <head>
+        <title>.NET Delegates: A C# Bedtime Story</title>
+    </head>
+
+<body>
+
+<h1>.NET Delegates: A C# Bedtime Story</h1>
+
+<p class="BodyNoIndent"><i>The following is an excerpt from <a href="wfbook">
+Windows Forms 2.0 Programming</a>, Chris Sells &amp; Michael Weinhardt, 
+Addison-Wesley, 2006. It's been updated from the original version for C# 2.0.</i></p>
+<p class="BodyNoIndent">Once upon a time, in a strange land south of here, there 
+was a worker named Peter. He was a diligent worker who would readily accept 
+requests from his boss. However, his boss was a mean, untrusting man who 
+insisted on steady progress reports. Since Peter did not want his boss standing 
+in his office looking over his shoulder, Peter promised to notify his boss 
+whenever his work progressed. Peter implemented this promise by periodically 
+calling his boss back via a typed reference like so:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Worker</span> {<br>
+&nbsp; <span style="color: teal">Boss</span> boss;<br>
+&nbsp;<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> 
+Advise(<span style="color: teal">Boss</span> boss) {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">this</span>.boss = boss;<br>
+&nbsp; }<br>
+&nbsp;<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> 
+DoWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work started&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">this</span>.boss 
+!= <span style="color: blue">null</span> ) <span style="color: blue">this</span>.boss.WorkStarted();<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work progressing&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">this</span>.boss 
+!= <span style="color: blue">null</span> ) <span style="color: blue">this</span>.boss.WorkProgressing();<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">this</span>.boss 
+!= <span style="color: blue">null</span> ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue">int</span> grade = <span style="color: blue">
+this</span>.boss.WorkCompleted();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker 
+grade= {0}&quot;</span>, grade);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+}<br>
+&nbsp;<br>
+<span style="color: blue">class</span> <span style="color: teal">Boss</span> {<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> 
+WorkStarted() { <br>
+&nbsp;&nbsp;&nbsp; <span style="color: green">// Boss doesn't care <br>
+&nbsp; </span>}<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> 
+WorkProgressing() { <br>
+&nbsp;&nbsp;&nbsp; <span style="color: green">// Boss doesn't care <br>
+&nbsp; </span>}<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">int</span> 
+WorkCompleted() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;It's 
+about time!&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">return</span> 2; <span style="color: green">// out 
+of 10<br>
+</span>&nbsp; }<br>
+}<br>
+&nbsp;<br>
+<span style="color: blue">class</span> <span style="color: teal">Universe</span> 
+{<br>
+&nbsp; <span style="color: blue">static</span> <span style="color: blue">void</span> 
+Main() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Worker</span> peter = <span style="color: blue">
+new</span> <span style="color: teal">Worker</span>();<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Boss</span> boss = <span style="color: blue">new</span>
+<span style="color: teal">Boss</span>();<br>
+&nbsp;&nbsp;&nbsp; peter.Advise(boss);<br>
+&nbsp;&nbsp;&nbsp; peter.DoWork();<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Main: 
+worker completed work&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.ReadLine();<br>
+&nbsp; }<br>
+}</font></p>
+<h2>Interfaces</h2>
+<p class="BodyNoIndent">Now Peter was a special person. Not only was he able to 
+put up with his mean-spirited boss, but he also had a deep connection with the 
+universe around him. So much so that he felt that the universe was interested in 
+his progress. Unfortunately, there was no way for Peter to advise the Universe 
+of his progress unless he added a special Advise method and special callbacks 
+just for the Universe, in addition to keeping his boss informed. What Peter 
+really wanted to do was to separate the list of potential notifications from the 
+implementation of those notification methods. And so he decided to split the 
+methods into an interface:</p>
+<p class="CP"><font face="Courier New"><b><span style="color: blue">interface</span>
+<span style="color: teal">IWorkerEvents</span> {<br>
+&nbsp; <span style="color: blue">void</span> WorkStarted();<br>
+&nbsp; <span style="color: blue">void</span> WorkProgressing();<br>
+&nbsp; <span style="color: blue">int</span> WorkCompleted();<br>
+}<br>
+</b>&nbsp;<br>
+<span style="color: blue">class</span> <span style="color: teal">Worker</span> {<br>
+<b>&nbsp; <span style="color: teal">IWorkerEvents</span> events;<br>
+</b>&nbsp;<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> 
+Advise(<b><span style="color: teal">IWorkerEvents</span> events</b>) {<br>
+<b>&nbsp;&nbsp;&nbsp; <span style="color: blue">this</span>.events = events;<br>
+</b>&nbsp; }<br>
+&nbsp;<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> 
+DoWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work started&quot;</span>);<br>
+<b>&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">this</span>.events 
+!= <span style="color: blue">null</span> ) <span style="color: blue">this</span>.events.WorkStarted();<br>
+</b>&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work progressing&quot;</span>);<br>
+<b>&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">this</span>.events 
+!= <span style="color: blue">null</span> ) <span style="color: blue">this</span>.events.WorkProgressing();<br>
+</b>&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <b><span style="color: blue">this</span>.events!=
+<span style="color: blue">null</span></b> ) {<br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue">int</span> grade = <span style="color: blue">
+this</span>.events.WorkCompleted();<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker 
+grade= {0}&quot;</span>, grade);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+}<br>
+&nbsp;<br>
+<span style="color: blue">class</span> <span style="color: teal">Boss</span> :
+<b><span style="color: teal">IWorkerEvents</span></b> {<br>
+<b>&nbsp; <span style="color: blue">public</span> <span style="color: blue">void
+</span>WorkStarted() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: green">// Boss doesn't care<br>
+</span>&nbsp; }<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">void </span>
+WorkProgressing() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: green">// Boss doesn't care<br>
+</span>&nbsp; }<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">int </span>
+WorkCompleted() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;It's 
+about time!&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">return</span> 3; <span style="color: green">// out 
+of 10<br>
+</span>&nbsp; }<br>
+</b>}</font></p>
+<h2>Delegates</h2>
+<p class="BodyNoIndent">Unfortunately, Peter was so busy talking his boss into 
+implementing this interface that he didn't get around to notifying the Universe, 
+but he knew he would soon. At least he'd abstracted the reference of his boss 
+far away from him so that others who implemented the IWorkerEvents interface 
+could be notified of his work progress.</p>
+<p class="Body">Still, his boss complained bitterly. &quot;Peter!&quot; his boss fumed. 
+&quot;Why are you bothering to notify me when you start your work or when your work 
+is progressing?!? I don't care about those events. Not only do you force me to 
+implement those methods, but you're wasting valuable work time waiting for me to 
+return from the event, which is further expanded when I am far away! Can't you 
+figure out a way to stop bothering me?&quot;</p>
+<p class="Body">And so, Peter decided that while interfaces were useful for many 
+things, when it came to events, their granularity was not fine enough. He wished 
+to be able to notify interested parties only of the events that matched their 
+hearts' desires. So, he decided to break the methods out of the interface into 
+separate delegate functions, each of which acted like a little tiny interface of 
+one method each:</p>
+<p><font face="Courier New"><b><span style="color: blue">delegate</span>
+<span style="color: blue">void</span> <span style="color: teal">WorkStarted</span>();<br>
+<span style="color: blue">delegate</span> <span style="color: blue">void</span>
+<span style="color: teal">WorkProgressing</span>();<br>
+<span style="color: blue">delegate</span> <span style="color: blue">int</span>
+<span style="color: teal">WorkCompleted</span>();<br>
+</b><span style="color: green">&nbsp;<br>
+</span><span style="color: blue">class</span> <span style="color: teal">Worker</span> 
+{<br>
+<b>&nbsp; <span style="color: blue">public</span> <span style="color: teal">
+WorkStarted</span> Started;<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: teal">
+WorkProgressing</span> Progressing;<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: teal">
+WorkCompleted</span> Completed;<br>
+</b><span style="color: green">&nbsp;<br>
+</span>&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> 
+DoWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work started&quot;</span>);<br>
+<b>&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">this</span>.Started 
+!= <span style="color: blue">null</span> ) <span style="color: blue">this</span>.Started();<br>
+</b>&nbsp;<br>
+&nbsp; &nbsp;&nbsp;<span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work progressing&quot;</span>);<br>
+<b>&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">this</span>.Progressing 
+!= <span style="color: blue">null</span> ) <span style="color: blue">this</span>.Progressing();<br>
+</b>&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <b><span style="color: blue">this</span>.Completed 
+!= <span style="color: blue">null</span></b> ) {<br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue">int</span> grade = <span style="color: blue">
+this</span>.Completed();<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker 
+grade= {0}&quot;</span>, grade);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+}<br>
+&nbsp;<br>
+<span style="color: blue">class</span> <span style="color: teal">Boss</span> {
+<br>
+&nbsp; <span style="color: blue">public</span> <span style="color: blue">int</span> 
+WorkCompleted() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;It's 
+about time!&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">return</span> 4; <span style="color: green">// out 
+of 10<br>
+</span>&nbsp; }<br>
+}<br>
+&nbsp;<br>
+<span style="color: blue">class</span> <span style="color: teal">Universe</span> 
+{<br>
+&nbsp; <span style="color: blue">static</span> <span style="color: blue">void</span> 
+Main() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Worker</span> peter = <span style="color: blue">
+new</span> <span style="color: teal">Worker</span>();<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Boss</span> boss = <span style="color: blue">new</span>
+<span style="color: teal">Boss</span>();<br>
+<span style="color: green">&nbsp;<br>
+</span><b>&nbsp;&nbsp;&nbsp; <span style="color: green">// NOTE: We've replaced the Advise 
+method with the assignment operation<br>
+</span>&nbsp;&nbsp;&nbsp; peter.Completed = <span style="color: blue">new</span>
+<span style="color: teal">WorkCompleted</span>(boss.WorkCompleted);<br>
+&nbsp;&nbsp;&nbsp; peter.DoWork();<br>
+</b>&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Main: 
+worker completed work&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.ReadLine();<br>
+&nbsp; }<br>
+}</font></p>
+<p><font face="Times New Roman">And, because Peter was under so much pressure, he decided to 
+advantage of the shorthand notation for assigning delegates provided by C# 2.0:</font></p>
+<p><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Universe</span> {<br>
+&nbsp; <span style="color: blue">static</span> <span style="color: blue">void</span> 
+Main() {<br>
+&nbsp;&nbsp;&nbsp; ...<br>
+<b>&nbsp;&nbsp;&nbsp; peter.Completed = boss.WorkCompleted;<br>
+</b>&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp; }<br>
+}</font></p>
+<h2>Static Listeners</h2>
+<p class="BodyNoIndent">Delegates accomplished the goal of not bothering his 
+boss with events that he didn't want, but still Peter had not managed to get the 
+universe on his list of listeners. Since the universe is an all-encompassing 
+entity, it didn't seem right to hook delegates to instance members (imagine how 
+many resources multiple instances of the universe would need...). Instead, Peter 
+need to hook delegates to static members, which delegates support fully:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Universe</span> {<br>
+<b>&nbsp; <span style="color: blue">static</span> <span style="color: blue">void</span> 
+WorkerStartedWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Universe 
+notices worker starting work&quot;</span>);<br>
+&nbsp; }<br>
+&nbsp;<br>
+&nbsp; <span style="color: blue">static</span> <span style="color: blue">int</span> 
+WorkerCompletedWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Universe 
+pleased with worker's work&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">return</span> 7;<br>
+&nbsp; }<br>
+</b>&nbsp;<br>
+&nbsp; <span style="color: blue">static</span> <span style="color: blue">void</span> 
+Main() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Worker</span> peter = <span style="color: blue">
+new</span> <span style="color: teal">Worker</span>();<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Boss</span> boss = <span style="color: blue">new</span>
+<span style="color: teal">Boss</span>();<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp; peter.Completed = boss.WorkCompleted;<br>
+<b>&nbsp;&nbsp;&nbsp; peter.Started = WorkerStartedWork;<br>
+&nbsp;&nbsp;&nbsp; peter.Completed = WorkerCompletedWork; // Oops!<br>
+</b>&nbsp;&nbsp;&nbsp; peter.DoWork();<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Main: 
+worker completed work&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.ReadLine();<br>
+&nbsp; }<br>
+}</font></p>
+	<h2>Events</h2>
+<p class="BodyNoIndent">Unfortunately, the Universe being very busy and 
+unaccustomed to paying attention to individuals, has managed to replace Peter's 
+boss's delegate with its own. This is an unintended side effect of making the 
+delegate fields public in Peter's Worker class. Likewise, if Peter's boss gets 
+impatient, he can decide to fire Peter's delegates himself (which is just the 
+kind of rude thing that Peter's boss was apt to do):</p>
+<p class="CP"><font face="Courier New"><span style="color: green">// Peter's boss taking matters into his 
+own hands<br>
+</span><span style="color: blue">if</span>( peter.Completed !=
+<span style="color: blue">null</span> ) peter.Completed();<span style="color: green">&nbsp;</span></font></p>
+<p class="Body">Peter wants to make sure that neither of these can happens. He 
+realizes he needs to add registration and unregistration functions for each 
+delegate so that listeners can add or remove themselves, but can't clear the 
+entire list or fire Peter's events. Instead of implementing these functions 
+himself, Peter uses the event keyword to make the C# compiler build these 
+methods for him:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Worker</span> {<br>
+&nbsp; <span style="color: blue">public</span> <b>
+<span style="color: blue">event</span></b> <span style="color: teal">WorkStarted</span> 
+Started;<br>
+&nbsp; <span style="color: blue">public</span> <b>
+<span style="color: blue">event</span></b> <span style="color: teal">
+WorkProgressing</span> Progressing;<br>
+&nbsp; <span style="color: blue">public</span> <b>
+<span style="color: blue">event</span></b> <span style="color: teal">
+WorkCompleted</span> Completed;<br>
+&nbsp; ...<br>
+}</font></p>
+<p class="Body">Peter knows that the event keyword erects a property around a 
+delegate, only allowing clients to add or remove themselves (using the += and -= 
+operators in C#), forcing his boss and the universe to play nicely:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Universe</span> {<br>
+&nbsp; ...<br>
+&nbsp; <span style="color: blue">static</span>
+<span style="color: blue">void</span> Main() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Worker</span> peter =
+<span style="color: blue">new</span> <span style="color: teal">Worker</span>();<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Boss</span> boss =
+<span style="color: blue">new</span> <span style="color: teal">Boss</span>();<br>
+<br>
+&nbsp;<b>&nbsp;&nbsp; peter.Completed = boss.WorkCompleted; // ERR!<br>
+&nbsp;&nbsp;&nbsp; peter.Completed += boss.WorkCompleted; // OK<br>
+&nbsp;&nbsp;&nbsp; peter.Started += <span style="color: teal">Universe</span>.WorkerStartedWork; 
+// OK<br>
+&nbsp;&nbsp;&nbsp; peter.Completed += <span style="color: teal">Universe</span>.WorkerCompletedWork; 
+// OK<br>
+<br>
+</b>&nbsp;&nbsp;&nbsp; peter.DoWork();<br>
+<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Main: 
+worker completed work&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.ReadLine();<br>
+&nbsp; }<br>
+}</font></p>
+<h2>Harvesting All Results</h2>
+<p class="BodyNoIndent">At this point, Peter breathes a sigh of relief. He has 
+managed to satisfy the requirements of all his listeners without having to be 
+closely coupled with the specific implementations. However, he notices that 
+while both his boss and the universe provide grades of his work that he's only 
+receiving one of the grades. In the face of multiple listeners, he'd really like 
+to harvest all of their results. So, he reaches into his delegate and pulls out 
+the list of listeners so that he can call each of them manually:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Worker</span> {<br>
+&nbsp; ...<br>
+&nbsp; <span style="color: blue">public</span>
+<span style="color: blue">void</span> DoWork() {<br>
+&nbsp; &nbsp;&nbsp;...<br>
+&nbsp; &nbsp;&nbsp;<span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+<b>&nbsp;<br>
+&nbsp; &nbsp;&nbsp;<span style="color: blue">if</span>(
+<span style="color: blue">this</span>.Completed != <span style="color: blue">
+null</span> ) {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span style="color: blue">foreach</span>(
+<span style="color: teal">WorkCompleted</span> wc <span style="color: blue">in</span>
+<span style="color: blue">this</span>.Completed.GetInvocationList() ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span style="color: blue">int</span> grade = wc();<br>
+&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker 
+grade= {0}&quot;</span>, grade);<br>
+&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp; &nbsp;&nbsp;}<br>
+</b>&nbsp; }<br>
+}<br>
+<span style="display: none">&nbsp;<br>
+</span><span style="color: blue; display: none">public</span><span style="display: none">
+</span><span style="color: blue; display: none">void</span><span style="display: none"> 
+DoWork() {<br>
+&nbsp; ...<br>
+&nbsp; Console.WriteLine(&quot;Worker: 
+work completed&quot;);<br>
+&nbsp; </span>
+<span style="color: blue; display: none">if</span><span style="display: none">( 
+completed != </span><span style="color: blue; display: none">null</span><span style="display: none"> 
+) {<br>
+</span><b><span style="display: none">&nbsp;&nbsp;&nbsp; </span>
+<span style="color: blue; display: none">foreach</span><span style="display: none">( 
+WorkCompleted wc </span><span style="color: blue; display: none">in</span><span style="display: none"> 
+completed.GetInvocationList() ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+<span style="color: blue; display: none">int</span><span style="display: none"> 
+grade = wc();<br>
+</span></b><span style="display: none">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Console.WriteLine(&quot;Worker grade= &quot; + grade);<br>
+</span><b><span style="display: none">&nbsp;&nbsp;&nbsp; }<br>
+</span></b><span style="display: none">&nbsp; }<br>
+}</span></font></p>
+<h2>Asynchronous Notification: Fire &amp; Forget</h2>
+<p class="BodyNoIndent">In the meantime, his boss and the universe have been 
+distracted with other things, which meant that the time it takes them to grade 
+Peter's work is greatly expanded:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Boss</span> { <br>
+&nbsp; <span style="color: blue">public</span>
+<span style="color: blue">int</span> WorkCompleted() {<br>
+<b>&nbsp;&nbsp;&nbsp; System.Threading.<span style="color: teal">Thread</span>.Sleep(5000);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Better...&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">return</span> 4;
+<span style="color: green">// out of 10<br>
+</span></b>&nbsp; }<br>
+}<br>
+<br>
+<span style="color: blue">class</span> <span style="color: teal">
+Universe</span> {<br>
+&nbsp; ...<br>
+&nbsp; <span style="color: blue">static</span>
+<span style="color: blue">int</span> WorkerCompletedWork() {<br>
+<b>&nbsp;&nbsp;&nbsp; System.Threading.<span style="color: teal">Thread</span>.Sleep(1000000);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Universe 
+pleased with worker's work&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">return</span> 7;<br>
+</b>&nbsp; }<br>
+&nbsp; ...<br>
+}</font></p>
+<p class="Body">Unfortunately, since Peter is notifying each listener one at a 
+time, waiting for each to grade him, these notifications now take up quite a bit 
+of his time when he should be working. So, he decides to forget the grade and 
+just fire the event asynchronously:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Worker</span> {<br>
+&nbsp; ...<br>
+&nbsp; <span style="color: blue">public</span>
+<span style="color: blue">void</span> DoWork() {<br>
+&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">
+this</span>.Completed != <span style="color: blue">null</span> ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue">foreach</span>(
+<span style="color: teal">WorkCompleted</span> wc <span style="color: blue">in</span>
+<span style="color: blue">this</span>.Completed.GetInvocationList() ) {<br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wc.BeginInvoke(<span style="color: blue">null</span>,
+<span style="color: blue">null</span>); // EndInvoke call required by .NET<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+}</font></p>
+<h2>Asynchronous Notification: Polling</h2>
+<p class="BodyNoIndent">The call to BeginInvoke allows Peter to notify the 
+listeners while letting Peter get back to work immediately, letting the process 
+thread pool invoke the delegate. Over time, however, Peter finds that he misses 
+the feedback on his work. He knows that he does a good job and appreciates the 
+praise of the universe as a whole (if not his boss specifically). Plus, he’s 
+afraid he’s leaking .NET resources acquired by calling BeginInvoke without 
+calling the corresponding EndInvoke method, so, he fires the event 
+asynchronously, but polls periodically, looking for the grade to be available:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Worker</span> {<br>
+&nbsp; ...<br>
+&nbsp; <span style="color: blue">public</span>
+<span style="color: blue">void</span> DoWork() {<br>
+&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">
+this</span>.Completed != <span style="color: blue">null</span> ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue">foreach</span>(
+<span style="color: teal">WorkCompleted</span> wc <span style="color: blue">in</span>
+<span style="color: blue">this</span>.Completed.GetInvocationList() ) {<br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal">IAsyncResult</span> result = 
+wc.BeginInvoke(<span style="color: blue">null</span>, <span style="color: blue">
+null</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue">while</span>( 
+!result.IsCompleted ) System.Threading.<span style="color: teal">Thread</span>.Sleep(1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue">int</span> grade = 
+wc.EndInvoke(result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker 
+grade= {0}&quot;</span>, grade);<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+}</font></p>
+<h2>Asynchronous Notification: Delegates</h2>
+<p class="BodyNoIndent">Unfortunately, Peter is back to what he wanted his boss 
+to avoid with him in the beginning, i.e. looking over the shoulder of the entity 
+doing the work. So, he decides to employ his own delegate as a means of 
+notification when the asynchronous work has completed, allowing him to get back 
+to work immediately, but still be notified when his work has been graded:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Worker</span> {<br>
+&nbsp; ...<br>
+&nbsp; <span style="color: blue">public</span>
+<span style="color: blue">void</span> DoWork() {<br>
+&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">if</span>( <span style="color: blue">
+this</span>.Completed != <span style="color: blue">null</span> ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue">foreach</span>(
+<span style="color: teal">WorkCompleted</span> wc <span style="color: blue">in</span>
+<span style="color: blue">this</span>.Completed.GetInvocationList() ) {<br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wc.BeginInvoke(<span style="color: blue">this</span>.WorkGraded, 
+wc);<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+<br>
+<b>&nbsp; <span style="color: blue">void</span> WorkGraded(<span style="color: teal">IAsyncResult</span> 
+result) {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">WorkCompleted</span> wc = (<span style="color: teal">WorkCompleted</span>)result.AsyncState;<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">int</span> grade = 
+wc.EndInvoke(result);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker 
+grade= {0}&quot;</span> + grade);<br>
+&nbsp; }<br>
+</b>}</font></p>
+	<h2>Anonymous Delegates</h2>
+
+<p class="Body">At this point, Peter is using delegates to notify interested 
+parties in the process of his work and using delegates to get notified when 
+grades are available on the work he’s completed. The delegates provided by his 
+boss and the universe are provided by separate entities, so it makes sense that 
+they are encapsulated in methods on those entities. However, in the case of the 
+WorkGraded method, there’s really no good reason for this to be a separate 
+method except the syntactic requirements of C# 1.0. As of C# 2.0, Peter can drop 
+the code required to handle the processing of his work grade into an <i>
+anonymous delegate</i>:</p>
+<p class="CP"><font face="Courier New">class <span style="color: teal">Worker</span> {<br>
+&nbsp; ...<br>
+&nbsp; public void DoWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">...<br>
+</span>&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; if( this.Completed != null ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach( <span style="color: teal">WorkCompleted</span> wc 
+in this.Completed.GetInvocationList() ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wc.BeginInvoke(<b>delegate(<span style="color: teal">IAsyncResult</span> 
+result) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal">WorkCompleted</span> wc2 = 
+(<span style="color: teal">WorkCompleted</span>)result.AsyncState;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int grade = wc2.EndInvoke(result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker 
+grade= {0}&quot;</span>, grade);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</b>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>wc</b>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+}</font></p>
+<p class="Body">Here, instead of passing in the name of a method to call when 
+his work has been graded, he’s passing in the body of the method itself as 
+designated with a different use of the delegate keyword to create a method with 
+no name (and therefore “anonymous”). The body of the method is fundamentally the 
+same in that Peter still passes the WorkCompleted delegate as a parameter to 
+BeginInvoke and then pulls it out of AsyncState for use in extracting the 
+result. However, one of the benefits of anonymous delegates that Peter knows is 
+that he can make use of the variables in the surrounding context from within the 
+anonymous delegate body, causing him to rewrite his code thusly:</p>
+<p class="CP"><font face="Courier New">class <span style="color: teal">Worker</span> {<br>
+&nbsp; ...<br>
+&nbsp; public void DoWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">...<br>
+</span>&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; if( this.Completed != null ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach( <span style="color: teal">WorkCompleted</span> <b>
+wc</b> in this.Completed.GetInvocationList() ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wc.BeginInvoke(delegate(<span style="color: teal">IAsyncResult</span> 
+result) {<br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green">// Use wc variable from 
+surrounding context (ERR!)<br>
+</span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int grade = <b>wc</b>.EndInvoke(result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker 
+grade= {0}&quot;</span>, grade);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>null</b>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+}</font></p>
+<p class="Body">This code compiles just fine, but when it’s run, it will cause 
+the following exception to be thrown:</p>
+<pre><font face="Courier New" size="3">System.InvalidOperationException:
+  The IAsyncResult object provided does not match this delegate.</font></pre>
+<p class="Body">The problem is that while the wc variable is allowed to be used 
+in the anonymous delegate, it’s still being used by the for-each statement. As 
+soon as the asynchronous invocation begins, the wc variable changes and the 
+delegate used to start things (wc) no longer matches the async result passed as 
+an argument to the anonymous delegate. Peter slaps his head and creates a hybrid 
+solution:</p>
+<p class="CP"><font face="Courier New">class <span style="color: teal">Worker</span> {<br>
+&nbsp; ...<br>
+&nbsp; public void DoWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">...<br>
+</span>&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; if( this.Completed != null ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach( <span style="color: teal">WorkCompleted</span> <b>
+wc</b> in this.Completed.GetInvocationList() ) {<br>
+</font>
+<b>
+<span style="font-family: Courier New">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:green">// 
+Create an unchanging variable referencing the current delegate<br>
+</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:teal">
+WorkCompleted</span> wc2 = wc;<br>
+</span></b><span style="font-family: Courier New">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wc.BeginInvoke(<span style="color:blue">delegate</span>(<span style="color:teal">IAsyncResult</span> 
+result) {<br>
+</span><b>
+<span style="font-family: Courier New">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:green">// 
+Use wc2 variable from surrounding context<br>
+</span></span></b><span style="font-family: Courier New">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:blue">int</span> 
+grade = <b>wc2</b>.EndInvoke(result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:teal">
+Console</span>.WriteLine(<span style="color:maroon">&quot;Worker grade= {0}&quot;</span>, 
+grade);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:blue">null</span>);<br>
+</span><font face="Courier New">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+}<br>
+<span style="display: none">&nbsp;<br>
+</span><span style="color: blue; display: none">public</span><span style="display: none">
+</span><span style="color: blue; display: none">void</span><span style="display: none"> 
+DoWork() {<br>
+&nbsp; ...<br>
+&nbsp; Console.WriteLine(&quot;Worker: 
+work completed&quot;);<br>
+&nbsp; </span>
+<span style="color: blue; display: none">if</span><span style="display: none">( 
+completed != </span><span style="color: blue; display: none">null</span><span style="display: none"> 
+) {<br>
+</span><b><span style="display: none">&nbsp;&nbsp;&nbsp; </span>
+<span style="color: blue; display: none">foreach</span><span style="display: none">( 
+WorkCompleted wc </span><span style="color: blue; display: none">in</span><span style="display: none"> 
+completed.GetInvocationList() ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wc.BeginInvoke(</span><span style="color: blue; display: none">new</span><span style="display: none"> 
+AsyncCallback(WorkGraded), wc);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+</span></b><span style="display: none">&nbsp; }<br>
+}<br>
+&nbsp;<br>
+</span><b><span style="color: blue; display: none">void</span><span style="display: none"> 
+WorkGraded(IAsyncResult res) {<br>
+&nbsp; WorkCompleted wc = 
+(WorkCompleted)res.AsyncState;<br>
+&nbsp; </span>
+<span style="color: blue; display: none">int</span><span style="display: none"> 
+grade = wc.EndInvoke(res);<br>
+</span></b><span style="display: none">&nbsp; Console.WriteLine(&quot;Worker 
+grade= &quot; + grade);<br>
+</span><b><span style="display: none">}</span></b></font></p>
+<h2>Happiness in the Universe</h2>
+<p class="BodyNoIndent">Peter, his boss and the universe are finally satisfied. 
+Peter's boss and the universe are allowed to be notified of the events that 
+interest them, reducing the burden of implementation and the cost of unnecessary 
+round-trips. Peter can notify them each, ignoring how long it takes them to 
+return from their target methods, while still getting his results asynchronously 
+and handling them using anonymous delegates, resulting in the following complete 
+solution:</p>
+<p class="CP"><font face="Courier New"><span style="color: blue">delegate</span>
+<span style="color: blue">void</span> <span style="color: teal">WorkStarted</span>();<br>
+<span style="color: blue">delegate</span>
+<span style="color: blue">void</span> <span style="color: teal">WorkProgressing</span>();<br>
+<span style="color: blue">delegate</span>
+<span style="color: blue">int</span> <span style="color: teal">WorkCompleted</span>();<br>
+<br>
+</font><span style="font-family: Courier New; color: blue">class</span><span style="font-family: Courier New">
+<span style="color:teal">Worker</span> {<br>
+&nbsp; <span style="color:blue">public</span>
+<span style="color:blue">event</span> <span style="color:teal">WorkStarted</span> 
+Started;<br>
+&nbsp; <span style="color:blue">public</span>
+<span style="color:blue">event</span> <span style="color:teal">WorkProgressing</span> 
+Progressing;<br>
+&nbsp; <span style="color:blue">public</span>
+<span style="color:blue">event</span> <span style="color:teal">WorkCompleted</span> 
+Completed;<br>
+&nbsp;<br>
+&nbsp; <span style="color:blue">public</span>
+<span style="color:blue">void</span> DoWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color:teal">Console</span>.WriteLine(<span style="color:maroon">&quot;Worker: 
+work started&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color:blue">if</span>(
+<span style="color:blue">this</span>.Started != <span style="color:blue">null</span> 
+)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:blue">this</span>.Started();<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color:teal">Console</span>.WriteLine(<span style="color:maroon">&quot;Worker: 
+work progressing&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color:blue">if</span>(
+<span style="color:blue">this</span>.Progressing != <span style="color:blue">
+null</span> )<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:blue">this</span>.Progressing();<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp; <span style="color:teal">Console</span>.WriteLine(<span style="color:maroon">&quot;Worker: 
+work completed&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color:blue">if</span>(
+<span style="color:blue">this</span>.Completed != <span style="color:blue">null</span> 
+) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:blue">foreach</span>(
+<span style="color:teal">WorkCompleted</span> wc <span style="color:blue">in</span>
+<span style="color:blue">this</span>.Completed.GetInvocationList() ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:teal">
+WorkCompleted</span> wc2 = wc;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wc.BeginInvoke(<span style="color:blue">delegate</span>(<span style="color:teal">IAsyncResult</span> 
+result) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:blue">int</span> 
+grade = wc2.EndInvoke(result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:teal">
+Console</span>.WriteLine(<span style="color:maroon">&quot;Worker grade= {0}&quot;</span>, 
+grade);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:blue">null</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+}<br>
+<br>
+</span><font face="Courier New"><span style="color: blue">class</span> <span style="color: teal">
+Boss</span> {<br>
+&nbsp; <span style="color: blue">public</span>
+<span style="color: blue">int</span> WorkCompleted() {<br>
+&nbsp;&nbsp;&nbsp; System.Threading.<span style="color: teal">Thread</span>.Sleep(3000);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Better...&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">return</span> 5;
+<span style="color: green">// out of 10<br>
+</span>&nbsp; }<br>
+}<br>
+<br>
+<span style="color: blue">class</span> <span style="color: teal">
+Universe</span> {<br>
+&nbsp; <span style="color: blue">static</span>
+<span style="color: blue">void</span> WorkerStartedWork() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Universe 
+notices worker starting work&quot;</span>);<br>
+&nbsp; }<br>
+<br>
+&nbsp; <span style="color: blue">static</span>
+<span style="color: blue">int</span> WorkerCompletedWork() {<br>
+&nbsp;&nbsp;&nbsp; System.Threading.<span style="color: teal">Thread</span>.Sleep(4000);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Universe 
+pleased with worker's work&quot;</span>);<br>
+&nbsp;&nbsp;&nbsp; <span style="color: blue">return</span> 7;<br>
+&nbsp; }<br>
+<br>
+&nbsp; <span style="color: blue">static</span>
+<span style="color: blue">void</span> Main() {<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Worker</span> peter =
+<span style="color: blue">new</span> <span style="color: teal">Worker</span>();<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Boss</span> boss =
+<span style="color: blue">new</span> <span style="color: teal">Boss</span>();<br>
+&nbsp;&nbsp;&nbsp; peter.Completed += boss.WorkCompleted;<br>
+&nbsp;&nbsp;&nbsp; peter.Started += <span style="color: teal">Universe</span>.WorkerStartedWork;<br>
+&nbsp;&nbsp;&nbsp; peter.Completed += <span style="color: teal">Universe</span>.WorkerCompletedWork;<br>
+&nbsp;&nbsp;&nbsp; peter.DoWork();<br>
+<br>
+&nbsp;&nbsp;&nbsp; <span style="color: teal">Console</span>.WriteLine(<span style="color: maroon">&quot;Main: 
+worker completed work&quot;</span>);<br>
+&nbsp; }<br>
+}</font></p>
+<p class="Body">Peter knows that getting results asynchronously comes with 
+issues, because as soon as he fires events asynchronously, the target methods 
+are likely to be executed on another thread, as is Peter's notification of when 
+the target method has completed. However, 
+<a target="_blank" href="http://www.razorsoft.net/">Peter</a> is good 
+friends with <a target="_blank" href="http://www.bearcanyon.com/">Mike</a>, who is very familiar with threading issues and can provide 
+guidance in that area.</p>
+<p class="BodyNoIndent">And they all lived happily every after.</p>
+<p class="BodyNoIndent">The end.</p>
+
+</body>
+
+</html>

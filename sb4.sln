@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sb4", "sb4.csproj", "{770F76A9-8130-408E-98E5-67D97DC8EAD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4A0041A-E54C-4045-8B62-70A1F23866B9}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		sb4.vsmdi = sb4.vsmdi
+		todo.txt = todo.txt
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sb4.Tests", "..\sbtools\sb4.Tests\sb4.Tests.csproj", "{A3972B78-C3C4-4C58-B061-95EEA35BB475}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sbda", "sbda\sbda.csproj", "{7ACFB754-BF54-451D-9F05-FE57738CF412}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataBlog", "..\ODataBlogging\ODataBlog\ODataBlog\ODataBlog.csproj", "{72D5F9EA-2868-471A-944A-7C2FF7396BAE}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = sb4.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{770F76A9-8130-408E-98E5-67D97DC8EAD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{770F76A9-8130-408E-98E5-67D97DC8EAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{770F76A9-8130-408E-98E5-67D97DC8EAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{770F76A9-8130-408E-98E5-67D97DC8EAD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3972B78-C3C4-4C58-B061-95EEA35BB475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3972B78-C3C4-4C58-B061-95EEA35BB475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3972B78-C3C4-4C58-B061-95EEA35BB475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3972B78-C3C4-4C58-B061-95EEA35BB475}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACFB754-BF54-451D-9F05-FE57738CF412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACFB754-BF54-451D-9F05-FE57738CF412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACFB754-BF54-451D-9F05-FE57738CF412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACFB754-BF54-451D-9F05-FE57738CF412}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D5F9EA-2868-471A-944A-7C2FF7396BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D5F9EA-2868-471A-944A-7C2FF7396BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D5F9EA-2868-471A-944A-7C2FF7396BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D5F9EA-2868-471A-944A-7C2FF7396BAE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

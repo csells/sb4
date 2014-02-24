@@ -1,0 +1,51 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/42 -->
+<html>
+<head>
+	<title>How do I add images in listview by using VB.NET?</title>
+</head>
+<body>
+
+		    
+<b>Q. How do I add images in listview by using VB.NET?</b>
+<p>
+<i>Asked by afrozkp. Answered by the Wonk on January 13, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">Adding images to most controls on a Form is the same. For example, imagine a form with a tree view, a list view and a toolbar, all needing images, as shown in Figure 1.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN><IMG height=224 alt=[Image] hspace=4 src="img1_2.JPG" width=280 align=left border=0 cd:pos="2"><BR clear=all></SPAN></P>
+<P class=MsoCaption style="MARGIN: 6pt 0in"><STRONG><FONT size=2>Figure <SPAN style="mso-no-proof: yes">1</SPAN>: Controls without images</FONT></STRONG></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">Each of these controls takes images from an ImageList component. To add one to the form, drag it from the Windows Forms section of the Toolbox. You can add any number of images to an ImageList component using Property Browser on the ImageList object’s Images property. Pressing the “…” button brings up the Image Collection Editor, as shown in Figure 2.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN><IMG height=330 alt=[Image] hspace=4 src="img2_2.JPG" width=480 align=left border=0 cd:pos="2"><BR clear=all></SPAN></P>
+<P class=MsoCaption style="MARGIN: 6pt 0in"><STRONG><FONT size=2>Figure <SPAN style="mso-no-proof: yes">2</SPAN>: The Image Collection Editor</FONT></STRONG></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">Notice that Figure 2 shows several images added to the ImageList component (I got them from the Common7\Graphics folder under my VS.NET installation). Once you have images in an image list, you can assign them to items in the controls. First, you’ll need to assign an ImageList to the object (a drop-down list will show all of the ImageList objects on the form). Second, you can assign items from the selected ImageList by setting an index into the list of images for a particular item.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">For example, assigning an image list to a ListView class requires setting the ImageList for the SmallImageList and/or the LargeImageList, which dictates which image to use based on what view of the ListView is being shown, i.e. Small Icon or Large Icon. Second, assigning an image from to an item is a matter of bringing up the ListViewItem Collection Editor by pressing the “…” button next to the Items property and setting the ImageIndex, as shown in Figure 3.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN><IMG height=330 alt=[Image] hspace=4 src="img3_2.JPG" width=480 align=left border=0 cd:pos="2"><BR clear=all></SPAN></P>
+<P class=MsoCaption style="MARGIN: 6pt 0in"><STRONG><FONT size=2>Figure <SPAN style="mso-no-proof: yes">3</SPAN>: Assigning an image to an item</FONT></STRONG></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">Images can be set programmatically when items are adding by setting the image index property of the new item:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">Sub</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: black">Form1_Load</SPAN>(<SPAN style="COLOR: blue">ByVal</SPAN> <SPAN style="COLOR: black">sender</SPAN> <SPAN style="COLOR: blue">As</SPAN> Object, <SPAN style="COLOR: blue">ByVal</SPAN> <SPAN style="COLOR: black">e</SPAN> <SPAN style="COLOR: blue">As</SPAN> <SPAN style="COLOR: black">EventArgs</SPAN>) _<BR><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: blue">Handles</SPAN> <SPAN style="COLOR: blue">MyBase</SPAN>.<SPAN style="COLOR: black">Load<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: green">' Add a new item to the ListView<o:p></o:p></SPAN></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: blue">Dim</SPAN> <SPAN style="COLOR: black">item</SPAN> <SPAN style="COLOR: blue">As</SPAN> <SPAN style="COLOR: black">ListViewItem</SPAN> = <SPAN style="COLOR: black">ListView1</SPAN>.<SPAN style="COLOR: black">Items</SPAN>.<SPAN style="COLOR: black">Add</SPAN>("Item6")<o:p></o:p></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><o:p>&nbsp;</o:p></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: green">' Set the index into the image list<o:p></o:p></SPAN></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: black">item</SPAN>.<SPAN style="COLOR: black">ImageIndex</SPAN> = 6<o:p></o:p></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">End</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">Sub<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">When images are added from an image list, they show at runtime, as shown in Figure 4.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN><IMG height=220 alt=[Image] hspace=4 src="img4_2.JPG" width=322 align=left border=0 cd:pos="2"><BR clear=all></SPAN></P>
+<P class=MsoCaption style="MARGIN: 6pt 0in"><STRONG><FONT size=2>Figure <SPAN style="mso-no-proof: yes">4</SPAN>: Images from the image list shown at run-time<o:p></o:p></FONT></STRONG></P></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'How do I add images in listview by using VB.NET?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

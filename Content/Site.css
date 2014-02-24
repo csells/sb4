@@ -1,0 +1,117 @@
+﻿/* Site.Master layout */
+.container
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 970px;
+}
+
+.leftPadding, .centerContent, .rightAds, .footerContent
+{
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10.0px;
+  margin-right: 10.0px;
+}
+
+.container .leftPadding
+{
+  width: 15px;
+}
+
+.container .rightAds
+{
+  width: 170px;
+}
+
+.container .centerContent
+{
+  width: 680px;
+  margin-right: 35px;
+}
+
+.container .footerContent
+{
+  width: 905px;
+}
+
+.footerText
+{
+  color: White;
+  font-size: smaller;
+}
+
+.footerAdText
+{
+  color: Silver;
+  font-size: smaller;
+}
+
+.lhsAdText
+{
+  color: Silver;
+  font-size: smaller;
+}
+
+.menulinkW
+{
+  font-family: Arial;
+  font-weight: bold;
+  color: white;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+/* post styles */
+.postDate
+{
+  font-family: Arial;
+  font-weight: bold;
+  color: Gray;
+}
+
+.postDate a
+{
+  font-family: Arial;
+  font-weight: bold;
+  color: Gray;
+}
+
+/* comment styles */
+.commentDate
+{
+  font-family: Arial;
+  font-weight: bold;
+  color: Gray;
+  font-size: smaller;
+}
+
+/* errors */
+.error
+{
+  color: Red;
+  font-weight: bold;
+}
+
+.validation-summary-errors
+{
+  color: Red;
+  font-weight: bold;
+}
+
+h1, h2, h3
+{
+  font-family: Arial;
+}
+
+/* global styles */
+a
+{
+  color: black;
+}
+
+a img
+{
+  border: none; /* JE: 2006-09-26-190635 - remove borders from images in links. */
+}

@@ -1,0 +1,26 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/33 -->
+<html>
+<head>
+	<title>Is it true that in ADO.NET it is impossible to create a program that uses a multi-user style database?</title>
+</head>
+<body>
+
+		    
+<b>Q. <P>I have just followed [an] introduction course for VB.NET, in which it was explained that it is impossible to create a program that uses a multi-user style database, since in ADO.NET record locking is no longer an option. This means that when one user retrieves data from the database, and in the mean time someone else accesses and changes the database, this first user cannot save without losing his changes to the records affected by the other. </P>
+<P>Is it true that this is impossible? Is there a workaround? How can several users work with data on a network?</P></b>
+<p>
+<i>Asked by jongedan. Answered by the Wonk on January 6, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P>Whenever you hear the word “impossible” used to describe anything in software, you should be suspicious. Remember that software is an imaginary world where all things are possible given enough knowledge, time and effort. In this particular case, ADO.NET has been made to be disconnected and that’s a good thing, because that spreads the load to clients, leaving servers to scale better. Because of this, the default behavior in ADO.NET is to not lock the rows being retrieved for a client. Instead, when updating a table, the generated update statements check to make sure that the data hasn’t changed while they’ve been edited by the user. All of this is goodness because if gives you scalability on the server, i.e. no clients are waiting to retrieved locked rows, while still letting you inform the user that the data has been changed out from under them so that they can take steps to correct things.</P>
+<P>However, the scalability and reliability does add some complexity. In fact, because this particular problem has so many solutions based on your application’s needs, that Shawn Wildermuth dedicated an entire chapter to possible ways to handle this requirement. Since you should be reading <A href="http://www.amazon.com/exec/obidos/tg/detail/-/0201745682/chrissells" target=_blank>Pragmatic ADO.NET</A> anyway, I don’t hesitate in recommending Chapter 8: Updating the Database, for a thorough discussion of these issues.</P></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'Is it true that in ADO.NET it is impossible to create a program that uses a multi-user style database?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

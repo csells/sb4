@@ -1,0 +1,45 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/38 -->
+<html>
+<head>
+	<title>What are your thoughts on application updating and deployment?</title>
+</head>
+<body>
+
+		    
+<b>Q. <P>One of the claims made in the .Net SDK is the ability of applications developed with the .Net framework to have the same update and deployment model as a traditional browser based web application. I have been following your Wahoo.exe articles related to "Smart Clients" with regards to this.</P>
+<P>While I appreciate the mechanism used in "Smart Clients" what about cases where I want to deploy from somewhere other than a http location, a network share for instance? I like the idea of an assembly checking its original source location for a newer version when it is loaded but is there a way around having to operate across http and through Internet Explorer, seems very clunky, is there an alternative or better mechanism that you know of in the pipeline? </P></b>
+<p>
+<i>Asked by Aaron Clauson. Answered by the Wonk on January 10, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">The whole deployment question came up very late in the original .NET timeframe and wasn’t solved completely. .NET today provides several alternatives to deployment of WinForms applications:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<UL style="MARGIN-TOP: 0in" type=disc>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l1 level1 lfo1; tab-stops: list .5in">Traditional: Setup applications and MSI files</LI>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l1 level1 lfo1; tab-stops: list .5in">“Zero” Deployment: Smart clients deployed across the web using an URL</LI>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l1 level1 lfo1; tab-stops: list .5in">Hybrid: A setup to get the initial bits on the machine and automated update as things change</LI></UL>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">The traditional setup.exe/MSI file method is well-known and well-supported, both in VS.NET itself, via setup projects, and in 3<SUP>rd</SUP> party tools, e.g. InstallShield, Wise Installer, etc. The problem with this approach, of course, is the need for an installation step for each version of the application.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">The “zero” deployment option, on the other hand, removes the need for an initial setup or subsequent setups, as each time the code is run, the “latest” version is downloaded (although “latest” has some special meaning here depending on whether HTTP or .NET versioning is being used). The downside here is getting the permissions to the client machine that are needed to run the application. See the references for articles about those issues.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">The hybrid approach is my current favorite, as it requires an initial install but installs code with full permissions that can download updates as they become available. The hybrid approach also works in a disconnected manner and can update files that aren’t .NET assemblies, so there’s a lot of power in this model. As far as HTTP being “clunky,” I disagree. HTTP is a wonderful protocol because it works through firewalls and is supported absolutely everywhere. The References section provides two articles on using HTTP to provide auto-update and this technique really works.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">In the future, I’d like to see the zero deployment model expand to provide a better way to deploy permissions and data files and to work in a disconnected manner, which will remove the need for even the initial setup process needed by the hybrid. I know that the WinForms team is very interested in making these things happen, so while <?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /><st1:City><st1:place>Everett</st1:place></st1:City> doesn’t contain any improvements in this area, perhaps future versions of .NET will.</P>
+<H1 style="MARGIN: 12pt 0in 3pt"><FONT face=Arial size=5>References</FONT></H1>
+<UL style="MARGIN-TOP: 0in" type=disc>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo2; tab-stops: list .5in"><A href="http://www.sellsbrothers.com/wahoo">The smart client Wahoo! sample</A>, <st1:PersonName>Chris Sells</st1:PersonName></LI>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo2; tab-stops: list .5in"><A href="http://msdn.microsoft.com/msdnmag/issues/02/07/NetSmartClients/default.asp" target=_blank>.NET Zero Deployment: Security and Versioning Models in the Windows Forms Engine Help You Create and Deploy Smart Clients</A>, <st1:PersonName>Chris Sells</st1:PersonName>, MSDN Magazine, 7/02</LI>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo2; tab-stops: list .5in"><A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnforms/html/winforms11122002.asp" target=_blank>Increasing Permissions for Web-Deployed WinForms Applications</A>, <st1:PersonName>Chris Sells</st1:PersonName>, MSDN Online, <st1:date Month="11" Day="5" Year="2002">11/5/02</st1:date></LI>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo2; tab-stops: list .5in"><A href="http://www.gotdotnet.com/team/windowsforms/appupdater.aspx" target=_blank>.NET Application Updater Component</A>, <st1:PersonName>Jamie Cool</st1:PersonName></LI>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo2; tab-stops: list .5in">BITS: Writing Auto-Updating Apps With .NET And The Background Intelligent Transfer Service API, MSDN Magazine, Jason Clark, 2/03<o:p></o:p></LI></UL></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'What are your thoughts on application updating and deployment?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

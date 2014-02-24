@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xrml="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <assemblyIdentity name="TicTacThree.app" version="1.0.0.0" publicKeyToken="b42e2150704f23fd" language="neutral" processorArchitecture="msil" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <description asmv2:publisher="Sells Brothers, Inc." asmv2:product="TicTacThree" asmv2:supportUrl="http://www.sellsbrothers.com/fun/tictacthree/" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <deployment install="true" mapFileExtensions="true">
+    <subscription>
+      <update>
+        <beforeApplicationStartup />
+      </update>
+    </subscription>
+    <deploymentProvider codebase="http://www.sellsbrothers.com/fun/tictacthree/tictacthree.application" />
+  </deployment>
+  <dependency>
+    <dependentAssembly codebase="v1.0.0.0\TicTacThree.exe.manifest" size="3085">
+      <assemblyIdentity name="TicTacThree.exe" version="1.0.0.0" publicKeyToken="b42e2150704f23fd" processorArchitecture="msil" type="win32" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>aP0lKfcOEOFcDW+3XMYliGazjic=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>mxb1Sl/LtkYEGz4Vc46sLmKyS4g=</DigestValue></Reference></SignedInfo><SignatureValue>O/+BxaILDBQW6nubJ6D53BNGn5s4EaKBIpjwUYHdzR3uDMLCBe2p12uK6/aTzNKMQwKqHEXSNix5hEWipy1NT55JX5PhX65kfWpf/ZYKL8fqf44OLUY8pdcRQbTiEX27xCMSKKTWJUgkGuJVDSP3JD+wFlGGWNXuyoQT4VSlaMfZSzx98vMOmQMawO5luholaFdPnWTJRMuXSPxc6Gc6UmqltLByHRQAJ51a0VCJxbVKvxeOLxSixvclgpi7oQrtfr81FuBs0ymIx6CpkXQ0xXvt7havKidaozOUwDYnbJFWifzL1VmiKAiRC2ioxnTAxgj1f64gKMJOcjorQVQ30w==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0clwNioIraxzihxvvefWpjj12FaaqEpeecpW7Ud46fQyCOIuEwy6FshAMb/NT1O2o66U50UvSjcwDyiNUN+bcDYWTo1Dvnw8TibtSG3Va9cSsGpyV3qUs9CgvMmvRjQghMJLgUTwuutupqwwNOhVOvn2CjVUCNuOWUp0CPssbLwyZYeK3eo+ps1x2Cr+mxoQ0knmWvhLjSfpejfqC3oN7ECGxrHHGCTNkghA/N1cif3y+3ynaZPZypQQ9cNEqwhKmghzg6/mxkT8B8KgSDn2XrwLn7xWg7UmBQDgmceWS91FA12zrDoWQuWgA7fIW+X1dxin9L+MXP2tfpgWu/uiYQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue></KeyInfo></Signature></asmv1:assembly>

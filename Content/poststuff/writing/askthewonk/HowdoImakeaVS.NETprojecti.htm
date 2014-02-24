@@ -1,0 +1,37 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/21 -->
+<html>
+<head>
+	<title>How do I make a VS.NET project item be copied to the output folder when the project is compiled?</title>
+</head>
+<body>
+
+		    
+<b>Q. How do I make one project item, say an XML file, be copied to the output folder when the project is compiled? My code assumes that the file is in the same folder as the compiled executable. I want to avoid having to manually copy that file every time.</b>
+<p>
+<i>Asked by reader. Answered by the Wonk on November 18, 2002</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">VS.NET has this great feature that takes an app.config file in the root of a project and copies it to the output of the project at build-time, renaming the file to &lt;projectName&gt;.exe.config, as per .NET requirements. However, it doesn’t do that for any other type of file, e.g. app.manifest. Likewise, VS.NET 2002 provides no capacity in C# or VB.NET projects to do anything custom at different parts of the project build cycle, like pre-build or post-build, where you could do these kinds of things yourself. If you happen to have a version of VS.NET that provides C++ project types, you can create a C++ Makefile project, change it to a Utility project, add your shell commands in pre-build or post-build events and, using VS.NET build dependencies, make your C++ Utility project execute at the right time during the build process.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">However, as you might be able to tell from the description, this is a bit of a hack. Luckily, in VS.NET 2003, the latest version that supports the .NET Framework 1.1 and available in beta version to MSDN subscribers, C# projects allow you to add your shell commands to the pre-build and post-build events during the project build. Access to the project build event settings are available via Project-&gt;Properties-&gt;Common Properties-&gt;Build Events. <SPAN style="mso-field-code: ' REF _Ref25399117 \h '">Figure <SPAN style="mso-no-proof: yes">1</SPAN></SPAN> shows the copying of an app.manifest file to the output directory based on the project name.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p><SPAN><IMG height=69 alt=[Image] hspace=4 src="img3.JPG" width=428 align=left border=0 cd:pos="2"><BR clear=all></SPAN></o:p></P>
+<P class=MsoCaption style="MARGIN: 6pt 0in"><A name=_Ref25399117><STRONG><FONT size=2>Figure </FONT></STRONG></A><STRONG><FONT size=2><SPAN style="mso-bookmark: _Ref25399117"><SPAN style="mso-no-proof: yes">1</SPAN></SPAN><SPAN style="mso-bookmark: _Ref25399117"></SPAN>: VS.NET 2003 C# project pre-build and post-build event handling</FONT></STRONG></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">Notice the use of variables in <SPAN style="mso-field-code: ' REF _Ref25399117 \h '">Figure <SPAN style="mso-no-proof: yes">1</SPAN></SPAN>:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 8pt; FONT-FAMILY: 'Courier New'">copy $(ProjectDir)app.manifest $(ProjectDir)$(OutDir)$(ProjectName)$(TargetExt).manifest<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">You can type these in from memory, or you can press the “…” button to show the event command line editor dialog, as shown in Figure 2.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p><SPAN><IMG height=606 alt=[Image] hspace=4 src="img4.JPG" width=293 align=left border=0 cd:pos="2"><BR clear=all></SPAN></o:p></P>
+<P class=MsoCaption style="MARGIN: 6pt 0in"><STRONG><FONT size=2>Figure <SPAN style="mso-no-proof: yes">2</SPAN>: Build event command line editor dialog<o:p></o:p></FONT></STRONG></P><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">And as if the event builder dialog wasn’t enough, the batch file being executed will be written to the output directory of the project, so you can debug exactly what is being executed if there’re any problems.</SPAN></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'How do I make a VS.NET project item be copied to the output folder when the project is compiled?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

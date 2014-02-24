@@ -1,0 +1,64 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/28 -->
+<html>
+<head>
+	<title>How would I fill a combo box using an array?</title>
+</head>
+<body>
+
+		    
+<b>Q. <P>I'm trying to create a combo box that lists a dropdown menu.&nbsp; The dropdown menu is going to contain units of length -- such as mm., cm., in., ft., mi., km., etc. How would I do this using an array? Thanks! Here's what I have thus far:</P>
+<P>Private Sub Form_Load()<BR>&nbsp;&nbsp;&nbsp; Dim Length(6) As Integer<BR>&nbsp;&nbsp;&nbsp; Dim J As Integer<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Length(1) = Millimeter<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Length(2) = Centimeter<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Length(3) = M<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Length(4) = dm<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Length(5) = dm<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Length(6) = mm<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; For J = Length(1) To Length(6)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cboStart.AddItem J<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Next J<BR>End Sub</P></b>
+<p>
+<i>Asked by David Laite. Answered by the Wonk on December 8, 2002</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">You were very close. A couple of tweaks to your existing code yields something that does what you want, I think:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">Private</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">Sub</SPAN> Form1_Load(<SPAN style="COLOR: blue">...</SPAN>) <SPAN style="COLOR: blue">Handles</SPAN> <SPAN style="COLOR: blue">MyBase</SPAN>.Load<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: blue">Dim</SPAN> Length(6) <SPAN style="COLOR: blue">As</SPAN> <SPAN style="COLOR: blue">String<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: blue">Dim</SPAN> J <SPAN style="COLOR: blue">As</SPAN> <SPAN style="COLOR: blue">Integer<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length(1) = "Millimeter"<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length(2) = "Centimeter"<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length(3) = "M"<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length(4) = "cm"<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length(5) = "dm"<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length(6) = "mm"<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: blue">For</SPAN> J = 1 <SPAN style="COLOR: blue">To</SPAN> 6<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </SPAN>cboStart.Items.Add(Length(J))<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: blue">Next</SPAN> J<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>cboStart.SelectedIndex = 0<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">End</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">Sub<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">If you wanted to get fancy, you could use an ArrayList and data binding, saving yourself the for-loop:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">Private</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">Sub</SPAN> Form1_Load(<SPAN style="COLOR: blue">...</SPAN>) <SPAN style="COLOR: blue">Handles</SPAN> <SPAN style="COLOR: blue">MyBase</SPAN>.Load<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN><SPAN style="COLOR: blue">Dim</SPAN> Length <SPAN style="COLOR: blue">As</SPAN> <SPAN style="COLOR: blue">New</SPAN> ArrayList()<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length.Add("Millimeter")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length.Add("Centimeter")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length.Add("M")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length.Add("cm")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length.Add("dm")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Length.Add("mm")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>cboStart.DataSource = Length<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">End</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">Sub<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">If you didn’t already have the array of values lying around, you could also add them to the combo box directly:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">Private</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">Sub</SPAN> Form1_Load(<SPAN style="COLOR: blue">...</SPAN>) <SPAN style="COLOR: blue">Handles</SPAN> <SPAN style="COLOR: blue">MyBase</SPAN>.Load<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>cboStart.Items.Add("Millimeter")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>cboStart.Items.Add("Centimeter")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>cboStart.Items.Add("M")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>cboStart.Items.Add("cm")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>cboStart.Items.Add("dm")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>cboStart.Items.Add("mm")<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>cboStart.SelectedIndex = 0<o:p></o:p></SPAN></P><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">End</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"> <SPAN style="COLOR: blue">Sub</SPAN></SPAN></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'How would I fill a combo box using an array?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

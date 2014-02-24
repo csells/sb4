@@ -1,0 +1,32 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/50 -->
+<html>
+<head>
+	<title>Why doesn't my .NET application work when run from a network share?</title>
+</head>
+<body>
+
+		    
+<b>Q. I have a VB.NET application that works fine when I run it from any folder on my local drive. But if I try to run it from a networked drive, it fails. The networked drive is a snap server, not a Windows 2000 server. I don't know if that would make a difference or not?</b>
+<p>
+<i>Asked by RickS. Answered by the Wonk on January 27, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">The fact that you’re running an application from a snap server doesn’t matter. However, the fact that you’re running a .NET application from a network share matters very much. The security settings in .NET are managed by a part of the runtime known as Code Access Security (CAS). In CAS, permissions are awarded to each assembly based on <I style="mso-bidi-font-style: normal">evidence</I>, that is, some characteristic of the assembly itself, rather than the user that’s running the assembly. Examples of evidence include what site an assembly is from, what URL was used to load it, what key was used to sign it and, most commonly, what zone an assembly is from. Anything copied to a computer’s hard drive and launched via a drive-based path name is from the My Computer zone and is awarded full trust. However, anything from a network share is from the Intranet zone, which means that it’s awarded partial trust. The permissions awarded to an assembly from the Intranet zone by default are available via the Microsoft .NET Framework Configuration administration tool and shown in <SPAN style="mso-field-code: ' REF _Ref31436455 h '">Figure <SPAN style="mso-no-proof: yes">1</SPAN></SPAN>.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN><IMG height=276 alt=[Image] hspace=4 src="img1_4.JPG" width=345 align=left border=0 cd:pos="2"><BR clear=all></SPAN></P>
+<P class=MsoCaption style="MARGIN: 6pt 0in"><A name=_Ref31436455><STRONG><FONT size=2>Figure </FONT></STRONG></A><STRONG><FONT size=2><SPAN style="mso-bookmark: _Ref31436455"><SPAN style="mso-no-proof: yes">1</SPAN></SPAN><SPAN style="mso-bookmark: _Ref31436455"></SPAN>: Default permissions for assemblies from the Intranet zone</FONT></STRONG></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">The set of permissions awarded in the Intranet zone are certainly greater than those from the Internet zone, to be sure, but are still not everything that a developer may come to expect when running from the My Computer zone. This unexpected limitation coupled with the relative newness of CAS itself and how CAS is applied for applications launched from network shares often lead a developer to be surprised and frankly, hurt as their advanced are spurned by the .NET runtime. They often want to just go back to the honeymoon of the My Computer zone without really understanding the value that the CAS model offers them.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">Luckily, this need is so great and so common that I’ve written an entire article on how to increase the permissions of an assembly from other than the My Computer zone. It’s available as “<A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnforms/html/winforms11122002.asp" target=_blank>Increasing Permissions for Web-Deployed WinForms Applications</A>,” and attempts to convince you of the value of the protection that CAS provides before showing you how to turn it off, much as your significant other may attempt to convince you of the value of settling down before you turn to the arms of another.</SPAN></P>
+<H1>How I Figured This Out</H1>
+<P>I learned the .NET CAS stuff not from a love of security (which I lack completely), but the need to make smart clients work.&nbsp; That need drove me to ask questions of everyone that I thought would know, from my colleagues to my friends at Microsoft and my follow mailing list participants. I started by asking really basic questions and then, as I learned more, I asked better questions and now, finally, I'm qualified to answer them. : )</P></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'Why doesn't my .NET application work when run from a network share?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

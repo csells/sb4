@@ -1,0 +1,113 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/94 -->
+<html>
+<head>
+	<title>What about the performance overhead of Control.Invoke?</title>
+</head>
+<body>
+
+		    
+<b>Q. <P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">I read with interest all 3 of the referenced WinForms multi-threading articles.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>One issue that concerned me while reading these articles was the performance of an architecture using Invoke versus synchronization locks.<SPAN style="mso-spacerun: yes"> </SPAN>I wrote an application to test this performance and achieved the following results.<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></SPAN></FONT></P>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"><o:p></o:p></SPAN></FONT></P>
+<TABLE class=MsoNormalTable style="MARGIN-LEFT: -1.15pt; WIDTH: 384.05pt; BORDER-COLLAPSE: collapse; mso-padding-alt: 0in 5.4pt 0in 5.4pt" cellSpacing=0 cellPadding=0 width=512 border=0>
+<TBODY>
+<TR style="HEIGHT: 12.75pt; mso-yfti-irow: 0" height=17>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-right-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Synch<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 192.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt" vAlign=bottom noWrap width=256 colSpan=4 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Run Number (Time in milliseconds)<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-top-alt: solid windowtext .5pt; mso-border-right-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">&nbsp;<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-top-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">&nbsp;<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-top-alt: solid windowtext .5pt; mso-border-right-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">&nbsp;<o:p></o:p></SPAN></FONT></P></TD></TR>
+<TR style="HEIGHT: 12.75pt; mso-yfti-irow: 1" height=17>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-left-alt: solid windowtext .5pt; mso-border-right-alt: solid windowtext .5pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Method<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 45.85pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">1<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 54.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=73 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">2<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 45.85pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">3<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 45.85pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">4<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-right-alt: solid windowtext .5pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">5<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Ave<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-right-alt: solid windowtext .5pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Penalty<o:p></o:p></SPAN></FONT></P></TD></TR>
+<TR style="HEIGHT: 12.75pt; mso-yfti-irow: 2" height=17>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-left-alt: solid windowtext .5pt; mso-border-right-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">None<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 45.85pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">312<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 54.5pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=73 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">328<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 45.85pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">312<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 45.85pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">328<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-right-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">312<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 48pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=64 height=17 x:num x:fmla="=AVERAGE(B3:F3)">
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">318.4<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-right-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17 x:num x:fmla="=G3/G3">
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">1.00<o:p></o:p></SPAN></FONT></P></TD></TR>
+<TR style="HEIGHT: 12.75pt; mso-yfti-irow: 3" height=17>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-left-alt: solid windowtext .5pt; mso-border-right-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Lock<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 45.85pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">531<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 54.5pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=73 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">500<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 45.85pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">515<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 45.85pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">500<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-right-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">515<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="PADDING-RIGHT: 5.4pt; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; WIDTH: 48pt; PADDING-TOP: 0in; HEIGHT: 12.75pt" vAlign=bottom noWrap width=64 height=17 x:num x:fmla="=AVERAGE(B4:F4)">
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">512.2<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: medium none; HEIGHT: 12.75pt; mso-border-right-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17 x:num="1.608668341708543" x:fmla="=G4/G3">
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">1.61<o:p></o:p></SPAN></FONT></P></TD></TR>
+<TR style="HEIGHT: 12.75pt; mso-yfti-irow: 4; mso-yfti-lastrow: yes" height=17>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-left-alt: solid windowtext .5pt; mso-border-right-alt: solid windowtext .5pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Invoke<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 45.85pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">98953<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 54.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=73 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">101718<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 45.85pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">99796<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 45.85pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=61 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">99437<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-right-alt: solid windowtext .5pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17 x:num>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">99453<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: medium none; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17 x:num x:fmla="=AVERAGE(B5:F5)">
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">99871.4<o:p></o:p></SPAN></FONT></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; WIDTH: 48pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 12.75pt; mso-border-right-alt: solid windowtext .5pt; mso-border-bottom-alt: solid windowtext .5pt" vAlign=bottom noWrap width=64 height=17 x:num="313.66645728643215" x:fmla="=G5/G3">
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">313.67<o:p></o:p></SPAN></FONT></P></TD></TR></TBODY></TABLE>
+<P class=MsoNormal><FONT face=Arial size=2><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">This test would seem to indicate that there is a substantial penalty involved in calling the Control.Invoke method.</SPAN></FONT></P></b>
+<p>
+<i>Asked by Ian Silverstone. Answered by the Wonk on March 3, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P>You're absolutely right, Ian. Calling Control.Invoke has a great deal more overhead than not calling it, just as accessing shared data between threads without a lock is faster than using a lock. However, when you avoid calling Control.Invoke and access UI objects directly from the UI thread, you're writing incorrect code that could cause stability problems in your application.</P>
+<P>The problem is that a "window" object in the underlying Windowing API in Win32, as represented by the HWND handle, has thread-affinity. It *must* be directly accessed only from the thread that created it. If it's not, the results are undefined and can cause subtle, intermittent bugs. The exact same thing could happen if you access shared data between two threads. Most of the time, it will work, but sometimes, in ways that are hard to predict or reproduce, it will fail, which is why multi-threaded code is so hard to write.</P>
+<P>By all means skip Control.Invoke and multi-threaded synchronization locks if you've only got one thread. Further, if you need to share data between two threads that isn't related to the UI, use locks and not Control.Invoke. However, if you need to affect a UI object from a worker thread, you absolutely must use Control.Invoke to transition back to the UI thread before making that call or you're in for a world of hurt.</P>
+<H1>References</H1>
+<LI><A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnforms/html/winforms06112002.asp" target=_blank>Safe, Simple Multithreading in Windows Forms</A>, MSDN Online, July, 2002 
+<LI><A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnforms/html/winforms08162002.asp" target=_blank>A Second Look at Windows Forms Multithreading</A>, MSDN Online, September, 2002 
+<LI><A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnforms/html/winforms01232003.asp" target=_blank>Safe, Simple Multithreading in Windows Forms, part 3</A>, MSDN Online, January, 2003 </LI></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'What about the performance overhead of Control.Invoke?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

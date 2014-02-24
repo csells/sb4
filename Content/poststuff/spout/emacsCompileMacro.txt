@@ -1,0 +1,20 @@
+' Here’s a VS macro that gives you M-x compile functionality from emacs.
+' Don Box, 10/19/02 
+
+Public mxCmd As String
+
+Public Sub EmacsCompile()
+    Dim resp As String
+    resp = InputBox("Command to execute", "M-x Compile", mxCmd)
+    If (resp = "") Then
+        Exit Sub
+    End If
+    mxCmd = resp
+
+    Try
+        DTE.ExecuteCommand("Tools.Shell", "/output " + mxCmd + "")
+        DTE.ExecuteCommand("View.Output")
+    Catch ex As System.Exception
+        MsgBox(ex.Message)
+    End Try
+End Sub

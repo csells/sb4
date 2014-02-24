@@ -1,0 +1,1137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{770F76A9-8130-408E-98E5-67D97DC8EAD9}</ProjectGuid>
+    <ProjectTypeGuids>{F85E285D-A4E0-4152-9332-AB1D724D3325};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>sb4</RootNamespace>
+    <AssemblyName>sb4</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>true</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <UseIISExpress>true</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DeployIisAppPath>sellsbrothers</DeployIisAppPath>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ODataBlog">
+      <HintPath>..\..\..\temp\foo\odatablogging\ODataBlog.dll</HintPath>
+    </Reference>
+    <Reference Include="Recaptcha, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Recaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\AmazonHelper.cs" />
+    <Compile Include="Code\AtomActionResult.cs" />
+    <Compile Include="Code\BasicAuthSingleAdminUserModule.cs" />
+    <Compile Include="Code\AtomServiceDocumentActionResult.cs" />
+    <Compile Include="Code\SimpleActionResult.cs" />
+    <Compile Include="Code\excuses.asmx.cs">
+      <DependentUpon>excuses.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Code\reCAPTCHA\RecaptchaActionFilter.cs" />
+    <Compile Include="Code\reCAPTCHA\RecaptchaHtmlHelper.cs" />
+    <Compile Include="Code\RssActionResult.cs" />
+    <Compile Include="Code\SbControllerFactory.cs" />
+    <Compile Include="Controllers\MbelleController.cs" />
+    <Compile Include="Controllers\NerdBullyController.cs" />
+    <Compile Include="Controllers\WritingController.cs" />
+    <Compile Include="odata.svc.cs">
+      <DependentUpon>odata.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\SbController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\TinySellsController.cs" />
+    <Compile Include="ViewModels\WritingViewModels.cs" />
+    <Compile Include="ViewModels\PostViewModels.cs" />
+    <Compile Include="ViewModels\MasterViewModel.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="clientaccesspolicy.xml" />
+    <Content Include="Code\excuses.asmx" />
+    <Content Include="Content\ads\120x600WH_aspnt4_fireworks_brnd_SM.gif" />
+    <Content Include="Content\ads\120x600_ylw_shkg_crd_WH_SM.gif" />
+    <Content Include="Content\favicon.ico" />
+    <Content Include="Content\images\assoc_dm.gif" />
+    <Content Include="Content\images\assoc_hero.gif" />
+    <Content Include="Content\images\assoc_hiq.gif" />
+    <Content Include="Content\images\assoc_ieee.gif" />
+    <Content Include="Content\images\assoc_ineta.gif" />
+    <Content Include="Content\images\assoc_mensa.gif" />
+    <Content Include="Content\images\assoc_ms.gif" />
+    <Content Include="Content\images\assoc_msrd.gif" />
+    <Content Include="Content\images\assoc_sl.gif" />
+    <Content Include="Content\images\assoc_vslive.gif" />
+    <Content Include="Content\images\assoc_windev.gif" />
+    <Content Include="Content\images\nerdbully.png" />
+    <Content Include="Content\images\hostedbysecurewebs.gif" />
+    <Content Include="Content\images\icon-atomfeed-28x28.png" />
+    <Content Include="Content\images\icon-feed-28x28.png" />
+    <Content Include="Content\images\icon-odatafeed-28x28.png" />
+    <Content Include="Content\images\icon-rssfeed-28x28.png" />
+    <Content Include="Content\images\icon-twitter-28x28.png" />
+    <Content Include="Content\images\icon-xmlfeed-28x28.png" />
+    <Content Include="Content\images\poweredbyaspnet.gif" />
+    <Content Include="Content\images\sellsbrothers_colophon.jpg" />
+    <Content Include="Content\images\sellsbrothers_colophon_ext.jpg" />
+    <Content Include="Content\images\sellsbrothers_feed_logo.jpg" />
+    <Content Include="Content\images\sellsbrothers_fun.jpg" />
+    <Content Include="Content\images\sellsbrothers_fun_ext.jpg" />
+    <Content Include="Content\images\sellsbrothers_home.jpg" />
+    <Content Include="Content\images\sellsbrothers_home_ext.jpg" />
+    <Content Include="Content\images\sellsbrothers_interviews.jpg" />
+    <Content Include="Content\images\sellsbrothers_interviews_ext.jpg" />
+    <Content Include="Content\images\sellsbrothers_logo.jpg" />
+    <Content Include="Content\images\sellsbrothers_spout.jpg" />
+    <Content Include="Content\images\sellsbrothers_spout_ext.jpg" />
+    <Content Include="Content\images\sellsbrothers_tools.jpg" />
+    <Content Include="Content\images\sellsbrothers_tools_ext.jpg" />
+    <Content Include="Content\images\sellsbrothers_writing.jpg" />
+    <Content Include="Content\images\sellsbrothers_writing_ext.jpg" />
+    <Content Include="Content\poststuff\conference\100x30.GIF" />
+    <Content Include="Content\poststuff\conference\120x60.gif" />
+    <Content Include="Content\poststuff\conference\140x100.gif" />
+    <Content Include="Content\poststuff\conference\amsdnmag_logo_2003.jpg" />
+    <Content Include="Content\poststuff\conference\atldevcon\index.htm" />
+    <Content Include="Content\poststuff\conference\atldevcon\oldindex.htm" />
+    <Content Include="Content\poststuff\conference\atldevcon\regthanks.htm" />
+    <Content Include="Content\poststuff\conference\atldevcon\Slides99.zip" />
+    <Content Include="Content\poststuff\conference\aw-ptr.jpg" />
+    <Content Include="Content\poststuff\conference\aw.JPG" />
+    <Content Include="Content\poststuff\conference\awd_logo_2003.jpg" />
+    <Content Include="Content\poststuff\conference\AW_horiz_PMS185.JPG" />
+    <Content Include="Content\poststuff\conference\AW_stacked.jpg" />
+    <Content Include="Content\poststuff\conference\axdc2003w_slides.zip" />
+    <Content Include="Content\poststuff\conference\axdc2004_slides.zip" />
+    <Content Include="Content\poststuff\conference\Banner.GIF" />
+    <Content Include="Content\poststuff\conference\corplogo.gif" />
+    <Content Include="Content\poststuff\conference\deklarit.JPG" />
+    <Content Include="Content\poststuff\conference\DeKlarit_logo.gif" />
+    <Content Include="Content\poststuff\conference\donxml.JPG" />
+    <Content Include="Content\poststuff\conference\g_ms.gif" />
+    <Content Include="Content\poststuff\conference\image001.jpg" />
+    <Content Include="Content\poststuff\conference\index.htm" />
+    <Content Include="Content\poststuff\conference\learxmlws.gif" />
+    <Content Include="Content\poststuff\conference\mar2002picts\index.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210001.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210001.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210003.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210003.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210006.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210006.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210007.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210007.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210008-0009.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210008-0009.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210011.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210011.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210012.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210012.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210013.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210013.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210014.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210014.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210018.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210018.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210023.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210023.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210028.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210028.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210029.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210029.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210030.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210030.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210031.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210031.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210032.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210032.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210034.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210034.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210040.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210040.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210041.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3210041.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220049.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220049.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220054.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220054.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220056.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220056.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220057.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220057.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220058.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220058.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220059.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220059.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220060.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220060.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220063.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220063.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220066.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220066.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220067.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220067.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220068.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220068.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220078.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\P3220078.JPG.htm" />
+    <Content Include="Content\poststuff\conference\mar2002picts\photos.xml" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210001.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210003.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210006.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210007.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210008-0009.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210011.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210012.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210013.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210014.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210018.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210023.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210028.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210029.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210030.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210031.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210032.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210034.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210040.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3210041.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220049.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220054.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220056.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220057.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220058.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220059.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220060.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220063.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220066.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220067.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220068.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\pictures\P3220078.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210001.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210003.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210006.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210007.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210008-0009.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210011.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210012.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210013.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210014.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210018.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210023.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210028.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210029.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210030.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210031.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210032.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210034.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210040.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3210041.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220049.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220054.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220056.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220057.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220058.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220059.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220060.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220063.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220066.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220067.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220068.JPG" />
+    <Content Include="Content\poststuff\conference\mar2002picts\thumbnails\P3220078.JPG" />
+    <Content Include="Content\poststuff\conference\mini_wsdclogo.gif" />
+    <Content Include="Content\poststuff\conference\ms.gif" />
+    <Content Include="Content\poststuff\conference\MSDNMag-lg.JPG" />
+    <Content Include="Content\poststuff\conference\msdnmag.gif" />
+    <Content Include="Content\poststuff\conference\MSDNMag.JPG" />
+    <Content Include="Content\poststuff\conference\mslogo-blue.gif" />
+    <Content Include="Content\poststuff\conference\oldindex2.htm" />
+    <Content Include="Content\poststuff\conference\oldindex3.htm" />
+    <Content Include="Content\poststuff\conference\oldindex4.htm" />
+    <Content Include="Content\poststuff\conference\oldindex5.htm" />
+    <Content Include="Content\poststuff\conference\oldindex6.htm" />
+    <Content Include="Content\poststuff\conference\oldindex7.htm" />
+    <Content Include="Content\poststuff\conference\oldindex8.htm" />
+    <Content Include="Content\poststuff\conference\oldindex9.htm" />
+    <Content Include="Content\poststuff\conference\ora.gif" />
+    <Content Include="Content\poststuff\conference\PerfectXML.JPG" />
+    <Content Include="Content\poststuff\conference\pluralsight.jpg" />
+    <Content Include="Content\poststuff\conference\PTRLogo.jpg" />
+    <Content Include="Content\poststuff\conference\Sax.net Logo.gif" />
+    <Content Include="Content\poststuff\conference\searchvb.gif" />
+    <Content Include="Content\poststuff\conference\SeatsLeft.asmx" />
+    <Content Include="Content\poststuff\conference\Small Box - DSL DevCon - Fill your head.jpg" />
+    <Content Include="Content\poststuff\conference\summary.htm" />
+    <Content Include="Content\poststuff\conference\svb_250.gif" />
+    <Content Include="Content\poststuff\conference\SWSC_Logo_Reverse.gif" />
+    <Content Include="Content\poststuff\conference\techtarget.JPG" />
+    <Content Include="Content\poststuff\conference\thanks.htm" />
+    <Content Include="Content\poststuff\conference\wd-logo.JPG" />
+    <Content Include="Content\poststuff\conference\wdmag_logo.gif" />
+    <Content Include="Content\poststuff\conference\webbuilder.JPG" />
+    <Content Include="Content\poststuff\conference\wsdc2002e_slides.zip" />
+    <Content Include="Content\poststuff\conference\wsdc2002w_slides.zip" />
+    <Content Include="Content\poststuff\conference\wsdclogo.gif" />
+    <Content Include="Content\poststuff\conference\ws_clipart_green_online.gif" />
+    <Content Include="Content\poststuff\conference\ws_clipart_green_online_s.gif" />
+    <Content Include="Content\poststuff\conference\wwwlogo.jpg" />
+    <Content Include="Content\poststuff\conference\yxlogo.JPG" />
+    <Content Include="Content\poststuff\fun\2003bball2small.JPG" />
+    <Content Include="Content\poststuff\fun\2003bball3small.JPG" />
+    <Content Include="Content\poststuff\fun\aggregate.gif" />
+    <Content Include="Content\poststuff\fun\animal.jpg" />
+    <Content Include="Content\poststuff\fun\ATLBorg.JPG" />
+    <Content Include="Content\poststuff\fun\BradsPhoto.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04190013.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04190014.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04190017.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04190018.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04190019.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04200009.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04200010.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04200012.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04210003.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04220004.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04220011.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04220013.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\04240003.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\artcar.JPG" />
+    <Content Include="Content\poststuff\fun\burningman\bmevents.JPG" />
+    <Content Include="Content\poststuff\fun\burningman\gadgetsAndGizmos.JPG" />
+    <Content Include="Content\poststuff\fun\burningman\index.10.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.11.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.12.gif" />
+    <Content Include="Content\poststuff\fun\burningman\index.13.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.14.gif" />
+    <Content Include="Content\poststuff\fun\burningman\index.15.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.16.gif" />
+    <Content Include="Content\poststuff\fun\burningman\index.17.gif" />
+    <Content Include="Content\poststuff\fun\burningman\index.18.gif" />
+    <Content Include="Content\poststuff\fun\burningman\index.19.gif" />
+    <Content Include="Content\poststuff\fun\burningman\index.2.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.20.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.21.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.22.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.23.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.3.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.4.gif" />
+    <Content Include="Content\poststuff\fun\burningman\index.5.gif" />
+    <Content Include="Content\poststuff\fun\burningman\index.6.gif" />
+    <Content Include="Content\poststuff\fun\burningman\index.7.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.8.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\index.9.jpg" />
+    <Content Include="Content\poststuff\fun\burningman\pissClear.JPG" />
+    <Content Include="Content\poststuff\fun\burningman\ridingRheRides.JPG" />
+    <Content Include="Content\poststuff\fun\burningman\theDLook.JPG" />
+    <Content Include="Content\poststuff\fun\burningman\themeCamp.JPG" />
+    <Content Include="Content\poststuff\fun\burningman\theRoadToTheMan.JPG" />
+    <Content Include="Content\poststuff\fun\centerfold\big_sells_centerfold.jpg" />
+    <Content Include="Content\poststuff\fun\centerfold\sells_centerfold.jpg" />
+    <Content Include="Content\poststuff\fun\centerfold\sells_data.jpg" />
+    <Content Include="Content\poststuff\fun\chrisflashsells.jpg" />
+    <Content Include="Content\poststuff\fun\chrissharp_02_05_05.jpg" />
+    <Content Include="Content\poststuff\fun\ComIsLove.JPG" />
+    <Content Include="Content\poststuff\fun\craig_dm.JPG" />
+    <Content Include="Content\poststuff\fun\Cranium.jpg" />
+    <Content Include="Content\poststuff\fun\csellsheadset.jpg" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\Adam Cogan 3 screenshot.JPG" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\agreement.htm" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\Darrel Miller screenshot 2.JPG" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\Darrel Miller screenshot.JPG" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\Dejan screenshot.JPG" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\Gert screen shot.JPG" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\Igal Ioffe screenshot.JPG" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\Jeff Brawstein screen shot.JPG" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\Sorin Jianu screen shot.JPG" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\SPInvoke.jpg" />
+    <Content Include="Content\poststuff\fun\DayWithDotNet\Stoyan screen shot.JPG" />
+    <Content Include="Content\poststuff\fun\dxva_sig.txt" />
+    <Content Include="Content\poststuff\fun\ericsink.jpg" />
+    <Content Include="Content\poststuff\fun\EvilGenius.gif" />
+    <Content Include="Content\poststuff\fun\exam.gif" />
+    <Content Include="Content\poststuff\fun\FlyDaddyAl.avi" />
+    <Content Include="Content\poststuff\fun\ft061001.gif" />
+    <Content Include="Content\poststuff\fun\image002.gif" />
+    <Content Include="Content\poststuff\fun\imagE_028.jpg" />
+    <Content Include="Content\poststuff\fun\kissingdon.PNG" />
+    <Content Include="Content\poststuff\fun\legostarwars.JPG" />
+    <Content Include="Content\poststuff\fun\Macho.jpg" />
+    <Content Include="Content\poststuff\fun\max.jpg" />
+    <Content Include="Content\poststuff\fun\MindChil1.jpg" />
+    <Content Include="Content\poststuff\fun\olympics1.jpg" />
+    <Content Include="Content\poststuff\fun\olympics2.jpg" />
+    <Content Include="Content\poststuff\fun\olympics3.jpg" />
+    <Content Include="Content\poststuff\fun\olympics4.jpg" />
+    <Content Include="Content\poststuff\fun\P0001295.JPG" />
+    <Content Include="Content\poststuff\fun\Panel2.JPG" />
+    <Content Include="Content\poststuff\fun\pnd_tshirt.jpg" />
+    <Content Include="Content\poststuff\fun\programmer-fashion-04.jpg" />
+    <Content Include="Content\poststuff\fun\project_life_cycle.GIF" />
+    <Content Include="Content\poststuff\fun\Proxy.gif" />
+    <Content Include="Content\poststuff\fun\rory.1.gif" />
+    <Content Include="Content\poststuff\fun\rory.2.gif" />
+    <Content Include="Content\poststuff\fun\rory.3.gif" />
+    <Content Include="Content\poststuff\fun\rory.4.gif" />
+    <Content Include="Content\poststuff\fun\rory.5.gif" />
+    <Content Include="Content\poststuff\fun\rory.6.gif" />
+    <Content Include="Content\poststuff\fun\RotsPose.jpg" />
+    <Content Include="Content\poststuff\fun\sbdugg.JPG" />
+    <Content Include="Content\poststuff\fun\shtoo.wav" />
+    <Content Include="Content\poststuff\fun\slice.jpg" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.0\CardControls.dll" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.0\CardControls.pdb" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.0\solfx.exe" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.0\solfx.pdb" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.0\Solitaire.Domain.dll" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.1\CardControls.dll" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.1\solfx.exe" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.1\Solitaire.Domain.dll" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.2\CardControls.dll" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.2\solfx.exe" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.2\Solitaire.Domain.dll" />
+    <Content Include="Content\poststuff\fun\solfx\solfx.zip" />
+    <Content Include="Content\poststuff\fun\solfx\solfx1.jpg" />
+    <Content Include="Content\poststuff\fun\solfx\solfx2.jpg" />
+    <Content Include="Content\poststuff\fun\tshirt-close.jpg" />
+    <Content Include="Content\poststuff\fun\tshirt.jpg" />
+    <Content Include="Content\poststuff\fun\tub2.JPG" />
+    <Content Include="Content\poststuff\fun\uhuraheadset.JPG" />
+    <Content Include="Content\poststuff\fun\vslive1.JPG" />
+    <Content Include="Content\poststuff\fun\vslive2.JPG" />
+    <Content Include="Content\poststuff\fun\vslive3.JPG" />
+    <Content Include="Content\poststuff\fun\Wedding_Toast_Chris_Don_1_5Mb.wmv" />
+    <Content Include="Content\poststuff\fun\Wedding_Toast_Chris_Don_300k.wmv" />
+    <Content Include="Content\poststuff\interview\beer.htm" />
+    <Content Include="Content\poststuff\interview\five_interviewers.htm" />
+    <Content Include="Content\poststuff\interview\metapuzzle.htm" />
+    <Content Include="Content\poststuff\interview\ootb.htm" />
+    <Content Include="Content\poststuff\interview\phone.htm" />
+    <Content Include="Content\poststuff\interview\pm.htm" />
+    <Content Include="Content\poststuff\interview\sample.htm" />
+    <Content Include="Content\poststuff\interview\study.htm" />
+    <Content Include="Content\poststuff\interview\tips.htm" />
+    <Content Include="Content\poststuff\interview\wacky.htm" />
+    <Content Include="Content\poststuff\samples\Affirm.zip" />
+    <Content Include="Content\poststuff\samples\AppInspector.GIF" />
+    <Content Include="Content\poststuff\samples\AppInspector.zip" />
+    <Content Include="Content\poststuff\samples\AsynchCalcPi.zip" />
+    <Content Include="Content\poststuff\samples\atldatetime.zip" />
+    <Content Include="Content\poststuff\samples\atldisp.zip" />
+    <Content Include="Content\poststuff\samples\AtlSplashScreen.zip" />
+    <Content Include="Content\poststuff\samples\BookTickerSvr.zip" />
+    <Content Include="Content\poststuff\samples\clockbox.zip" />
+    <Content Include="Content\poststuff\samples\dlgctrl.zip" />
+    <Content Include="Content\poststuff\samples\Dlgonly.zip" />
+    <Content Include="Content\poststuff\samples\DumpZipFileOfTextFiles.zip" />
+    <Content Include="Content\poststuff\samples\DynaContextMenu.zip" />
+    <Content Include="Content\poststuff\samples\EventSinkAndMethodInvoke2typed.zip" />
+    <Content Include="Content\poststuff\samples\ExcuseGenerator_SMP.ARMV4.CAB" />
+    <Content Include="Content\poststuff\samples\HostingDynamicHtml.zip" />
+    <Content Include="Content\poststuff\samples\Htmlonly.zip" />
+    <Content Include="Content\poststuff\samples\MidiPlaybackTest.zip" />
+    <Content Include="Content\poststuff\samples\optionaltest.zip" />
+    <Content Include="Content\poststuff\samples\PersonGridView.zip" />
+    <Content Include="Content\poststuff\samples\PopdownWindowSample.JPG" />
+    <Content Include="Content\poststuff\samples\PopdownWindowSample.zip" />
+    <Content Include="Content\poststuff\samples\RegexPlorer.JPG" />
+    <Content Include="Content\poststuff\samples\satest.zip" />
+    <Content Include="Content\poststuff\samples\timecli.zip" />
+    <Content Include="Content\poststuff\samples\WebCommandLineHelper.zip" />
+    <Content Include="Content\poststuff\samples\WfEventSinkAndMethodInvoke2.zip" />
+    <Content Include="Content\poststuff\samples\WfEventSinkAndMethodInvoke2plusStateMachine.zip" />
+    <Content Include="Content\poststuff\samples\WfEventSinkAndMethodInvoke2typed.zip" />
+    <Content Include="Content\poststuff\samples\WfEventSinkAndMethodInvoke2with3projectsAndStateMachine.zip" />
+    <Content Include="Content\poststuff\samples\WpfHostingWfWebBrowserControl.zip" />
+    <Content Include="Content\poststuff\samples\xslto.zip" />
+    <Content Include="Content\poststuff\samples\xslto1.1.zip" />
+    <Content Include="Content\poststuff\services\dotnetWonder.jpg" />
+    <Content Include="Content\poststuff\services\vikingme.JPG" />
+    <Content Include="Content\poststuff\spout\after.jpg" />
+    <Content Include="Content\poststuff\spout\apparchetypes2.gif" />
+    <Content Include="Content\poststuff\spout\bbcb1-again.jpg" />
+    <Content Include="Content\poststuff\spout\bbcb1.jpg" />
+    <Content Include="Content\poststuff\spout\bbcb2.jpg" />
+    <Content Include="Content\poststuff\spout\before.jpg" />
+    <Content Include="Content\poststuff\spout\bookcool.jpg" />
+    <Content Include="Content\poststuff\spout\bookcoolthumb.JPG" />
+    <Content Include="Content\poststuff\spout\career.jpg" />
+    <Content Include="Content\poststuff\spout\ddc-old.png" />
+    <Content Include="Content\poststuff\spout\eb1.jpg" />
+    <Content Include="Content\poststuff\spout\eb10.jpg" />
+    <Content Include="Content\poststuff\spout\eb11.jpg" />
+    <Content Include="Content\poststuff\spout\eb12.jpg" />
+    <Content Include="Content\poststuff\spout\eb13.jpg" />
+    <Content Include="Content\poststuff\spout\eb14.jpg" />
+    <Content Include="Content\poststuff\spout\eb15.jpg" />
+    <Content Include="Content\poststuff\spout\eb16.jpg" />
+    <Content Include="Content\poststuff\spout\eb17.jpg" />
+    <Content Include="Content\poststuff\spout\eb18.jpg" />
+    <Content Include="Content\poststuff\spout\eb19.jpg" />
+    <Content Include="Content\poststuff\spout\eb2.jpg" />
+    <Content Include="Content\poststuff\spout\eb20.jpg" />
+    <Content Include="Content\poststuff\spout\eb21.jpg" />
+    <Content Include="Content\poststuff\spout\eb22.jpg" />
+    <Content Include="Content\poststuff\spout\eb23.jpg" />
+    <Content Include="Content\poststuff\spout\eb24.jpg" />
+    <Content Include="Content\poststuff\spout\eb25.jpg" />
+    <Content Include="Content\poststuff\spout\eb26.jpg" />
+    <Content Include="Content\poststuff\spout\eb27.jpg" />
+    <Content Include="Content\poststuff\spout\eb28.jpg" />
+    <Content Include="Content\poststuff\spout\eb29.jpg" />
+    <Content Include="Content\poststuff\spout\eb3.jpg" />
+    <Content Include="Content\poststuff\spout\eb30.jpg" />
+    <Content Include="Content\poststuff\spout\eb31.jpg" />
+    <Content Include="Content\poststuff\spout\eb32.jpg" />
+    <Content Include="Content\poststuff\spout\eb33.jpg" />
+    <Content Include="Content\poststuff\spout\eb4.jpg" />
+    <Content Include="Content\poststuff\spout\eb5.jpg" />
+    <Content Include="Content\poststuff\spout\eb6.jpg" />
+    <Content Include="Content\poststuff\spout\eb7.jpg" />
+    <Content Include="Content\poststuff\spout\eb8.jpg" />
+    <Content Include="Content\poststuff\spout\eb9.jpg" />
+    <Content Include="Content\poststuff\spout\emacsCompileMacro.txt" />
+    <Content Include="Content\poststuff\spout\excuse1.jpg" />
+    <Content Include="Content\poststuff\spout\excuse2.jpg" />
+    <Content Include="Content\poststuff\spout\gq3131.jpg" />
+    <Content Include="Content\poststuff\spout\halfmonty.PNG" />
+    <Content Include="Content\poststuff\spout\IDEEnhancements.zip" />
+    <Content Include="Content\poststuff\spout\image001.png" />
+    <Content Include="Content\poststuff\spout\image002.jpg" />
+    <Content Include="Content\poststuff\spout\img.1.jpg" />
+    <Content Include="Content\poststuff\spout\img.10.jpg" />
+    <Content Include="Content\poststuff\spout\img.2.jpg" />
+    <Content Include="Content\poststuff\spout\img.3.jpg" />
+    <Content Include="Content\poststuff\spout\img.4.jpg" />
+    <Content Include="Content\poststuff\spout\img.5.jpg" />
+    <Content Include="Content\poststuff\spout\img.6.jpg" />
+    <Content Include="Content\poststuff\spout\img.7.jpg" />
+    <Content Include="Content\poststuff\spout\img.8.jpg" />
+    <Content Include="Content\poststuff\spout\img.9.jpg" />
+    <Content Include="Content\poststuff\spout\img8.jpg" />
+    <Content Include="Content\poststuff\spout\KeyboardShortcuts.zip" />
+    <Content Include="Content\poststuff\spout\KeyMap.zip" />
+    <Content Include="Content\poststuff\spout\math1.jpg" />
+    <Content Include="Content\poststuff\spout\math2.jpg" />
+    <Content Include="Content\poststuff\spout\math3.jpg" />
+    <Content Include="Content\poststuff\spout\math4.jpg" />
+    <Content Include="Content\poststuff\spout\math5.jpg" />
+    <Content Include="Content\poststuff\spout\mensa1.jpg" />
+    <Content Include="Content\poststuff\spout\mensa2.jpg" />
+    <Content Include="Content\poststuff\spout\messages_0069.PNG" />
+    <Content Include="Content\poststuff\spout\messages_0070.PNG" />
+    <Content Include="Content\poststuff\spout\messages_0071.PNG" />
+    <Content Include="Content\poststuff\spout\messages_0072.PNG" />
+    <Content Include="Content\poststuff\spout\messages_0073.PNG" />
+    <Content Include="Content\poststuff\spout\messages_0074.PNG" />
+    <Content Include="Content\poststuff\spout\messages_0075.PNG" />
+    <Content Include="Content\poststuff\spout\mgraphipad.jpg" />
+    <Content Include="Content\poststuff\spout\ndc2010.jpg" />
+    <Content Include="Content\poststuff\spout\nunit-filenotfound.jpg" />
+    <Content Include="Content\poststuff\spout\PanModule.zip" />
+    <Content Include="Content\poststuff\spout\searchtheinternet.jpg" />
+    <Content Include="Content\poststuff\spout\sparklines.gif" />
+    <Content Include="Content\poststuff\spout\tdd1.jpg" />
+    <Content Include="Content\poststuff\spout\tdd2.jpg" />
+    <Content Include="Content\poststuff\spout\tdd3.jpg" />
+    <Content Include="Content\poststuff\spout\tdd4.jpg" />
+    <Content Include="Content\poststuff\spout\tdd5.jpg" />
+    <Content Include="Content\poststuff\spout\tdd6.jpg" />
+    <Content Include="Content\poststuff\spout\tragedybanner2.jpg" />
+    <Content Include="Content\poststuff\spout\UI_For_Programmers.jpg" />
+    <Content Include="Content\poststuff\spout\wahoo.JPG" />
+    <Content Include="Content\poststuff\spout\wahoo_top_10.JPG" />
+    <Content Include="Content\poststuff\spout\wf.1.jpg" />
+    <Content Include="Content\poststuff\spout\wf2.jpg" />
+    <Content Include="Content\poststuff\spout\winforms01232003-fig01.gif" />
+    <Content Include="Content\poststuff\spout\winforms11202003-fig02.gif" />
+    <Content Include="Content\poststuff\spout\wordfind.jpg" />
+    <Content Include="Content\poststuff\spout\xaml1.JPG" />
+    <Content Include="Content\poststuff\spout\xaml2.JPG" />
+    <Content Include="Content\poststuff\spout\xaml3.JPG" />
+    <Content Include="Content\poststuff\tools\AddSearchInternetLinkInStartMenu.zip" />
+    <Content Include="Content\poststuff\tools\aspptr.h" />
+    <Content Include="Content\poststuff\tools\atlcompose.h" />
+    <Content Include="Content\poststuff\tools\atlcopies.h" />
+    <Content Include="Content\poststuff\tools\Atlmdi.zip" />
+    <Content Include="Content\poststuff\tools\AtlPropSheet.h" />
+    <Content Include="Content\poststuff\tools\atlsip.h" />
+    <Content Include="Content\poststuff\tools\AtlSplashScreen.zip" />
+    <Content Include="Content\poststuff\tools\attila\attila.jpg" />
+    <Content Include="Content\poststuff\tools\attila\Attila.zip" />
+    <Content Include="Content\poststuff\tools\attila\attilacontrib.zip" />
+    <Content Include="Content\poststuff\tools\axdlg2.zip" />
+    <Content Include="Content\poststuff\tools\CComSafeArray.zip" />
+    <Content Include="Content\poststuff\tools\ciethis.h" />
+    <Content Include="Content\poststuff\tools\clpwiz.gif" />
+    <Content Include="Content\poststuff\tools\CollectionGen.zip" />
+    <Content Include="Content\poststuff\tools\CollectionGen1.gif" />
+    <Content Include="Content\poststuff\tools\CollectionGen2.gif" />
+    <Content Include="Content\poststuff\tools\CollectionGen3.gif" />
+    <Content Include="Content\poststuff\tools\CollectionGen4.gif" />
+    <Content Include="Content\poststuff\tools\combool.h" />
+    <Content Include="Content\poststuff\tools\comcurrency.zip" />
+    <Content Include="Content\poststuff\tools\comdate.zip" />
+    <Content Include="Content\poststuff\tools\CommandLineParser.zip" />
+    <Content Include="Content\poststuff\tools\CommandLineParser7.h" />
+    <Content Include="Content\poststuff\tools\comtrace.zip" />
+    <Content Include="Content\poststuff\tools\comvector.h" />
+    <Content Include="Content\poststuff\tools\CorPub.zip" />
+    <Content Include="Content\poststuff\tools\cputil.h" />
+    <Content Include="Content\poststuff\tools\CsvFileTest.zip" />
+    <Content Include="Content\poststuff\tools\CycleDetect.h" />
+    <Content Include="Content\poststuff\tools\dbox\comisapi.zip" />
+    <Content Include="Content\poststuff\tools\dbox\enumgen.zip" />
+    <Content Include="Content\poststuff\tools\dbox\giplip.zip" />
+    <Content Include="Content\poststuff\tools\dbox\heapdet.zip" />
+    <Content Include="Content\poststuff\tools\dbox\MBVDelegator.zip" />
+    <Content Include="Content\poststuff\tools\dbox\xmlpropbag.zip" />
+    <Content Include="Content\poststuff\tools\dbox\yacl.zip" />
+    <Content Include="Content\poststuff\tools\devenv.exe.manifest.zip" />
+    <Content Include="Content\poststuff\tools\dispimpl2.h" />
+    <Content Include="Content\poststuff\tools\dlgresize.zip" />
+    <Content Include="Content\poststuff\tools\enum_iterator.h" />
+    <Content Include="Content\poststuff\tools\evolve.gif" />
+    <Content Include="Content\poststuff\tools\formatd.JPG" />
+    <Content Include="Content\poststuff\tools\FormatDesigner.exe" />
+    <Content Include="Content\poststuff\tools\FormatDesigner.zip" />
+    <Content Include="Content\poststuff\tools\Genghis\genghis.zip" />
+    <Content Include="Content\poststuff\tools\Genghis\GenghisContrib.zip" />
+    <Content Include="Content\poststuff\tools\Genghis\images\file-cvs-modified.png" />
+    <Content Include="Content\poststuff\tools\Genghis\images\file-cvs-unmodified.png" />
+    <Content Include="Content\poststuff\tools\Genghis\images\file-normal.png" />
+    <Content Include="Content\poststuff\tools\Genghis\images\folder-cvs.png" />
+    <Content Include="Content\poststuff\tools\Genghis\images\folder-normal.png" />
+    <Content Include="Content\poststuff\tools\Genghis\images\genghis.gif" />
+    <Content Include="Content\poststuff\tools\Genghis\images\SmallrmTrackLogo.gif" />
+    <Content Include="Content\poststuff\tools\Genghis\MfcSimplePad.zip" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\AniForm.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\AppBar.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\CommandLineTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\CompletionComboTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\ContainerStatusBarTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\CoolMenu.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\CursorChangerTest.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\CustomStateTreeViewTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\FileDocumentTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\FileSearchEngine.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\FindReplace.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\FolderBrowser.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\GradientProgressBar.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\HandleCollectorTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\HeaderGroupBoxTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\HtmlLinkLabel.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\ImageComboTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\MRUTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\multipletoplevel.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\PathResolverTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\ScrollablePictureBox.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\SimplePad.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\SortedLV.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\SplashScreen.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\StatusBarExtender.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\treeviewplus.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\UserResizablePanel.jpg" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\UserResizablePanel.png" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\WebCommandLineHelperTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\WindowSerializer.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\WinformValidationTest.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\WizardSheetSample.JPG" />
+    <Content Include="Content\poststuff\tools\Genghis\screenshots\xptheme.jpg" />
+    <Content Include="Content\poststuff\tools\genx.GIF" />
+    <Content Include="Content\poststuff\tools\gitcookie.h" />
+    <Content Include="Content\poststuff\tools\githelp.cpp" />
+    <Content Include="Content\poststuff\tools\githelp.h" />
+    <Content Include="Content\poststuff\tools\heapdet.zip" />
+    <Content Include="Content\poststuff\tools\HtmlDialogImpl.h" />
+    <Content Include="Content\poststuff\tools\imcli.zip" />
+    <Content Include="Content\poststuff\tools\img.1.jpg" />
+    <Content Include="Content\poststuff\tools\img.2.jpg" />
+    <Content Include="Content\poststuff\tools\mbvimpl.h" />
+    <Content Include="Content\poststuff\tools\monikers\BasicMonikers.zip" />
+    <Content Include="Content\poststuff\tools\monikers\MeowMoniker.zip" />
+    <Content Include="Content\poststuff\tools\multidisp\multidisp.zip" />
+    <Content Include="Content\poststuff\tools\multidisp\winnie_the_pooh_dispatch.h" />
+    <Content Include="Content\poststuff\tools\MyExpando.zip" />
+    <Content Include="Content\poststuff\tools\num2str0.jpg" />
+    <Content Include="Content\poststuff\tools\num2str1.jpg" />
+    <Content Include="Content\poststuff\tools\num2str2.jpg" />
+    <Content Include="Content\poststuff\tools\ObjectModel.zip" />
+    <Content Include="Content\poststuff\tools\ode1.jpg" />
+    <Content Include="Content\poststuff\tools\olddispimpl2.h" />
+    <Content Include="Content\poststuff\tools\oxid.h" />
+    <Content Include="Content\poststuff\tools\psiimpl2.h" />
+    <Content Include="Content\poststuff\tools\regex.zip" />
+    <Content Include="Content\poststuff\tools\regexd.JPG" />
+    <Content Include="Content\poststuff\tools\regexd.zip" />
+    <Content Include="Content\poststuff\tools\RegexDesigner.zip" />
+    <Content Include="Content\poststuff\tools\ResourceExplorer.zip" />
+    <Content Include="Content\poststuff\tools\SafeFormatter.zip" />
+    <Content Include="Content\poststuff\tools\ScancodeMapper.JPG" />
+    <Content Include="Content\poststuff\tools\ScancodeMapper.zip" />
+    <Content Include="Content\poststuff\tools\screenshot.jpg" />
+    <Content Include="Content\poststuff\tools\ShowMeTheTemplate.png" />
+    <Content Include="Content\poststuff\tools\ShowMeTheTemplate.zip" />
+    <Content Include="Content\poststuff\tools\SimpleObject2Setup.exe" />
+    <Content Include="Content\poststuff\tools\SmartEnum.zip" />
+    <Content Include="Content\poststuff\tools\te11_setup.exe" />
+    <Content Include="Content\poststuff\tools\te12_setup.exe" />
+    <Content Include="Content\poststuff\tools\texplorer.GIF" />
+    <Content Include="Content\poststuff\tools\texplorer2.GIF" />
+    <Content Include="Content\poststuff\tools\tExplorerSrcVC6.zip" />
+    <Content Include="Content\poststuff\tools\tExplorerSrcVS.NET.zip" />
+    <Content Include="Content\poststuff\tools\textbox\Textbox.zip" />
+    <Content Include="Content\poststuff\tools\TraceHook.zip" />
+    <Content Include="Content\poststuff\tools\tz\tz2xml.zip" />
+    <Content Include="Content\poststuff\tools\tz\tzxml.zip" />
+    <Content Include="Content\poststuff\tools\UrlRun.zip" />
+    <Content Include="Content\poststuff\tools\vblite.zip" />
+    <Content Include="Content\poststuff\tools\VisualTreeShower.zip" />
+    <Content Include="Content\poststuff\tools\WebAppProvider.zip" />
+    <Content Include="Content\poststuff\tools\WordFind.zip" />
+    <Content Include="Content\poststuff\tools\WrapperDispatch.h" />
+    <Content Include="Content\poststuff\tools\XmlSerializerPreCompiler.zip" />
+    <Content Include="Content\poststuff\tools\xmlValid.zip" />
+    <Content Include="Content\poststuff\tools\XsdClassesGen.zip" />
+    <Content Include="Content\poststuff\video\x1demo.wmv" />
+    <Content Include="Content\poststuff\wahoo2\publish.htm" />
+    <Content Include="Content\poststuff\wahoo2\setup.exe" />
+    <Content Include="Content\poststuff\wahoo\html\image001.gif" />
+    <Content Include="Content\poststuff\wahoo\html\index.htm" />
+    <Content Include="Content\poststuff\wahoo\html\sblogo.GIF" />
+    <Content Include="Content\poststuff\wahoo\Wahoo.exe" />
+    <Content Include="Content\poststuff\wahoo\wahoo.exe.config" />
+    <Content Include="Content\poststuff\wahoo\wahoo.JPG" />
+    <Content Include="Content\poststuff\wahoo\Wahoo.zip" />
+    <Content Include="Content\poststuff\wahoo\WahooControl.dll" />
+    <Content Include="Content\poststuff\writing\addnewitemdialog.jpg" />
+    <Content Include="Content\poststuff\writing\aol.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Afterabuildthepropertywin.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\ArethereanyCtoVBconversio.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\CanItargetNT4andWindows20.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\CanVS.NETprojectsbegroupe.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\CanweseethelistofpendingA.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\controlsChapterAndSrc.zip" />
+    <Content Include="Content\poststuff\writing\askthewonk\DoyourecommendthatItarget.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\EnumProcessIdentities.zip" />
+    <Content Include="Content\poststuff\writing\askthewonk\Howcananapplication.confi.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowcanIgetthesecurityprin.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowcanIimplementanFTPuplo.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowcanIsetthefocusonatext.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowcanIuseserializationin.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoestheThreadAbortExce.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIaddimagesinlistview.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIbuildExplorershelle.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIcalculatepathscorre.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIchangetheproperties.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIchoosebetweenproduc.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIdeterminethetypeofa.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIgetmyVS.NETstartpag.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoImakeaVS.NETprojecti.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoImodifyalloftheVS.NE.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIprintaforminVB.NET.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIproperlymaintainima.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIreclaimspaceformyco.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoIstoptheflickerinmyM.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Howdoyoucreateacontrolarr.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowdoyouobtaintheMicrosof.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Howdoyouusecontrolcollect.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Howsimplewoulditbetomakea.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\HowwouldIfillacomboboxusi.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\img1.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img1_2.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img1_3.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img1_4.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img2.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img2_2.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img2_3.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img3.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img3_2.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img3_3.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img4.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img4_2.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img4_3.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\img5.JPG" />
+    <Content Include="Content\poststuff\writing\askthewonk\Imnewto.NETandIcantseemto.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\InChowdoImovefocusautomat.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\index.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Ineedin-depthhelpforcreat.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\IsittruethatinADO.NETitis.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\IstheresomeVS.NETfeaturet.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\PlansfortheFutureofATW.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\regionblocksarebeingputin.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\ShouldIchooseinterfacesor.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\ShouldIuseADOorADO.NETfor.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\SpringBreak2003.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\VbSmartClient.zip" />
+    <Content Include="Content\poststuff\writing\askthewonk\webPathHelpSrc.zip" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whatabouttheperformanceov.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whataretheminimumconfigur.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whatareyourthoughtsonappl.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whatcanyoutellmeaboutobje.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\WhatdoestheSTAThreadattri.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\WhatdoyoupredictforVS.NET.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whatdoyouthinkthereleaseo.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whatisthedifferencebetwee.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whatistheintegrationpathl.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whatsthebestwaytomaintain.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whatsthedifferencebetween.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\WhenshouldIeditthedesigne.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\WherecanIgetmoreinformati.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Wheresthemenuoptiontogeta.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\WhycantSystem.Security.Su.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\Whydoesntmy.NETapplicatio.htm" />
+    <Content Include="Content\poststuff\writing\askthewonk\WhyisVB.NETconsideredtrul.htm" />
+    <Content Include="Content\poststuff\writing\atlbook\at2ecover.jpg" />
+    <Content Include="Content\poststuff\writing\atlbook\AtlInternals2eSrc.zip" />
+    <Content Include="Content\poststuff\writing\a_young_person.htm" />
+    <Content Include="Content\poststuff\writing\containmentfig01.gif" />
+    <Content Include="Content\poststuff\writing\delegates.htm" />
+    <Content Include="Content\poststuff\writing\dotnet2customsettingsprovider.htm" />
+    <Content Include="Content\poststuff\writing\dotnet2customsettingsprovider_files\image001.jpg" />
+    <Content Include="Content\poststuff\writing\dotnet2customsettingsprovider_files\image002.jpg" />
+    <Content Include="Content\poststuff\writing\dotnet2customsettingsprovider_files\image003.jpg" />
+    <Content Include="Content\poststuff\writing\dotnet2customsettingsprovider_files\image004.jpg" />
+    <Content Include="Content\poststuff\writing\DotNetImageReColoring.htm" />
+    <Content Include="Content\poststuff\writing\DotNetImageReColoring_files\image001.png" />
+    <Content Include="Content\poststuff\writing\DotNetImageReColoring_files\image002.jpg" />
+    <Content Include="Content\poststuff\writing\DotNetImageReColoring_files\image003.png" />
+    <Content Include="Content\poststuff\writing\DotNetImageReColoring_files\image004.jpg" />
+    <Content Include="Content\poststuff\writing\FunWithGridViewPresenter_files\img16.jpg" />
+    <Content Include="Content\poststuff\writing\FunWithGridViewPresenter_files\img18.jpg" />
+    <Content Include="Content\poststuff\writing\FunWithGridViewPresenter_files\img1C.jpg" />
+    <Content Include="Content\poststuff\writing\FunWithGridViewPresenter_files\img30.jpg" />
+    <Content Include="Content\poststuff\writing\image001.png" />
+    <Content Include="Content\poststuff\writing\image003.png" />
+    <Content Include="Content\poststuff\writing\intro2tapi\callcontrol.htm" />
+    <Content Include="Content\poststuff\writing\intro2tapi\connect.htm" />
+    <Content Include="Content\poststuff\writing\intro2tapi\image1.gif" />
+    <Content Include="Content\poststuff\writing\intro2tapi\image2.gif" />
+    <Content Include="Content\poststuff\writing\intro2tapi\image3.gif" />
+    <Content Include="Content\poststuff\writing\intro2tapi\image4.gif" />
+    <Content Include="Content\poststuff\writing\intro2tapi\image5.gif" />
+    <Content Include="Content\poststuff\writing\intro2tapi\image6.gif" />
+    <Content Include="Content\poststuff\writing\intro2tapi\image7.gif" />
+    <Content Include="Content\poststuff\writing\intro2tapi\image8.gif" />
+    <Content Include="Content\poststuff\writing\intro2tapi\index.htm" />
+    <Content Include="Content\poststuff\writing\intro2tapi\media.htm" />
+    <Content Include="Content\poststuff\writing\intro2tapi\myborder.jpg" />
+    <Content Include="Content\poststuff\writing\intro2tapi\network.htm" />
+    <Content Include="Content\poststuff\writing\intro2tapi\platforms.htm" />
+    <Content Include="Content\poststuff\writing\intro2tapi\pstn.htm" />
+    <Content Include="Content\poststuff\writing\intro2tapi\sharing.htm" />
+    <Content Include="Content\poststuff\writing\intro2tapi\summary.htm" />
+    <Content Include="Content\poststuff\writing\intro2tapi\wosa.htm" />
+    <Content Include="Content\poststuff\writing\MsdnMagRussiaInterview.htm" />
+    <Content Include="Content\poststuff\writing\MyWebFormTemplateSample.zip" />
+    <Content Include="Content\poststuff\writing\ProjectItemTemplateSample.zip" />
+    <Content Include="Content\poststuff\writing\refcount_rotor_delta.zip" />
+    <Content Include="Content\poststuff\writing\RegistrySettingsProvider2.zip" />
+    <Content Include="Content\poststuff\writing\ResourcesAndWinForms.htm" />
+    <Content Include="Content\poststuff\writing\sample.JPG" />
+    <Content Include="Content\poststuff\writing\telprog\telprog5.zip" />
+    <Content Include="Content\poststuff\writing\telprog\telprog6.zip" />
+    <Content Include="Content\poststuff\writing\telprog\tExplorer.gif" />
+    <Content Include="Content\poststuff\writing\telprog\vc6mfc42.zip" />
+    <Content Include="Content\poststuff\writing\w.gif" />
+    <Content Include="Content\poststuff\writing\wfbook\2eCover.jpg" />
+    <Content Include="Content\poststuff\writing\wfbook\cover.jpg" />
+    <Content Include="Content\poststuff\writing\wfbook\covervb.jpg" />
+    <Content Include="Content\poststuff\writing\wfbook\cs_2e_src2005.zip" />
+    <Content Include="Content\poststuff\writing\wfbook\cs_src2002.zip" />
+    <Content Include="Content\poststuff\writing\wfbook\cs_src2003.zip" />
+    <Content Include="Content\poststuff\writing\wfbook\cs_src2003_documents.zip" />
+    <Content Include="Content\poststuff\writing\wfbook\dotnetdj.JPG" />
+    <Content Include="Content\poststuff\writing\wfbook\Open.jpg" />
+    <Content Include="Content\poststuff\writing\wfbook\vb_src2002.zip" />
+    <Content Include="Content\poststuff\writing\wfbook\vb_src2003.zip" />
+    <Content Include="Content\poststuff\writing\WinForms Data ValidationFiles\image001.jpg" />
+    <Content Include="Content\poststuff\writing\winformsAutoScaling.htm" />
+    <Content Include="Content\poststuff\writing\WinFormsAutoScalingFiles\image001.jpg" />
+    <Content Include="Content\poststuff\writing\WinFormsAutoScalingFiles\image002.jpg" />
+    <Content Include="Content\poststuff\writing\WinFormsAutoScalingFiles\image003.jpg" />
+    <Content Include="Content\poststuff\writing\winformsDataValidation.htm" />
+    <Content Include="Content\poststuff\writing\winformsDataValidation_files\image001.png" />
+    <Content Include="Content\poststuff\writing\winformsDataValidation_files\image002.jpg" />
+    <Content Include="Content\poststuff\writing\wizard.JPG" />
+    <Content Include="Content\poststuff\writing\WizardFolder.jpg" />
+    <Content Include="Content\poststuff\writing\wpfbook\AToastToWPF.JPG" />
+    <Content Include="Content\poststuff\writing\wpfbook\RtmBookSamples.zip" />
+    <Content Include="Content\poststuff\writing\wpfbook\wpfcover.JPG" />
+    <Content Include="Content\poststuff\writing\wpfbook\WpfPreReleaseBookSamples.zip" />
+    <Content Include="Content\poststuff\writing\WTLPart1.zip" />
+    <Content Include="Content\poststuff\writing\WTLPart2.zip" />
+    <Content Include="odata.svc" />
+    <Content Include="Global.asax" />
+    <Content Include="Sites\dipqueen\back.gif" />
+    <Content Include="Sites\dipqueen\img0.gif" />
+    <Content Include="Sites\dipqueen\img1.gif" />
+    <Content Include="Sites\dipqueen\img10.gif" />
+    <Content Include="Sites\dipqueen\img11.gif" />
+    <Content Include="Sites\dipqueen\img12.gif" />
+    <Content Include="Sites\dipqueen\img13.gif" />
+    <Content Include="Sites\dipqueen\img2.gif" />
+    <Content Include="Sites\dipqueen\img3.gif" />
+    <Content Include="Sites\dipqueen\img4.gif" />
+    <Content Include="Sites\dipqueen\img5.gif" />
+    <Content Include="Sites\dipqueen\img6.gif" />
+    <Content Include="Sites\dipqueen\img7.gif" />
+    <Content Include="Sites\dipqueen\img8.gif" />
+    <Content Include="Sites\dipqueen\img9.gif" />
+    <Content Include="Sites\dipqueen\index.htm" />
+    <Content Include="Sites\dipqueen\page2.htm" />
+    <Content Include="Sites\dipqueen\page3.htm" />
+    <Content Include="Sites\dipqueen\page4.htm" />
+    <Content Include="Sites\dipqueen\page5.htm" />
+    <Content Include="Sites\dipqueen\_blnk.gif" />
+    <Content Include="Views\Mbelle\Index.aspx" />
+    <Content Include="Content\images\mb_logo.png" />
+    <Content Include="Views\Posts\CommentSubmitted.aspx" />
+    <Content Include="Views\Posts\InvalidFormat.aspx" />
+    <Content Include="Views\Shared\BingSearchView.ascx" />
+    <Content Include="Views\Shared\BadgesView.ascx" />
+    <Content Include="Views\Shared\BannerAdView.ascx" />
+    <Content Include="Views\Shared\TextAdsView.ascx" />
+    <Content Include="Views\Shared\FooterTextAdsView.ascx" />
+    <Content Include="Views\Shared\Error.aspx" />
+    <Content Include="Views\Shared\GoogleAdView.ascx" />
+    <Content Include="Views\Posts\Details.aspx" />
+    <Content Include="Views\Posts\Index.aspx" />
+    <Content Include="Views\Posts\NotFound.aspx" />
+    <Content Include="Views\TinySells\Index.aspx" />
+    <Content Include="Views\Writing\Index.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\jquery-1.3.2.js" />
+    <Content Include="Scripts\jquery-1.3.2.min.js" />
+    <Content Include="Scripts\jquery-1.3.2-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcJQueryValidation.js" />
+    <Content Include="Views\Shared\Site.Master" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="wlwmanifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\poststuff\sb4\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Code\excuses.asmx.resx">
+      <DependentUpon>excuses.asmx.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.0\solfx.manifest" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.1\solfx.manifest" />
+    <Content Include="Content\poststuff\fun\solfx\7.0.0.2\solfx.manifest" />
+    <Content Include="Content\poststuff\fun\solfx\solfx.deploy" />
+    <Content Include="Content\poststuff\fun\tictacthree\TicTacThree.application" />
+    <Content Include="Content\poststuff\fun\tictacthree\v1.0.0.0\TicTacThree.exe.deploy" />
+    <Content Include="Content\poststuff\fun\tictacthree\v1.0.0.0\TicTacThree.exe.manifest" />
+    <Content Include="Content\poststuff\samples\dinner.xls" />
+    <Content Include="Content\poststuff\spout\rsvskeys.xls" />
+    <Content Include="Content\poststuff\spout\SoftwareCareers.zip" />
+    <Content Include="Content\poststuff\tools\AddSearchInternetLinkInStartMenu.reg" />
+    <Content Include="Content\poststuff\tools\attila\attilacontrib.doc" />
+    <Content Include="Content\poststuff\tools\caps-off.reg" />
+    <Content Include="Content\poststuff\tools\clp.pdf" />
+    <Content Include="Content\poststuff\tools\completionChar.reg" />
+    <Content Include="Content\poststuff\tools\FilterFilesWithUnknownExtensionsForXP.reg" />
+    <Content Include="Content\poststuff\tools\Genghis\doc\Genghis.chm" />
+    <Content Include="Content\poststuff\tools\Genghis\GenghisContrib.doc" />
+    <Content Include="Content\poststuff\tools\RegexDesigner.chm" />
+    <Content Include="Content\poststuff\tools\regsvr.reg" />
+    <Content Include="Content\poststuff\tools\RotorRefCounting.doc" />
+    <Content Include="Content\poststuff\tools\SetUpdateRegisterDesignViewOnIdle0.reg" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_0.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_0\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_0\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_0\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_0\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_1.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_10.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_10\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_10\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_10\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_10\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_11.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_11\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_11\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_11\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_11\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_12.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_12\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_12\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_12\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_12\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_13.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_13\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_13\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_13\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_13\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_14.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_14\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_14\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_14\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_14\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_15\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_15\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_15\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_15\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_16\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_16\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_16\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_16\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_1\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_1\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_1\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_1\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_2.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_2\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_2\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_2\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_2\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_3.application" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_3\Wahoo.exe.config.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_3\Wahoo.exe.deploy" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_3\Wahoo.exe.manifest" />
+    <Content Include="Content\poststuff\wahoo2\Wahoo_1_0_0_3\WahooControlLibrary.dll.deploy" />
+    <Content Include="Content\poststuff\wahoo\WahooPermissionsSetup.msi" />
+    <Content Include="Content\poststuff\writing\DeKlarit.doc" />
+    <Content Include="Content\poststuff\writing\Easy Event Notication %28Annotated%29.doc" />
+    <Content Include="Content\poststuff\writing\ITconsultant_column inch_Jan2002.pdf" />
+    <Content Include="Content\poststuff\writing\refcount_rotor.doc" />
+    <Content Include="Content\poststuff\writing\thesis.doc" />
+    <Content Include="Content\poststuff\writing\vb4cpp.doc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="sbda\sbda.csproj">
+      <Project>{7ACFB754-BF54-451D-9F05-FE57738CF412}</Project>
+      <Name>sbda</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\poststuff\samples\RoslynRepl.zip" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <!-- To enable MVC area subproject support, uncomment the following two lines:
+  <UsingTask TaskName="Microsoft.Web.Mvc.Build.CreateAreaManifest" AssemblyName="Microsoft.Web.Mvc.Build, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+  <UsingTask TaskName="Microsoft.Web.Mvc.Build.CopyAreaManifests" AssemblyName="Microsoft.Web.Mvc.Build, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+  -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>29711</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:29711/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://localhost:81</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

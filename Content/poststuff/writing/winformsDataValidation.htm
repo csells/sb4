@@ -1,0 +1,80 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+    <title>WinForms Data Validation</title>
+</head>
+<body>
+    <h1>
+        WinForms Data Validation</h1>
+    <p>
+        <i>This article was originally published in the <a target="_blank" href="http://www.windevnet.com/newsletters/sells/">
+            &quot;Chris Sells on .NET&quot; newsletter</a></i></p>
+    <p>
+        You should never trust your users. I don't mean don't trust them to pay (which is
+        a completely separate issue that I won't go into here…). I mean don't trust the
+        data that they enter. They may not give you all the data that you need. They may
+        not give you data in the correct format. List boxes, radio buttons and all of the
+        other controls that give users choices all do so to make sure that the provide data
+        in the correct format. However, sometimes you need to validate more free form data
+        entry, like what a user types into a text box. For that, you need to handle a control's
+        Validating event:</p>
+    <pre>void applicantNameTextBox_Validating(object sender, CancelEventArgs e) {
+  if( applicantNameTextBox.Text.Length == 0 ) {
+    MessageBox.Show(&quot;Please enter a name&quot;, &quot;Error&quot;);
+    e.Cancel = true;
+  }
+}</pre>
+    <p>
+        The Validating will be called when moving focus from a control on the dialog that
+        has the CausesValidation property set to true to another control that has the CausesValidation
+        property set to true, e.g. from a TextBox control to the OK button. The Validating
+        event gives the handler the chance to cancel the move of focus by setting the CancelEventArgs.Cancel
+        property to true. In this example, if the user doesn't enter a name into the text
+        box, than the Validating event handler notifies the user of their transgression
+        and cancels the event, which will keep the focus on the text box with invalid data.<br>
+        If the Validating event is not canceled, the dialog will get notified with the Validated
+        event:</p>
+    <pre>void applicantNameTextBox_Validated(object sender, EventArgs e) {
+  MessageBox.Show(&quot;Nice name, &quot; + applicantNameTextBox.Text);
+}</pre>
+    <p>
+        Since each control has CausesValidation set to true by default, to allow the user
+        to cancel the dialog without entering valid data, make sure to set the CausesValidation
+        property to false for your Cancel or Close button:</p>
+    <pre>void InitializeComponent() {
+  ...
+  this.cancelButton.CausesValidation = false;
+  ...
+}</pre>
+    <h2>
+        Data Format Notification</h2>
+    <p>
+        As much as I lean on the message box in my test development, I prefer not to use
+        it for actual applications. A better way is to use the ErrorProvider component,
+        which shows the user that there's a problem and provides a tooltip with extra information,
+        as shown in Figure 1.</p>
+    <p>
+        <img border="0" src="WinForms%20Data%20ValidationFiles/image001.jpg" width="393"
+            height="206"><span style="font-size: 10.0pt; font-family: Arial"><br>
+            </span>Figure 1: Example use of the ErrorProvider component</p>
+    <p>
+        When the user attempts to chance focus out of the empty text box, we use an instance
+        of the ErrorProvider component to set an error associated with that text box, causing
+        the icon to be displayed to the right of the text box and making the tool tip available
+        if they need more info. This behavior was achieved by dragging an ErrorProvider
+        component onto the dialog and handling the Validating event like so:</p>
+    <pre>void applicantNameTextBox_Validating(object sender, CancelEventArgs e) {
+  string error = null;
+  if( applicantNameTextBox.Text.Length == 0 ) {
+    error = &quot;Please enter a name&quot;;
+    e.Cancel = true;
+  }
+  errorProvider1.SetError((Control)sender, error);
+}</pre>
+    <p>
+        Notice the call to ErrorProvider.SetError, passing in the control the error is associated
+        with (which we get from the sender argument to the Validating event), along with
+        the error string, which will be used as the tool tip. If there is no problem, the
+        error will be null, which will cause the error indicator on the dialog to go away.</p>
+</body>
+</html>

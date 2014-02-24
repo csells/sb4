@@ -1,0 +1,68 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/45 -->
+<html>
+<head>
+	<title>How do I properly maintain images in VS.NET?</title>
+</head>
+<body>
+
+		    
+<b>Q. <P>When building Windows forms I’ve noticed that my images don’t get updated in the built executable after they are modified on disk. This is even after a full rebuild of the executable.</P>
+<P>With some tracking down I found that the selection of an image via a property page or via a custom designer results in designer code that looks something like this:</P>
+<P>this.button1.Image = ((System.Drawing.Bitmap)(resources.GetObject("button1.Image")));</P>
+<P>and the actual image appears to get sucked into the resx file like this:</P>
+<P>&lt;data name="button1.Image" type="System.Drawing.Bitmap, ..." mimetype="application/x-microsoft.net.object.bytearray.base64"&gt;<BR>&nbsp; &lt;value&gt;...base64-encoded data...&lt;/value&gt;<BR>&lt;/data&gt;</P>
+<P>The resx information doesn’t seem to include the original file information. This means that there is no automatic way of easily getting these resx files updated. This is a maintenance problem especially as the image count increases for a project or if the images are being provided by external parties.</P>
+<P>My questions are:</P>
+<UL>
+<LI>Am I missing something or is this the way the designer handles the selection and storage of images? 
+<LI>Is there an alternative approach to manually reselecting the images in the designer when they change (yet still use the designer for image selection)?</LI></UL></b>
+<p>
+<i>Asked by Apolon Ivankovic. Answered by the Wonk on January 14, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">When you add any kind of a resource, like an image, to a .resx file, the data for the resource is embedded directly into the .resx file and the original source of the data is never consulted again. This happens whether the .resx file is custom for the project or it’s a .resx file that goes along with a component class, e.g. a custom form, a custom control or a non-visual custom component. The upside is that if the source data goes away, the resource data is untouched. The downside is exactly what you point out: if the original data source is edited, the .resx file is not updated. This is further exacerbated by the fact that there are no tools in VS.NET to edit binary data once it’s been dropped into a .resx file. This last thing is the real killer and bears repeating: <I style="mso-bidi-font-style: normal">There is no way in VS.NET to edit binary data once it’s been added to a .resx file.</I></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">One work-around is to use manifest resources, which are files added to a project and marked as Embedded Resource. Those files get read and embedded as resources during each build and there are built in editors for most of the common files, e.g. bitmaps, XML, etc. Accessing a manifest resource is done at the assembly level. Assuming an embedded manifest resource called “Azul.jpg” and a default project namespace of “MyProjectNamespace”, you can load the raw bytes at runtime using a stream:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>using </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">System</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>.</FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">IO</SPAN><FONT color=#0000ff><SPAN style="FONT-SIZE: 10pt">;</SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: green"><o:p></o:p></SPAN></FONT></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt"><o:p><FONT face="Courier New" color=#0000ff><STRONG>&nbsp;</STRONG></FONT></o:p></SPAN></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>public </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">Form1</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>() {<o:p></o:p></FONT></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp; </FONT></SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">...</SPAN><SPAN style="FONT-SIZE: 10pt"><o:p></o:p></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt"><o:p><FONT face="Courier New" color=#0000ff><STRONG>&nbsp;</STRONG></FONT></o:p></SPAN></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp; </FONT></SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: green">// Get the currently executing assembly<o:p></o:p></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp; </FONT></SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">Assembly</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff> </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">assem</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff> = </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">Assembly</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>.</FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">GetExecutingAssembly</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>();<o:p></o:p></FONT></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt"><o:p><FONT face="Courier New" color=#0000ff><STRONG>&nbsp;</STRONG></FONT></o:p></SPAN></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp; </FONT></SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: green">// Get the stream that holds the resource<o:p></o:p></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp; </FONT></SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: green">// NOTE1: Make sure not to close this stream!<o:p></o:p></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt; COLOR: green"><STRONG><FONT face="Courier New"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>// NOTE2: Also be very careful to match the case<o:p></o:p></FONT></STRONG></SPAN></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt; COLOR: green"><STRONG><FONT face="Courier New"><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>//<SPAN style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>on the resource name itself<o:p></o:p></FONT></STRONG></SPAN></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp; </FONT></SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">Stream</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff> </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">stream</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff> =<o:p></o:p></FONT></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp;&nbsp;&nbsp; </FONT></SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">assem</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>.</FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">GetManifestResourceStream</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>("MyProjectNamespace.Azul.jpg");<o:p></o:p></FONT></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt"><o:p><FONT face="Courier New" color=#0000ff><STRONG>&nbsp;</STRONG></FONT></o:p></SPAN></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><SPAN style="mso-spacerun: yes"><FONT color=#0000ff>&nbsp; </FONT></SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: green">// Load the bitmap from the stream<o:p></o:p></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><STRONG><FONT face="Courier New"><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff><SPAN style="mso-spacerun: yes">&nbsp; </SPAN>this.</FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">BackgroundImage</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff> = new </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">Bitmap</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>(</FONT></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black">stream</SPAN><SPAN style="FONT-SIZE: 10pt"><FONT color=#0000ff>);<o:p></o:p></FONT></SPAN></FONT></STRONG></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt"><STRONG><FONT color=#0000ff><FONT face="Courier New">}<o:p></o:p></FONT></FONT></STRONG></SPAN></P>
+<P class=NormalCourierNew style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt"><o:p><STRONG><FONT face="Courier New" color=#0000ff>&nbsp;</FONT></STRONG></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">Some .NET types, like the bitmap provide shortcuts for reading from manifest resources, removing the need to open the stream separately:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: green; FONT-FAMILY: 'Courier New'">// Load the bitmap directly from the manifest resources<o:p></o:p></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: green; FONT-FAMILY: 'Courier New'">// Use the namespace of the loading type as the prefix<o:p></o:p></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">this</SPAN></B><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">.<SPAN style="COLOR: black">BackgroundImage</SPAN> = <SPAN style="COLOR: blue">new</SPAN> <SPAN style="COLOR: black">Bitmap</SPAN>(<SPAN style="COLOR: blue">this</SPAN>.<SPAN style="COLOR: black">GetType</SPAN>(), "Azul.jpg");<o:p></o:p></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">I agree that this mechanism is not ideal compared to the convenience of setting resources from the Designer, but it is does allow for embedded resources that can be edited directly in VS.NET.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">You current best bet for editing binary data in .resx files directly are 3<SUP>rd</SUP>-party .resx editors, like those provided in the References section.</SPAN></P><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+<H1>References</H1>
+<UL style="MARGIN-TOP: 0in" type=disc>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><A href="http://www.aisto.com/roeder/dotnet/" target=_blank>Resourcer for .NET</A> 
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><A href="http://www.codeproject.com/cs/miscctrl/resource_editor.asp" target=_blank>Resource Editor .NET</A><o:p></o:p></LI></UL></SPAN></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'How do I properly maintain images in VS.NET?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

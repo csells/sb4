@@ -1,0 +1,795 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="sellsbrothersModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="sellsbrothersModelStoreContainer">
+          <EntitySet Name="Ads" EntityType="sellsbrothersModel.Store.Ads" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Badges" EntityType="sellsbrothersModel.Store.Badges" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="fref_link" EntityType="sellsbrothersModel.Store.fref_link" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LandingZones" EntityType="sellsbrothersModel.Store.LandingZones" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="mbPosts" EntityType="sellsbrothersModel.Store.mbPosts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="mbTopics" EntityType="sellsbrothersModel.Store.mbTopics" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OutputCategories" EntityType="sellsbrothersModel.Store.OutputCategories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OutputItems" EntityType="sellsbrothersModel.Store.OutputItems" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PostCategories" EntityType="sellsbrothersModel.Store.PostCategories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PostImages" EntityType="sellsbrothersModel.Store.PostImages" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Sites" EntityType="sellsbrothersModel.Store.Sites" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__Badges__SiteId__51300E55" Association="sellsbrothersModel.Store.FK__Badges__SiteId__51300E55">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Badges" EntitySet="Badges" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LandingZo__SiteI__503BEA1C" Association="sellsbrothersModel.Store.FK__LandingZo__SiteI__503BEA1C">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="LandingZones" EntitySet="LandingZones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OutputCat__SiteI__4F47C5E3" Association="sellsbrothersModel.Store.FK__OutputCat__SiteI__4F47C5E3">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="OutputCategories" EntitySet="OutputCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OutputIte__Categ__531856C7" Association="sellsbrothersModel.Store.FK__OutputIte__Categ__531856C7">
+            <End Role="OutputCategories" EntitySet="OutputCategories" />
+            <End Role="OutputItems" EntitySet="OutputItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OutputIte__SiteI__540C7B00" Association="sellsbrothersModel.Store.FK__OutputIte__SiteI__540C7B00">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="OutputItems" EntitySet="OutputItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PostCateg__SiteI__5224328E" Association="sellsbrothersModel.Store.FK__PostCateg__SiteI__5224328E">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="PostCategories" EntitySet="PostCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TextAds__SiteId__4E53A1AA" Association="sellsbrothersModel.Store.FK__TextAds__SiteId__4E53A1AA">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Ads" EntitySet="Ads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostImageSite" Association="sellsbrothersModel.Store.FK_PostImageSite">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="PostImages" EntitySet="PostImages" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Ads">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="int" Nullable="false" />
+          <Property Name="LinkPath" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="128" />
+          <Property Name="ContactEmail" Type="nvarchar" MaxLength="128" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Rate" Type="decimal" />
+          <Property Name="RatePeriod" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsCanceled" Type="bit" Nullable="false" />
+          <Property Name="InFooter" Type="bit" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Badges">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="int" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="128" />
+          <Property Name="LinkPath" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fref_link">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Link" Type="nvarchar" MaxLength="1024" />
+          <Property Name="AccessCount" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="ISBN" Type="nvarchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="LandingZones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="int" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" Nullable="false" MaxLength="32" />
+          <Property Name="RelativeUrl" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="HeaderImagePath" Type="nvarchar" Nullable="false" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="mbPosts">
+          <Key>
+            <PropertyRef Name="PostKey" />
+          </Key>
+          <Property Name="PostKey" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ParentTopicKey" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Message" Type="ntext" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="upsize_ts" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="ShouldEmailNotifications" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mbTopics">
+          <Key>
+            <PropertyRef Name="TopicKey" />
+          </Key>
+          <Property Name="TopicKey" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TopicID" Type="nvarchar" MaxLength="64" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="255" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Link" Type="nvarchar" MaxLength="255" />
+          <Property Name="Categories" Type="nvarchar" MaxLength="255" />
+          <Property Name="upsize_ts" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="EntryName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OutputCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="Order" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OutputItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="1024" />
+          <Property Name="Link" Type="nvarchar" MaxLength="2048" />
+          <Property Name="ISBN" Type="nvarchar" MaxLength="16" />
+          <Property Name="Authors" Type="nvarchar" MaxLength="1024" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Publisher" Type="nvarchar" MaxLength="256" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="PostCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" />
+          <Property Name="DisplayName" Type="nvarchar" Nullable="false" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="PostImages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="64" />
+          <Property Name="Size" Type="int" />
+          <Property Name="SiteId" Type="int" />
+          <Property Name="ImageData" Type="image" />
+        </EntityType>
+        <EntityType Name="Sites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BriefAbout" Type="nvarchar" Nullable="false" MaxLength="512" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="ContactEmail" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="CopyrightNotice" Type="nvarchar" Nullable="false" MaxLength="512" />
+          <Property Name="PageSize" Type="smallint" Nullable="false" />
+          <Property Name="ContactName" Type="nvarchar" Nullable="false" MaxLength="128" />
+        </EntityType>
+        <Association Name="FK__Badges__SiteId__51300E55">
+          <End Role="Sites" Type="sellsbrothersModel.Store.Sites" Multiplicity="1" />
+          <End Role="Badges" Type="sellsbrothersModel.Store.Badges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Badges">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LandingZo__SiteI__503BEA1C">
+          <End Role="Sites" Type="sellsbrothersModel.Store.Sites" Multiplicity="1" />
+          <End Role="LandingZones" Type="sellsbrothersModel.Store.LandingZones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LandingZones">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OutputCat__SiteI__4F47C5E3">
+          <End Role="Sites" Type="sellsbrothersModel.Store.Sites" Multiplicity="1" />
+          <End Role="OutputCategories" Type="sellsbrothersModel.Store.OutputCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutputCategories">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OutputIte__Categ__531856C7">
+          <End Role="OutputCategories" Type="sellsbrothersModel.Store.OutputCategories" Multiplicity="1" />
+          <End Role="OutputItems" Type="sellsbrothersModel.Store.OutputItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OutputCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutputItems">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OutputIte__SiteI__540C7B00">
+          <End Role="Sites" Type="sellsbrothersModel.Store.Sites" Multiplicity="1" />
+          <End Role="OutputItems" Type="sellsbrothersModel.Store.OutputItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutputItems">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PostCateg__SiteI__5224328E">
+          <End Role="Sites" Type="sellsbrothersModel.Store.Sites" Multiplicity="1" />
+          <End Role="PostCategories" Type="sellsbrothersModel.Store.PostCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostCategories">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TextAds__SiteId__4E53A1AA">
+          <End Role="Sites" Type="sellsbrothersModel.Store.Sites" Multiplicity="1" />
+          <End Role="Ads" Type="sellsbrothersModel.Store.Ads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ads">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostImageSite">
+          <End Role="Sites" Type="sellsbrothersModel.Store.Sites" Multiplicity="0..1" />
+          <End Role="PostImages" Type="sellsbrothersModel.Store.PostImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostImages">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sellsbrothersModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="sellsbrothersEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ads" EntityType="sellsbrothersModel.Ad" />
+          <EntitySet Name="Badges" EntityType="sellsbrothersModel.Badge" />
+          <EntitySet Name="LandingZones" EntityType="sellsbrothersModel.LandingZone" />
+          <EntitySet Name="Comments" EntityType="sellsbrothersModel.Comment" />
+          <EntitySet Name="Posts" EntityType="sellsbrothersModel.Post" />
+          <EntitySet Name="OutputCategories" EntityType="sellsbrothersModel.OutputCategory" />
+          <EntitySet Name="OutputItems" EntityType="sellsbrothersModel.OutputItem" />
+          <EntitySet Name="PostCategories" EntityType="sellsbrothersModel.PostCategory" />
+          <EntitySet Name="Sites" EntityType="sellsbrothersModel.Site" />
+          <AssociationSet Name="FK__TextAds__SiteId__4E53A1AA" Association="sellsbrothersModel.FK__TextAds__SiteId__4E53A1AA">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Ads" EntitySet="Ads" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Badges__SiteId__51300E55" Association="sellsbrothersModel.FK__Badges__SiteId__51300E55">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Badges" EntitySet="Badges" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LandingZo__SiteI__503BEA1C" Association="sellsbrothersModel.FK__LandingZo__SiteI__503BEA1C">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="LandingZones" EntitySet="LandingZones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OutputCat__SiteI__4F47C5E3" Association="sellsbrothersModel.FK__OutputCat__SiteI__4F47C5E3">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="OutputCategories" EntitySet="OutputCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OutputIte__Categ__531856C7" Association="sellsbrothersModel.FK__OutputIte__Categ__531856C7">
+            <End Role="OutputCategories" EntitySet="OutputCategories" />
+            <End Role="OutputItems" EntitySet="OutputItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OutputIte__SiteI__540C7B00" Association="sellsbrothersModel.FK__OutputIte__SiteI__540C7B00">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="OutputItems" EntitySet="OutputItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PostCateg__SiteI__5224328E" Association="sellsbrothersModel.FK__PostCateg__SiteI__5224328E">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="PostCategories" EntitySet="PostCategories" />
+          </AssociationSet>
+          <EntitySet Name="TinyLinks" EntityType="sellsbrothersModel.TinyLink" />
+          <AssociationSet Name="PostComment" Association="sellsbrothersModel.PostComment">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <EntitySet Name="PostImages" EntityType="sellsbrothersModel.PostImage" />
+          <AssociationSet Name="FK_PostImageSite" Association="sellsbrothersModel.FK_PostImageSite">
+            <End Role="Site" EntitySet="Sites" />
+            <End Role="PostImage" EntitySet="PostImages" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Ad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="Int32" Nullable="false" />
+          <Property Name="LinkPath" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="Title" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="ExpirationDate" Type="DateTime" />
+          <Property Name="ContactName" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="ContactEmail" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RatePeriod" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="IsCanceled" Type="Boolean" Nullable="false" />
+          <Property Name="InFooter" Type="Boolean" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Site" Relationship="sellsbrothersModel.FK__TextAds__SiteId__4E53A1AA" FromRole="Ads" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="Badge">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="Int32" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="LinkPath" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Site" Relationship="sellsbrothersModel.FK__Badges__SiteId__51300E55" FromRole="Badges" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="LandingZone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="Int32" Nullable="false" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="32" Unicode="true" FixedLength="false" />
+          <Property Name="RelativeUrl" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="HeaderImagePath" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Site" Relationship="sellsbrothersModel.FK__LandingZo__SiteI__503BEA1C" FromRole="LandingZones" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Author" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="ShouldEmailNotifications" Type="Boolean" Nullable="false" />
+          <Property Type="Int32" Name="PostId" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="sellsbrothersModel.PostComment" FromRole="Comment" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Author" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Categories" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="PostName" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="sellsbrothersModel.PostComment" FromRole="Post" ToRole="Comment" />
+          <Property Type="String" Name="UuidString" MaxLength="36" Nullable="true" />
+        </EntityType>
+        <EntityType Name="OutputCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="Order" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Site" Relationship="sellsbrothersModel.FK__OutputCat__SiteI__4F47C5E3" FromRole="OutputCategories" ToRole="Sites" />
+          <NavigationProperty Name="OutputItems" Relationship="sellsbrothersModel.FK__OutputIte__Categ__531856C7" FromRole="OutputCategories" ToRole="OutputItems" />
+        </EntityType>
+        <EntityType Name="OutputItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="1024" Unicode="true" FixedLength="false" />
+          <Property Name="Link" Type="String" MaxLength="2048" Unicode="true" FixedLength="false" />
+          <Property Name="ISBN" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="Authors" Type="String" MaxLength="1024" Unicode="true" FixedLength="false" />
+          <Property Name="Date" Type="DateTime" />
+          <Property Name="Publisher" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="Notes" Type="String" MaxLength="2048" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="OutputCategory" Relationship="sellsbrothersModel.FK__OutputIte__Categ__531856C7" FromRole="OutputItems" ToRole="OutputCategories" />
+          <NavigationProperty Name="Site" Relationship="sellsbrothersModel.FK__OutputIte__SiteI__540C7B00" FromRole="OutputItems" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="PostCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Site" Relationship="sellsbrothersModel.FK__PostCateg__SiteI__5224328E" FromRole="PostCategories" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="Site">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BriefAbout" Type="String" Nullable="false" MaxLength="512" Unicode="true" FixedLength="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="ContactEmail" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="CopyrightNotice" Type="String" Nullable="false" MaxLength="512" Unicode="true" FixedLength="false" />
+          <Property Name="PageSize" Type="Int16" Nullable="false" />
+          <Property Name="ContactName" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Ads" Relationship="sellsbrothersModel.FK__TextAds__SiteId__4E53A1AA" FromRole="Sites" ToRole="Ads" />
+          <NavigationProperty Name="Badges" Relationship="sellsbrothersModel.FK__Badges__SiteId__51300E55" FromRole="Sites" ToRole="Badges" />
+          <NavigationProperty Name="LandingZones" Relationship="sellsbrothersModel.FK__LandingZo__SiteI__503BEA1C" FromRole="Sites" ToRole="LandingZones" />
+          <NavigationProperty Name="OutputCategories" Relationship="sellsbrothersModel.FK__OutputCat__SiteI__4F47C5E3" FromRole="Sites" ToRole="OutputCategories" />
+          <NavigationProperty Name="OutputItems" Relationship="sellsbrothersModel.FK__OutputIte__SiteI__540C7B00" FromRole="Sites" ToRole="OutputItems" />
+          <NavigationProperty Name="PostCategories" Relationship="sellsbrothersModel.FK__PostCateg__SiteI__5224328E" FromRole="Sites" ToRole="PostCategories" />
+          <NavigationProperty Name="PostImages" Relationship="sellsbrothersModel.FK_PostImageSite" FromRole="Site" ToRole="PostImage" />
+        </EntityType>
+        <Association Name="FK__TextAds__SiteId__4E53A1AA">
+          <End Role="Sites" Type="sellsbrothersModel.Site" Multiplicity="1" />
+          <End Role="Ads" Type="sellsbrothersModel.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ads">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Badges__SiteId__51300E55">
+          <End Role="Sites" Type="sellsbrothersModel.Site" Multiplicity="1" />
+          <End Role="Badges" Type="sellsbrothersModel.Badge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Badges">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LandingZo__SiteI__503BEA1C">
+          <End Role="Sites" Type="sellsbrothersModel.Site" Multiplicity="1" />
+          <End Role="LandingZones" Type="sellsbrothersModel.LandingZone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LandingZones">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OutputCat__SiteI__4F47C5E3">
+          <End Role="Sites" Type="sellsbrothersModel.Site" Multiplicity="1" />
+          <End Role="OutputCategories" Type="sellsbrothersModel.OutputCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutputCategories">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OutputIte__Categ__531856C7">
+          <End Role="OutputCategories" Type="sellsbrothersModel.OutputCategory" Multiplicity="1" />
+          <End Role="OutputItems" Type="sellsbrothersModel.OutputItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OutputCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutputItems">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OutputIte__SiteI__540C7B00">
+          <End Role="Sites" Type="sellsbrothersModel.Site" Multiplicity="1" />
+          <End Role="OutputItems" Type="sellsbrothersModel.OutputItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutputItems">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PostCateg__SiteI__5224328E">
+          <End Role="Sites" Type="sellsbrothersModel.Site" Multiplicity="1" />
+          <End Role="PostCategories" Type="sellsbrothersModel.PostCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostCategories">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TinyLink">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Type="Int32" Name="Code" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Link" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="AccessCount" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="String" Name="ISBN" MaxLength="16" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="PostComment">
+          <End Type="sellsbrothersModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="sellsbrothersModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PostImage" m:HasStream="true" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ContentType" MaxLength="64" FixedLength="false" Unicode="true" Nullable="true" />
+          <Property Type="Int32" Name="Size" Nullable="false" />
+          <Property Type="Int32" Name="SiteId" Nullable="false" />
+          <NavigationProperty Name="Site" Relationship="sellsbrothersModel.FK_PostImageSite" FromRole="PostImage" ToRole="Site" />
+          <Property Type="Binary" Name="ImageData" MaxLength="Max" FixedLength="false" Nullable="true" />
+        </EntityType>
+        <Association Name="FK_PostImageSite">
+          <End Type="sellsbrothersModel.Site" Role="Site" Multiplicity="1" />
+          <End Type="sellsbrothersModel.PostImage" Role="PostImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Site">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostImage">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sellsbrothersModelStoreContainer" CdmEntityContainer="sellsbrothersEntities">
+          <EntitySetMapping Name="Ads"><EntityTypeMapping TypeName="sellsbrothersModel.Ad"><MappingFragment StoreEntitySet="Ads">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+            <ScalarProperty Name="LinkPath" ColumnName="LinkPath" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+            <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+            <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+            <ScalarProperty Name="Notes" ColumnName="Notes" />
+            <ScalarProperty Name="Rate" ColumnName="Rate" />
+            <ScalarProperty Name="RatePeriod" ColumnName="RatePeriod" />
+            <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
+            <ScalarProperty Name="InFooter" ColumnName="InFooter" />
+            <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Badges"><EntityTypeMapping TypeName="sellsbrothersModel.Badge"><MappingFragment StoreEntitySet="Badges">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+            <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+            <ScalarProperty Name="LinkPath" ColumnName="LinkPath" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="Order" ColumnName="Order" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="LandingZones"><EntityTypeMapping TypeName="sellsbrothersModel.LandingZone"><MappingFragment StoreEntitySet="LandingZones">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+            <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+            <ScalarProperty Name="RelativeUrl" ColumnName="RelativeUrl" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="HeaderImagePath" ColumnName="HeaderImagePath" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Comments"><EntityTypeMapping TypeName="sellsbrothersModel.Comment"><MappingFragment StoreEntitySet="mbPosts">
+                <ScalarProperty Name="PostId" ColumnName="ParentTopicKey" />
+                <ScalarProperty Name="Id" ColumnName="PostKey" />
+            <ScalarProperty Name="Author" ColumnName="Name" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="Content" ColumnName="Message" />
+            <ScalarProperty Name="CreationDate" ColumnName="CreateDate" />
+            <ScalarProperty Name="IsApproved" ColumnName="Approved" />
+            <ScalarProperty Name="ShouldEmailNotifications" ColumnName="ShouldEmailNotifications" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Posts"><EntityTypeMapping TypeName="sellsbrothersModel.Post"><MappingFragment StoreEntitySet="mbTopics">
+            <ScalarProperty Name="UuidString" ColumnName="TopicID" />
+                <ScalarProperty Name="Id" ColumnName="TopicKey" />
+            <ScalarProperty Name="Title" ColumnName="Subject" />
+            <ScalarProperty Name="Author" ColumnName="Name" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="CreationDate" ColumnName="CreateDate" />
+            <ScalarProperty Name="Link" ColumnName="Link" />
+            <ScalarProperty Name="Categories" ColumnName="Categories" />
+            <ScalarProperty Name="PostName" ColumnName="EntryName" />
+            <ScalarProperty Name="Content" ColumnName="Message" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="OutputCategories"><EntityTypeMapping TypeName="sellsbrothersModel.OutputCategory"><MappingFragment StoreEntitySet="OutputCategories">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Order" ColumnName="Order" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="OutputItems"><EntityTypeMapping TypeName="sellsbrothersModel.OutputItem"><MappingFragment StoreEntitySet="OutputItems">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+            <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="Link" ColumnName="Link" />
+            <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+            <ScalarProperty Name="Authors" ColumnName="Authors" />
+            <ScalarProperty Name="Date" ColumnName="Date" />
+            <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+            <ScalarProperty Name="Notes" ColumnName="Notes" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PostCategories"><EntityTypeMapping TypeName="sellsbrothersModel.PostCategory"><MappingFragment StoreEntitySet="PostCategories">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Sites"><EntityTypeMapping TypeName="sellsbrothersModel.Site"><MappingFragment StoreEntitySet="Sites">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="BriefAbout" ColumnName="BriefAbout" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+            <ScalarProperty Name="CopyrightNotice" ColumnName="CopyrightNotice" />
+            <ScalarProperty Name="PageSize" ColumnName="PageSize" />
+            <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="TinyLinks">
+            <EntityTypeMapping TypeName="sellsbrothersModel.TinyLink">
+              <MappingFragment StoreEntitySet="fref_link">
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AccessCount" ColumnName="AccessCount" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostImages">
+            <EntityTypeMapping TypeName="sellsbrothersModel.PostImage">
+              <MappingFragment StoreEntitySet="PostImages">
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="sellsbrothers">
+        <EntityTypeShape EntityType="sellsbrothersModel.Ad" Width="1.5" PointX="3" PointY="2.25" Height="3.7109993489583322" IsExpanded="true" />
+        <EntityTypeShape EntityType="sellsbrothersModel.Badge" Width="1.5" PointX="3" PointY="6.75" Height="2.5571907552083317" IsExpanded="true" />
+        <EntityTypeShape EntityType="sellsbrothersModel.LandingZone" Width="1.5" PointX="3" PointY="10" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="sellsbrothersModel.Comment" Width="2.125" PointX="5.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="sellsbrothersModel.Post" Width="1.5" PointX="8.5" PointY="6.375" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="sellsbrothersModel.OutputCategory" Width="1.5" PointX="3" PointY="13.125" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="sellsbrothersModel.OutputItem" Width="1.5" PointX="5.25" PointY="10.125" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="sellsbrothersModel.PostCategory" Width="1.5" PointX="3" PointY="16" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="sellsbrothersModel.Site" Width="1.5" PointX="0.75" PointY="8.375" Height="3.5186979166666674" IsExpanded="true" />
+        <AssociationConnector Association="sellsbrothersModel.FK__TextAds__SiteId__4E53A1AA" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="8.375" />
+          <ConnectorPoint PointX="1.5" PointY="4.1054996744791659" />
+          <ConnectorPoint PointX="3" PointY="4.1054996744791659" />
+        </AssociationConnector>
+        <AssociationConnector Association="sellsbrothersModel.FK__Badges__SiteId__51300E55" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="8.8410953776041659" />
+          <ConnectorPoint PointX="3" PointY="8.8410953776041659" />
+        </AssociationConnector>
+        <AssociationConnector Association="sellsbrothersModel.FK__LandingZo__SiteI__503BEA1C" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="11.042999674479166" />
+          <ConnectorPoint PointX="3" PointY="11.042999674479166" />
+        </AssociationConnector>
+        <AssociationConnector Association="sellsbrothersModel.FK__OutputCat__SiteI__4F47C5E3" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.2627573486328125" PointY="12.085999348958332" />
+          <ConnectorPoint PointX="1.2627573486328125" PointY="14.2112939453125" />
+          <ConnectorPoint PointX="1.7042978409830731" PointY="14.2112939453125" />
+          <ConnectorPoint PointX="1.8709645076497397" PointY="14.2112939453125" />
+          <ConnectorPoint PointX="3" PointY="14.2112939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="sellsbrothersModel.FK__OutputIte__Categ__531856C7" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="13.2881982421875" />
+          <ConnectorPoint PointX="5.25" PointY="13.2881982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="sellsbrothersModel.FK__OutputIte__SiteI__540C7B00" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="9.6535953776041659" />
+          <ConnectorPoint PointX="6" PointY="9.6535953776041659" />
+          <ConnectorPoint PointX="6" PointY="10.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="sellsbrothersModel.FK__PostCateg__SiteI__5224328E" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.7876311743164064" PointY="12.085999348958332" />
+          <ConnectorPoint PointX="1.7876311743164064" PointY="16.990143229166666" />
+          <ConnectorPoint PointX="3" PointY="16.990143229166666" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="sellsbrothersModel.TinyLink" Width="1.5" PointX="9.25" PointY="3.75" Height="1.9802864583333388" />
+        <AssociationConnector Association="sellsbrothersModel.PostComment">
+          <ConnectorPoint PointX="8.84375" PointY="6.375" />
+          <ConnectorPoint PointX="8.84375" PointY="2.12474609375" />
+          <ConnectorPoint PointX="7.875" PointY="2.12474609375" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="sellsbrothersModel.PostImage" Width="1.5" PointX="3" PointY="19.25" Height="1.9802864583333317" />
+        <AssociationConnector Association="sellsbrothersModel.FK_PostImageSite" >
+          <ConnectorPoint PointX="0.97512617431640625" PointY="12.085999348958332" />
+          <ConnectorPoint PointX="0.97512617431640625" PointY="20.240143229166666" />
+          <ConnectorPoint PointX="3" PointY="20.240143229166666" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

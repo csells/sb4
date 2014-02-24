@@ -1,0 +1,34 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/18 -->
+<html>
+<head>
+	<title>Where's the menu option to get a command prompt set to the context of your current project?</title>
+</head>
+<body>
+
+		    
+<b>Q. I might be mistaken, but I distinctly remember a beta release of VS.NET that had a menu option that took to a command prompt set to the context of your current project. I can't find it in the release version of VS.NET. Was it taken out, was it never there, or is it hidden away somewhere?</b>
+<p>
+<i>Asked by reader. Answered by the Wonk on November 5, 2002</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">While I don’t remember the functionality you’re speaking of ever being in VS.NET, I know exactly what you mean, because I often need the ability to pop up a command prompt in my project’s directory, with the full suite of .NET SDK tools provided for in my path. Setting the path can be accomplished using the Visual Studio .NET Command Prompt item from the Start-&gt;Programs-&gt;Microsoft Visual Studio .NET-&gt;Visual Studio Tools menu, which launches the Windows command shell and runs the C:\Program Files\Microsoft Visual Studio .NET\Common7\Tools\vsvars32.bat batch file. I often place this shortcut on my Quick Launch toolbar to save me digging into the menus.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">However, this shortcut will put me into a folder deep in the Program Files folder, which is never where I want to be. Where I want to be is in the project directory of my current VS.NET project. To set that up, add a new External Tool to VS.NET by choosing External Tool from the VS.NET Tools menu and add a new tool that looks like this:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN><IMG height=398 alt=[Image] hspace=4 src="img2.JPG" width=396 align=left border=0 cd:pos="2"><BR clear=all></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">The Title of the tool is whatever you like, but by putting &amp; in the title, you can set the menu item short cut key (I like S). The Command is the path to the command shell on your system (it’s c:\windows\system32\cmd.exe on mine). The Arguments are “/k” following by the path to vsvars32.bat on your system, which means execute the batch file and keep the shell executing. The Initial directory is a variable which represents the currently active project in VS.NET. $(SolutionDir) is another good choice, if you’d like to not worry about choosing the property project before executing this command. When you execute this new tool, you’ll get a new command shell in the current project’s directory all set up with the appropriate path.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">Also, If you’d like to do the same thing for the File Explorer, set the Command to the path to explorer.exe and the Arguments to the $(ProjectDir) or $(SolutionDir) in double quotes, which will cause Explorer to open that folder for you.</SPAN></P>
+<P><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"></SPAN>
+<H1>Feedback Responses</H1>Aaron Clauson mentions that you can run <A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpsamples/html/explorer_shell_extension_technology_sample.asp">the sample that comes with the .NET Framework SDK that deals with Shell Extensions</A> and you can get the command option in your explorer context menu.</p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'Where's the menu option to get a command prompt set to the context of your current project?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

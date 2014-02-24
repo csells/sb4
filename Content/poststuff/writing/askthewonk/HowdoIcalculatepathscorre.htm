@@ -1,0 +1,111 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/9 -->
+<html>
+<head>
+	<title>How do I calculate paths correctly from my web site?</title>
+</head>
+<body>
+
+		    
+<b>Q. How do I calculate paths correctly from my web site?</b>
+<p>
+<i>Asked by Chris Sells. Answered by the Wonk on January 2, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P>[<A href="webPathHelpSrc.zip">sample code</A>]</P>
+<P>This question comes up again and again. In building my own web site, I've often found the need to compose path names to resources on my site. For example, the image at the top of each of my web pages is determined dynamically based on what directory you're reading from. So, if you're reading a page from tools or one of the sub-directories, the src attribute of the &lt;img&gt; tag is:</P><PRE><B>http://www.sellsbrothers.com/</B>images/tg_tools.gif</PRE>
+<P>(where “tg” stands for “top graphic”). At least, that's what you get when you surf to my public web site. However, when I'm testing my web site internally before publishing it, the URL for the image is very different</P><PRE><B>http://localhost/sb/</B>images/tg_tools.gif</PRE>
+<P>Notice that in test mode, my web site is just another vdir and not the default web. And therein lies a problem. I can't just slap my domain name on the front of every URL – I need each URL on my site to be relative to the current site I’m testing, otherwise I’ll follow a link from my test site to my live site and not be testing anymore.</P>
+<P>Of course, the immediately obvious solution is to use relative path names instead of absolute path names. Unfortunately, that doesn’t work as nicely as you’d like, either. The problem is that I’m using a single web control on every page of my web site to give it a common look 'n' feel. The web control will come into existence at all levels of my site:</P><PRE>/
+/tools
+/tools/monikers</PRE>
+<P class=MsoNormal>I can't just use a hard-coded relative link to get to the image from the control, because even the relative path needs to be adjusted dynamically:</P><PRE><FONT face="Courier New">/images/tg_tools.gif
+../images/tg_tools.gif
+../../images/tg_tools.gif</FONT></PRE>
+<P class=MsoNormal>The HttpRequest class provides a very promising method called MapPath that sounds useful to solve this problem. Unfortunately, MapPath maps to the physical location on the hard drive, not to an URL:</P>
+<P class=MsoNormal><SPAN style="FONT-SIZE: 10pt; COLOR: green; FONT-FAMILY: 'Courier New'">// default.aspx<BR>// yields d:\project\mine\sb\images\tg_tools.gif<BR></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">string</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: black">src</SPAN> = <SPAN style="COLOR: black">request</SPAN>.<SPAN style="COLOR: black">MapPath</SPAN>(“<SPAN style="COLOR: black">images</SPAN>/<SPAN style="COLOR: black">tg_tools</SPAN>.<SPAN style="COLOR: black">gif</SPAN>”); </SPAN></P>
+<P class=MsoNormal>Even if MapPath gave me an URL, it will only map from the current sub-dir and not from the root, so if I'm three levels deep, there’s no way to get a path relative to the root:</P>
+<P class=MsoNormal><SPAN style="FONT-SIZE: 10pt; COLOR: green; FONT-FAMILY: 'Courier New'">// foo/bar/default.aspx<BR>// yields d:\project\mine\sb\foo\bar\images\tg_tools.gif<BR>// and not d:\project\mine\sb\images\tg_tools.gif<BR></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">string</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: black">src</SPAN> = <SPAN style="COLOR: black">request</SPAN>.<SPAN style="COLOR: black">MapPath</SPAN>(“/<SPAN style="COLOR: black">images</SPAN>/<SPAN style="COLOR: black">tg_tools</SPAN>.<SPAN style="COLOR: black">gif</SPAN>”); </SPAN></P>
+<P class=MsoNormal>What we're really after is another kind of relative than we’ve had so far. We know how to build absolute path names and URL names starting from some known root. We also know how to build relative path and URL names starting from where we are. We need something else. To abstract away the differences between web servers, we need to be able to construct absolute path and URL names relative to the logical root of the vdir. No matter where I am in the hierarchy of my web site, I need to be able to translate:</P><PRE><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">images/tg_tools.gif</SPAN></PRE>
+<P class=MsoNormal>into:</P><PRE>http://localhost/sb/images/tg_tools.gif</PRE>
+<P class=MsoNormal>when in test mode and into:</P><PRE>http://www.sellsbrothers.com/images/tg_tools.gif</PRE>
+<P class=MsoNormal>when in release mode, but not have to change my code to do it (I tried that once – wow what a lot of work). ASP.NET provides no build in classes or methods that will do this for you. Luckily, it provides the necessary building blocks.</P>
+<H2>WebPathHelper</H2>
+<P class=MsoNormal>The core of mapping as relative from a logical root is to first find the logical root. This can be done using the HttpRequest URL property and HttpRequest ApplicationPath property:</P>
+<P class=MsoNormal><B><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">public</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">class</SPAN> <SPAN style="COLOR: black">WebPathHelper</SPAN> {<BR></SPAN></B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp; <SPAN style="COLOR: green">// "http://www.foo.com/" or "http://localhost/foo/"<BR></SPAN></SPAN><B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp; <SPAN style="COLOR: blue">public</SPAN> <SPAN style="COLOR: blue">static</SPAN> <SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">RootUrl</SPAN> {<BR>&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">get</SPAN> {<BR></SPAN></B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">HttpRequest</SPAN> <SPAN style="COLOR: black">request</SPAN> = <SPAN style="COLOR: black">HttpContext</SPAN>.<SPAN style="COLOR: black">Current</SPAN>.<SPAN style="COLOR: black">Request</SPAN>;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: green">// "http://www.foo.com/foo.htm" or "http://localhost/foo/foo.htm"<BR></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">string<BR></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">requestUrl</SPAN> = <SPAN style="COLOR: black">request</SPAN>.<SPAN style="COLOR: black">Url</SPAN>.<SPAN style="COLOR: black">ToString</SPAN>();&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: green">// "http" or "ftp"<BR></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">string<BR></SPAN>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="COLOR: black">protocol</SPAN> = <SPAN style="COLOR: black">requestUrl</SPAN>.<SPAN style="COLOR: black">Substring</SPAN>(0, <SPAN style="COLOR: black">requestUrl</SPAN>.<SPAN style="COLOR: black">IndexOf</SPAN>(":"));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: green">// "www.foo.com" or "localhost"<BR></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">site</SPAN> = <SPAN style="COLOR: black">Site</SPAN>.<SPAN style="COLOR: black">CreateFromUrl</SPAN>(<SPAN style="COLOR: black">requestUrl</SPAN>).<SPAN style="COLOR: black">Name</SPAN>;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: green">// "/" or "/foo" =&gt; "" or "foo"<BR></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">appPath</SPAN> = <SPAN style="COLOR: black">request</SPAN>.<SPAN style="COLOR: black">ApplicationPath</SPAN>.<SPAN style="COLOR: black">Substring</SPAN>(1);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: green">// "http://www.foo.com/" or "http://localhost/foo/"<BR></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">string<BR></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">root</SPAN> = <SPAN style="COLOR: blue">string</SPAN>.<SPAN style="COLOR: black">Format</SPAN>(<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "{0}://{1}/{2}{3}",<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">protocol</SPAN>,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">site</SPAN>,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">appPath</SPAN>,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">appPath</SPAN>.<SPAN style="COLOR: black">Length</SPAN> &gt; 0 ? "/" : "");&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">Debug</SPAN>.<SPAN style="COLOR: black">Assert</SPAN>(<SPAN style="COLOR: black">root</SPAN>.<SPAN style="COLOR: black">EndsWith</SPAN>("/"));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">return</SPAN> <SPAN style="COLOR: black">root</SPAN>;<BR></SPAN><B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp;&nbsp;&nbsp; }<BR>&nbsp; }<BR></SPAN></B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp; ...<BR></SPAN><B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">}</SPAN></B></P>
+<P class=MsoNormal>No matter where WebPathHelper.RootUrl is called from, it will use the current HttpRequest object as context to return the root of the web site as an URL, including any vdir name as needed, as shown here:</P>
+<TABLE class=MsoTableGrid style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse" cellSpacing=0 cellPadding=0 border=1>
+<TBODY>
+<TR>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>Getting RootUrl From</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>V-Dir Name</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>WebPathHelper.RootUrl</P></TD></TR>
+<TR>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>http://www.sellsbrothers.com</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>&lt;none&gt;</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>http://www.sellsbrothers.com/</P></TD></TR>
+<TR>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>http://www.sellsbrothers.com/foo</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>&lt;none&gt;</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>http://www.sellsbrothers.com/</P></TD></TR>
+<TR>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>http://localhost/sb</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>/sb</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>Sb</P></TD></TR>
+<TR>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>http://localhost/sb/foo</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>sb</P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: medium none; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid" vAlign=top>
+<P class=MsoNormal>http://localhost/sb</P></TD></TR></TBODY></TABLE>
+<P class=MsoNormal>From this, it's easy to construct a mapping function:</P>
+<P class=MsoNormal><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">public</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">class</SPAN> <SPAN style="COLOR: black">WebPathHelper</SPAN> {<BR></SPAN><B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp; <SPAN style="COLOR: blue">public</SPAN> <SPAN style="COLOR: blue">static</SPAN> <SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">MapUrlFromRoot</SPAN>(<SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">url</SPAN>) {<BR>&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">safeUrl</SPAN> = <SPAN style="COLOR: black">url</SPAN>.<SPAN style="COLOR: black">Replace</SPAN>('\\', '/').<SPAN style="COLOR: black">TrimStart</SPAN>('/');<BR>&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">return</SPAN> <SPAN style="COLOR: black">RootUrl</SPAN> + <SPAN style="COLOR: black">safeUrl</SPAN>;<BR>&nbsp; }<BR></SPAN></B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp; ...<BR>}</SPAN></P>
+<P class=MsoNormal>Now, I can call WebPathHelper.MapUrlFromRoot("images/tg_tools.gif") from anywhere on my site and always get the right URL, whether it’s on my test site or my live site.</P>
+<P class=MsoNormal>When I have similar needs on the file system, e.g. loading an Access database, I can do so using RootPath and MapPathFromRoot:</P>
+<P class=MsoNormal><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">public</SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"> <SPAN style="COLOR: blue">class</SPAN> <SPAN style="COLOR: black">WebPathHelper </SPAN>{<BR></SPAN><B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp; <SPAN style="COLOR: blue">public</SPAN> <SPAN style="COLOR: blue">static</SPAN> <SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">RootPath</SPAN> {<BR>&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">get</SPAN> {<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">HttpRequest</SPAN> <SPAN style="COLOR: black">request</SPAN> = <SPAN style="COLOR: black">HttpContext</SPAN>.<SPAN style="COLOR: black">Current</SPAN>.<SPAN style="COLOR: black">Request</SPAN>;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">root</SPAN> = <SPAN style="COLOR: black">request</SPAN>.<SPAN style="COLOR: black">PhysicalApplicationPath</SPAN>;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: black">Debug</SPAN>.<SPAN style="COLOR: black">Assert</SPAN>(<SPAN style="COLOR: black">root</SPAN>.<SPAN style="COLOR: black">EndsWith</SPAN>(@"\"));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">return</SPAN> <SPAN style="COLOR: black">root</SPAN>;<BR>&nbsp;&nbsp;&nbsp; }<BR>&nbsp; }<BR></SPAN></B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp;<BR></SPAN><B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp; <SPAN style="COLOR: blue">public</SPAN> <SPAN style="COLOR: blue">static</SPAN> <SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">MapPathFromRoot</SPAN>(<SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">path</SPAN>) {<BR>&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">string</SPAN> <SPAN style="COLOR: black">safePath</SPAN> = <SPAN style="COLOR: black">path</SPAN>.<SPAN style="COLOR: black">Replace</SPAN>('/', '\\').<SPAN style="COLOR: black">TrimStart</SPAN>('\\');<BR>&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">return</SPAN> <SPAN style="COLOR: black">RootPath</SPAN> + <SPAN style="COLOR: black">safePath</SPAN>;<BR>&nbsp; }<BR></SPAN></B><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp; ...<BR>}</SPAN></P>
+<P class=MsoNormal>This allows me to call WebPathHelper.MapPathFromRoot(@"foo\foo.mdb") and get the correct path name, where it's on my test machine or whether it’s on whatever machine ORCSWeb is using to host my site.</P>
+<P>Where Are We?</P>
+<P class=MsoNormal>In exploring this problem, I discovered that there are three kinds of paths, where only two have come up explicitly in my previous experience. We’re all familiar with absolute and relative URL and file names and our operating systems and browsers can consume them w/o trouble. However, building web applications requires also building absolute URLs and files from URLs and files relative to a logical root. The WebPathHelper will construct paths relative to the logical vdir root, which fills in the functionality missing from .NET for dealing with only relative and absolutely paths. This lets me add features to my site that require URLs and file names, test them locally and have confidence that they’ll work exactly the same way on my production site.</P>
+<H1>How I Figured This Out</H1>
+<P class=MsoNormal>This one was a pain to figure out. I started by noticing the problem and attempting some bone-headed temporary solutions that I'd prefer not to list here (too embarrassing : ). The key came when I asked some of my ASP.NET expert friends and they agreed that there was no good way to do what I wanted built into ASP.NET itself. Once that was established, I started digging through the information that ASP.NET, particularly the Request object, provided, which is where the aspx pages in the sample came from. From that information, I pulled out what I needed to build the WebPathHelper class and then deployed it on my own site, fixed the bugs that can only be found in a real-world deployment.</P>
+<H1>How To Avoid This In The Future</H1>
+<P class=MsoNormal>I don't know that I could have avoided this problem. I had actual resources, both file and URL, to reference that were relative to the root of the vdir. It would've been better to dig into the problem for real in the first place instead of my silly bandaids, but one can't always do things the "right" way the first time. The key was to recognize that I can a recurring problem happening in all kinds of spots on my web site, figuring out that they were all the same problem and sitting down to fix it once and for all.</P>
+<H1>Feedback Responses</H1>
+<P class=MsoNormal>Jamie Cansdale pointed out that the ~ character can be used in place of Request.ApplicationPath in some limited cases, e.g.</P>
+<P><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><SPAN style="COLOR: blue"></SPAN><FONT color=#000000>&lt;a runat="server" href="<STRONG>~</STRONG>/images/tg_tools.gif"&gt;relative to virtual root&lt;/a&gt;</FONT></SPAN></P>
+<P>However, this shortcut can only be used with server-side controls and only in a few places. I prefer the WebPathHelper because it's explicit and general purpose.</P>
+Damjan Janevski has the following feedback:</p>
+<blockquote>Page.ResolveUrl(&quot;~/images/tg_tools.gif&quot;) will return string with URL relative 
+to the web application folder (vdir).<br>
+<br>
+e.g. for http://www.sellsbrothers.com/images/tg_tools.gif it will be &quot;/images/tg_tools.gif&quot;, 
+for http://localhost/sb/images/tg_tools.gif it will be &quot;/sb/images/tg_tools.gif&quot;.<br>
+<br>
+It's better from WebPathHelper solution because the links are relative and no 
+requests to DNS server are made.</blockquote>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+			Harry Collins points out that I forgot to handle the port 
+			specification, e.g. http://192.168.1.47:12300/mypage.aspx.</SPAN></FONT></p>
+<font size="2">
+<SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'How do I calculate paths correctly from my web site?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

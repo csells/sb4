@@ -1,0 +1,386 @@
+<html>
+    <head>
+        <title>Call Control Focus</title>
+    </head>
+    <body>
+        <h1 align="center">
+            Windows Telephony Overview
+        </h1>
+        <h2 align="center">
+            Call Control Focus
+        </h2>
+        <hr>
+        <p>
+            <br>
+            TAPI was designed to establish connections between end-points on a telephone 
+            network. These end-points are called <i>addresses</i>. You can think of an 
+            address as a phone number. On a business phone system where you're allowed to 
+            have multiple calls at once (although you can only talk on one at a time), an 
+            address is called a <i>call appearance</i>. Either way, it's possible to have 
+            more than one address on a single line. The <i>line </i>is the physical 
+            connection between each end-point and the CO switch. Of course, you're allowed 
+            multiple lines at any location. All businesses of any size have multiple phone 
+            lines. Most homes have one, although some have two or more.
+        </p>
+        <p>
+            <br>
+            <br>
+        </p>
+        <table border="1" cellspacing="1" bordercolor="#000000" cellpadding="9" width="100%">
+            <tr>
+                <td valign="TOP">
+                    Most homes built within the last twenty years are wired internally for two or 
+                    three lines even if they only have one. For example, my house is wired for 
+                    three phone lines. This means that at every phone outlet in my house, I've got 
+                    six copper wires, i.e. three pairs. Currently, the phone company has only 
+                    connected two pairs to the CO. At any time, however, I could spend the money 
+                    (usually between $35 and $75) to have the third line activated. I'd love this, 
+                    of course, being a telephony nerd, but it was hard enough to talk my wife into 
+                    two...
+                </td>
+            </tr>
+        </table>
+        <p>
+            <br>
+            <br>
+            <br>
+            The physical connections between each end-point and a CO and the telephone 
+            network between each CO allows a logical connection to be made from any 
+            end-point to any other end-point. This logical connection is a <i>call</i>. You 
+            make a call, of course, by providing the switch with another address <font face="Symbol">
+                -</font> you know, dialing a phone number.
+        </p>
+        <p>
+            When establishing a call, an address can have several forms. If you're 
+            connecting to another person on your key system or PBX, you can dial an 
+            abbreviated version called an extension number. This is usually the last three, 
+            four or five digits of the full phone number. If you're dialing someone in your 
+            area code, you dial just the phone number without the area code. If you're 
+            dialing long distance within the US, you first have to dial 1 followed by the 
+            area code. If you're dialing an international number, you first have to dial 
+            the prefix string that identifies an international number <font face="Symbol">-</font>
+            011 in the US <font face="Symbol">-</font> followed by the country code, the 
+            area code and then the number. The further away you get, the more complicated 
+            the phone number becomes.
+        </p>
+        <p>
+            For example, let's say someone wanted to dial the Addison-Wesley Developer's 
+            Press to order this book for a friend. Here's the digits they'd have to dial 
+            based on where they're calling from:
+        </p>
+        <table border="1" cellspacing="2" bordercolor="#000000" cellpadding="9" width="100%">
+            <tr>
+                <th width="41%" valign="TOP" bgcolor="#ffffff">
+                    Dialing From
+                </th>
+                <th width="39%" valign="TOP" bgcolor="#ffffff">
+                    Number to Dial
+                </th>
+                <th width="20%" valign="TOP" bgcolor="#ffffff">
+                    Digits
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    Inside AW
+                </td>
+                <td>
+                    4-3700
+                </td>
+                <td>
+                    5
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    In same area code
+                </td>
+                <td>
+                    944-3700
+                </td>
+                <td>
+                    7
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Inside the US
+                </td>
+                <td>
+                    1-617-944-3700
+                </td>
+                <td>
+                    11
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    From Germany
+                </td>
+                <td>
+                    001-617-944-3700
+                </td>
+                <td>
+                    13
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    From a PBX in Germany using an AT&amp;T credit card
+                </td>
+                <td>
+                    9-0130-0010-617-944-3700-xxx-xxxx-xxxx
+                </td>
+                <td>
+                    30
+                </td>
+            </tr>
+        </table>
+        <p>
+            <br>
+            <br>
+            <br>
+            According to the psychology classes I took in college, people are able to group 
+            together about five things, give or take a couple, in a single thought. The 
+            typical phone number is seven digits long, which is pushing it, and dialing 
+            long distance is about all I can manage. When I have to dial internationally 
+            using a calling card and some number to get an outside line first <font face="Symbol">
+                -</font> well, let's just say I don't usually get it right the first time.
+        </p>
+        <p>
+            Wouldn't it be great if we could just give the computer a phone number and let 
+            it figure out what digits to actually dial? TAPI has support for doing just 
+            that. To transform a phone number into a <i>dial string</i>, TAPI needs two 
+            things, an phone number in <i>canonical address format </i>for a specific 
+            country and a description of a <i>dialing location</i>. The canonical address 
+            format is:
+        </p>
+        <p>
+            <code>+ country-code space <b>[</b>(area-code) space<b>]</b> subscriber-number <b>[</b>more<b>]</b>
+            </code>
+        </p>
+        <p>
+            <br>
+        </p>
+        <table border="1" cellspacing="1" bordercolor="#000000" cellpadding="9" width="100%">
+            <tr>
+                <td width="30%" valign="TOP">
+                    country-code
+                </td>
+                <td width="70%" valign="TOP">
+                    Identifies the country of the address. One or more digits followed by a space.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    area-code
+                </td>
+                <td>
+                    Identifies the area code of the address. Zero or more digits. If there are 
+                    digits, they're surrounded by parenthesis which are followed by a space.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    subscriber-number
+                </td>
+                <td>
+                    The rest of the phone number. One or more digits, dialing control characters or 
+                    formatting characters.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    more
+                </td>
+                <td>
+                    Optional delimiter character and one or more characters denoting an ISDN 
+                    sub-address, name information or another address. Multiple addresses are used 
+                    in ISDN to combine multiple data channels.
+                </td>
+            </tr>
+        </table>
+        <p>
+            <br>
+            <br>
+            Therefore, the canonical format of the Addison-Wesley Developer's Press is +1 
+            (617) 944-3700.
+        </p>
+        <p>
+            Since I know the country where phone I'm calling is located, all I need now is 
+            a description of the location I'm dialing from. The Telephony Control Panel 
+            allows access to the Dialing Properties available on your system. The &quot;My 
+            Locations&quot; tab allows you to set up one or more dialing locations.
+        </p>
+        <p align="center">
+            <br>
+            <img src="Image3.gif" width="560" height="542">
+            <br clear="all">
+            <br>
+            Figure 3: Dialing Locations settings
+            <br>
+            <br>
+            <br>
+            <br>
+            The Default Location is for desktop computers. You set up the dialing rules for 
+            your computer once <font face="Symbol">-</font> what country you're in, what to 
+            dial to get an outside line, et cetera <font face="Symbol">-</font> and it'll 
+            be used by every TAPI application. Being able to configure multiple locations 
+            is for laptop computers. For example, I take my laptop to hotels all over the 
+            US. Invariably, hotels require me to dial either 8 or 9 to get an outside line 
+            and a 1 for long distance calls. I've set up two dialing locations, one called 
+            Prefix 8 and one called Prefix 9, both of which are identical except for the 
+            prefix. When I want to access my Internet Service Provider (ISP) from the road, 
+            I choose the location I'm dialing from based on how the hotel's switch is set 
+            up. This means I can enter phone number information once and the dial string 
+            will be properly composed based on my location.
+        </p>
+        <p>
+            When dialing a number, every good TAPI application will let you enter the area 
+            code, the subscriber number, the name of the country you're dialing and the 
+            dialing location you're calling from. For example, HyperTerminal has a dialog 
+            that looks like this:
+        </p>
+        <p align="center">
+            <br>
+            <img src="Image4.gif" width="455" height="294">
+            <br clear="all">
+            <br>
+            Figure 4: Dialing a TAPI phone number
+            <br>
+            <br>
+            <br>
+            <br>
+            The phone number country, area code and subscriber number can be changed by 
+            pressing the Modify button and the location can be changed in the Your location 
+            list box. If I want to access the Dialing Properties dialog just like I can 
+            from the Telephony Control Panel, I can press the Dialing Properties button. 
+            HyperTerminal uses this information to form the canonical address of the phone 
+            number you're dialing. It then asks TAPI to translate this address into <i>dialable 
+                address format</i>. Dialable addresses are the actual string of numbers and 
+            control characters needed to dial the address from your location. The possible 
+            characters are listed below:
+        </p>
+        <table border="1" cellspacing="1" bordercolor="#000000" cellpadding="9" width="100%">
+            <tr>
+                <td width="28%" valign="TOP">
+                    0-9 and A-D
+                </td>
+                <td width="72%" valign="TOP">
+                    Dial digits. A-D are special tones used for telephony maintenance and are not 
+                    available on most phone keypads.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    !
+                </td>
+                <td>
+                    <i>Flash hook</i> (500ms on-hook, 500ms off-hook). Most phones have a <i>hook 
+                        switch</i> that the phone rests on when you hang up. Holding this switch 
+                    for a short time is called a <i>flash</i>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    P or p
+                </td>
+                <td>
+                    Dial following digits using pulses.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    T or t
+                </td>
+                <td>
+                    Dial following digits using tones.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    ,
+                </td>
+                <td>
+                    Pause (time based on device settings).
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    W or w
+                </td>
+                <td>
+                    Wait for dial tone before proceeding.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @
+                </td>
+                <td>
+                    Wait for <i>quiet answer</i> (a ring followed by several seconds of silence).
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    ;
+                </td>
+                <td>
+                    Indicates the end of a partial dialing string. Another dial string will follow 
+                    in a separate dial string.
+                </td>
+            </tr>
+        </table>
+        <p>
+            <br>
+            <br>
+            <br>
+            For example, on a line supporting tone dialing, the dial string for the 
+            Addison-Wesley Developer's Press in the US from a home in another US area code 
+            is T16179443700. This is the string that will actually be sent to TAPI to dial 
+            the phone.
+        </p>
+        <p>
+            After translating a canonical address into a dialable address and dialing, a 
+            call has begun. Before it's connected, a call will go through a number of <i>call 
+                states</i>. These states include dialing, proceeding and ringing. If the 
+            call is picked up on the other end, it will transition into the connected 
+            state. If it's busy or there is a network error (&quot;doo-doo-do. I'm sorry, 
+            your call could not be connected...&quot;), the call will transition into the 
+            appropriate state. Once the call has been disconnected, it will translate into 
+            its final state, idle. It's the responsibility of a Full TAPI application to 
+            properly handle these states. (See Chapter 2, Assisted Telephony, for a 
+            discussion of the difference between Full TAPI and Assisted TAPI).
+        </p>
+        <p>
+            TAPI provides programming access to three objects for call control: lines, 
+            addresses and calls. As I said, one location can have multiple lines and one 
+            line can have multiple addresses. In addition, one address can have multiple 
+            calls. You can switch between calls, by placing one on <i>hold</i> before 
+            activating another. You can place a call on hold, establish another call and <i>transfer</i>
+            the initial call to the new address. You join two or more calls together and 
+            have a <i>conference</i>. These and many other advanced call control techniques 
+            are all supported by TAPI.
+        </p>
+        <p>
+            One other telephony object supported by TAPI is the phone. The phone is the 
+            hunk of hardware that you use for its convenient placement of speaker, 
+            microphone and keypad. Using TAPI, call control can take place independently of 
+            the phone. To connect input and output to a line, TAPI allows a <i>terminal</i> 
+            to be established. Often, the default terminal will be the phone. However, this 
+            facility allows a sound card, speakers and a microphone to be used instead of a 
+            phone. It also allows the phone to be used as an input-output peripheral 
+            without connecting it to a line.
+        </p>
+        <p>
+            <br>
+        </p>
+        <hr>
+        <p align="center">
+            <br>
+            <a href="index.htm"><font size="4">Back</a> | <a href="index.htm">Top</a> | <a href="media.htm">
+                Next</a> </font>
+            <br>
+        </p>
+    </body>
+</html>

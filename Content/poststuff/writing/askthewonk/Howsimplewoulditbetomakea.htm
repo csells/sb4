@@ -1,0 +1,41 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/52 -->
+<html>
+<head>
+	<title>How simple would it be to make a VB6 application available to browser users via VB.NET?</title>
+</head>
+<body>
+
+		    
+<b>Q. I have an application developed in VB6 that people interact with on a network of PCs. How simple would it be to make the same application available to browser users on the Internet using VB.NET?</b>
+<p>
+<i>Asked by Wayne. Answered by the Wonk on January 27, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">You really have three choices here:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt 0.5in; TEXT-INDENT: -0.25in; mso-list: l1 level1 lfo1; tab-stops: list .5in"><SPAN style="mso-list: Ignore">1)<SPAN style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN></SPAN>You can leave your application in VB6 or port it to VB.NET and distribute your application (along with all of the patches) via a setup program or MSI file.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt 0.5in; TEXT-INDENT: -0.25in; mso-list: l1 level1 lfo1; tab-stops: list .5in"><SPAN style="mso-list: Ignore">2)<SPAN style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN></SPAN>You can rewrite your VB6 application in ASP.NET, keeping as much of the flavor of the original application as possible.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt 0.5in; TEXT-INDENT: -0.25in; mso-list: l1 level1 lfo1; tab-stops: list .5in"><SPAN style="mso-list: Ignore">3)<SPAN style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN></SPAN>You can port your VB6 application to VB.NET and deploy it as a “smart client.”</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">#1 has the advantage that distributing an application and its patches is well-known and well-understood. The disadvantage, of course, is keeping all of the client machines up to date with the latest version of the application.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">#2 is nice because you get the web application deployment model. The downside, of course, is that you’re pretty much rewriting your application from scratch and, no matter what you’ve heard to the contrary, this is not an easy job. Plus, when you’re done, you’ll just have a web site and not a fully-featured Windows application.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">If you’re not familiar with .NET “smart clients,” they’re Windows applications built using .NET that are launched with an URL, e.g. http://networkofpcs/myapp.exe. #3 allows you to port your VB6 application to VB.NET and then deploy it by parking it on a web server and emailing around an URL. As your application changes, e.g. bug fixes, new features, etc, each client will get the latest and greatest version when they surf to the application.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">For more information about #3 (one of my very most favorite things about .NET), check the following sources:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<UL style="MARGIN-TOP: 0in" type=disc>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo2; tab-stops: list .5in"><A href="http://www.sellsbrothers.com/wahoo">The smart client Wahoo! sample</A>, <?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /><st1:PersonName>Chris Sells</st1:PersonName> 
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo2; tab-stops: list .5in"><A href="http://msdn.microsoft.com/msdnmag/issues/02/07/NetSmartClients/default.asp" target=_blank>.NET Zero Deployment: Security and Versioning Models in the Windows Forms Engine Help You Create and Deploy Smart Clients</A>, <st1:PersonName>Chris Sells</st1:PersonName>, MSDN Magazine, 7/02 
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo2; tab-stops: list .5in"><A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnforms/html/winforms11122002.asp" target=_blank>Increasing Permissions for Web-Deployed WinForms Applications</A>, </SPAN><st1:PersonName><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">Chris Sells</SPAN></st1:PersonName><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">, MSDN Online, </SPAN><st1:date Month="11" Day="5" Year="2002"><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">11/5/02</SPAN></st1:date></LI></UL></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'How simple would it be to make a VB6 application available to browser users via VB.NET?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+

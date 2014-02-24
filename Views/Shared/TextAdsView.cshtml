@@ -1,0 +1,11 @@
+﻿@model sb4.ViewModels.MasterViewModel
+@using sb4
+<!-- text links -->
+<p>
+  @{ foreach (Ad ad in Model.TextAds.Where(ad => !ad.InFooter)) { 
+  <br />
+  <a class="footerAdText" href="@ad.LinkPath">
+    @ad.Title</a>
+   } }
+</p>
+

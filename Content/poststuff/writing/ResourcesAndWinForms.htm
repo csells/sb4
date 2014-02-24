@@ -1,0 +1,80 @@
+<html>
+
+<head>
+<title>Resources and WinForms</title>
+</head>
+
+<body>
+
+<h1>Resources and <span class=SpellE>WinForms</span></h1>
+
+<p><i>This article was originally published in the
+            <a target="_blank" href="http://www.windevnet.com/newsletters/sells/">
+            &quot;Chris Sells on .NET&quot; newsletter</a></i></p>
+
+<p>A resource is a named piece of data bound into the assembly at build time. 
+For example, you could set the background image of a form in your application by 
+loading a bitmap from a file, like so:</p>
+<pre>public MainForm() {
+  InitializeComponent();
+<b>  this.BackgroundImage = new Bitmap(@&quot;C:\WINDOWS\Web\Wallpaper\Azul.jpg&quot;);
+</b>}</pre>
+<p>The problem with this code, of course, is that not all installations of 
+Windows will have Azul.jpg and even those that do may not have it in the same 
+place. Even if you shipped this picture with your application, a space-conscious 
+user may decide to remove it, causing your application to fault. The only safe 
+way to make sure that the picture, or any file, stays with code is to embed it 
+as a resource. You can do this in two ways. One way is to right-click on your 
+project in the Solution Explorer, choose Add New Item and open the file you’d 
+like to embed as a resource. The file will be copied into your project’s 
+directory, but will still not be embedded. To embed a file as a resource, 
+right-click on the file and choose Properties, changing the Build Action from 
+Content (the default) to Embedded Resource. Once you’ve done that, you can load 
+it at runtime. Many of the .NET classes provide constructors that take resource 
+identifiers, like the Bitmap:</p>
+<pre>public MainForm() {
+  InitializeComponent();
+<b>  this.BackgroundImage = new Bitmap(this.GetType(), &quot;Azul.jpg&quot;);</b>
+}</pre>
+<p>When embedded as a resource, the full name will be composed of the project’s 
+default namespace and the name of the file where the resource came from, e.g. 
+MySecondApp.Azul.jpg. When the picture is loaded at runtime, the first argument 
+is a type that shares the same namespace as that of the embedded resource and 
+the string is the rest of the name.<br>
+Luckily, if the resource naming scheme is less than intuitive for you or you’d 
+really like to see what the background image is going to look like in the 
+designer, you can set the value of many properties in your forms by using the 
+Property Browser directly, skipping the need to write the resource loading code 
+at all. For example to set the background image for a form, you merely have to 
+press the “…” button in the Property Brower next to the BackgroundImage 
+property, choose the file from the file system and the data will be read 
+directly into a bundle of resources maintained for that form. This causes the 
+image to be shown in the designer and the code to be generated that loads the 
+resource at runtime:</p>
+<pre>namespace MySecondApp {
+  public class MainForm : System.Windows.Forms.Form {
+  public MainForm() {
+    InitializeComponent();
+  }
+&nbsp;
+  private void InitializeComponent() {
+<b>    System.Resources.ResourceManager resources =
+      new System.Resources.ResourceManager(typeof(MainForm));
+</b>    ...
+<b>    this.BackgroundImage =
+      (Bitmap)resources.GetObject(&quot;$this.BackgroundImage&quot;);
+</b>    ...
+  }
+  ...
+}</pre>
+<p>In this case, instead of using the Bitmap constructor directly, the generated 
+code is using the ResourceManager class. This class will load the bundle of 
+resources specific to this form, whether those resources happen to be in the 
+executing assembly or an assembly with a set of localized resources specific to 
+the current user’s culture settings. This allows forms to be localized without 
+changing a lick of code or even recompiling, but that will have to remain a 
+topic for future articles…</p>
+
+</body>
+
+</html>

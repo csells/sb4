@@ -1,0 +1,42 @@
+<!-- Published by Fog Creek Software CityDesk MAYOWDQEAUJJTIIX/EB053B17/46 -->
+<html>
+<head>
+	<title>Are there any C# to VB conversion tools?</title>
+</head>
+<body>
+
+		    
+<b>Q. I'm a C# developer being forced to code in VB.NET...Any C# to VB conversion tools?</b>
+<p>
+<i>Asked by Patrick Crawford. Answered by the Wonk on January 16, 2003</i>
+<P style="MARGIN-RIGHT: 0px">
+		 </P>
+		  
+		<p style="MARGIN-RIGHT: 0px"><b>A.</b> <P class=MsoNormal style="MARGIN: 0in 0in 0pt">As far as being a C# developer forced to code in VB.NET, I don’t think that’s necessarily all bad. The technical team lead for the .NET CLR, who’s previous job was as an MIT professor for 20 years, actually prefers VB.NET as his managed language of choice. I don’t fault him entirely. VB.NET has some real advantages over C#, including line-by-line compilation, case correction (instead of case sensitivity), optional loose binding w/o writing Reflection code, a simpler event handling model, the filtering event handling scheme and various IDE enhancements all make VB.NET a pleasant language if you can get over the different, more verbose, syntax. Plus, when compared to VB6, VB.NET provides a cornucopia of language enhancements that make it useable by “real” object-oriented programmers. Implementation inheritance alone is worth the upgrade from VB6 to VB.NET as far as I’m concerned.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">On the other hand, I still haven’t switched, so I know what you’re after: some way to write code in C# and convert it after the fact to meet project/management/department/satanic requirements. I wouldn’t recommend that, frankly. While VB.NET and C# are roughly on parity feature-wise, the quality of the code you write directly in VB.NET is going to be much better than the quality of code that comes out of a C# to VB.NET conversion utility. VB.NET has a different culture (which you may or may not want to emulate) as well as some different conventions (which you absolutely should emulate) that can’t be duplicated by any conversion utility that I’m aware of.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">However, if you absolutely must convert C# code to VB.NET code, I know of a few tools that provide this service:</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<UL style="MARGIN-TOP: 0in" type=disc>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><A href="http://www.aspalliance.com/aldotnet/examples/translate.aspx" target=_blank>ASP Alliance’s C # to VB.NET Translator</A>, which is a web page and a web service.</LI>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><A href="http://www.xmlforasp.net/codeSection.aspx?csID=44" target=_blank>Dan Wahlin’s C# to VB.NET web service proxy</A>, which converts C# files to VB.NET files in bulk.</LI>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><A href="http://www.kamalpatel.net/ConvertCSharp2VB.aspx" target=_blank>Kamal Patel’s C# to VB.NET web page</A>, which includes an offline conversion tool and full source code.</LI>
+<LI class=MsoNormal style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo1; tab-stops: list .5in">If you discover you’d like to go the other way, there’s a Swedish tool called <A href="http://w1.311.telia.com/~u31115556/desc/programs.htm#BabbelFisken" target=_blank>BabbelFisken that converts from VB.NET to C#</A> (it also translates VB6 and <?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /><st1:place>Delphi</st1:place> to C#).</LI></UL>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">None of these tools is going to be perfect, unfortunately. My ideal tool would actually compile the C# code and translate it into a .NET CodeDOM object model, letting me spit it out any .NET language with a code provider. <A href="mailto:csells@sellsbrothers.com?subject=C# to CodeDOM Compiler">Please let me know if you build such a tool.</A></P>
+<H1 style="MARGIN: 12pt 0in 3pt"><FONT face=Arial size=5>How I Discovered This</FONT></H1>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">My ideas about whether it’s better to convert from one language to another come from experience. If a human has to read or maintain a hunk of source code, it’s always better than a human generate it in the first place, otherwise important language and culture-specifics are going to be missed or just plain wrong.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">The list of conversion tools came from following a link that Paul sent me himself and paying attention to the community that expresses itself via mailing lists and blogs. BabbelFisken was mentioned on <A href="http://radio.weblogs.com/0117167/" target=_blank>Sean 'Early' Campbell &amp; Scott 'Adopter' Swigart's Radio Weblog</A>, for example.</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">My need for a C# to CodeDOM conversion tool comes not from my need to write C# and produce VB.NET (although Justin Gehtland is performing this service for me in <A href="http://www.sellsbrothers.com/writing">porting my C# WinForms book to VB.NET</A>), but my need to build code generation tools (like <A href="http://www.sellsbrothers.com/tools/#collectionGen">CollectionGen</A> and <A href="http://www.sellsbrothers.com/tools/#xsdClassesGen">XsdClassesGen</A>). Right now, I need per-language code generation templates, which are impossible to keep in parity. If I had a single C# template that I used to generate the code, but passed it through a C# to CodeDOM compiler, I could output C# or VB.NET or any other language with a .NET code provider.<o:p></o:p></P></p>
+  		<p style="MARGIN-RIGHT: 0px">
+			<font size="2"><SPAN 
+style="FONT-SIZE: 12pt; FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		</p>
+<H1>Feedback</H1>
+<P><A href="mailto:askthewonk@sellsbrothers.com?subject=Feedback on 'Are there any C# to VB conversion tools?'">I have 
+feedback on this Ask The Wonk answer</A></P></SPAN></FONT></body>
+</html>
+
