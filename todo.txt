@@ -1,3 +1,10 @@
+-move to azure
+  -remove web-connections.config from git
+  -get SSL cert
+  -remove https URLs in existing content
+  -remove https URLs in new content
+  -fix the site search box
+
 -I think the categories for the items should be more visible. That would allow people to then drill into the categories more.
 -Blog Converstaions
 -clean up imported data
