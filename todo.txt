@@ -2,13 +2,14 @@
   +backup database to local machine
   +copy database to azure
   +don't get approval emails anymore
-  -lots of unapproved comments
+  +lots of unapproved comments (95010,95014,95054,95059)
+  +reduce # of posts on the home page
+  +fix the site search box
   -can't post new blog posts
   -get SSL cert
-  -reduce # of posts on the home page
-  -fix the site search box
-  -add google analytics to my web site	8:52 AM	13 KB	
-  -404 testing on the web site	8:45 AM	13 KB	  -copy site to azure
+  -add google analytics to my web site	
+  -404 testing on the web site
+  -copy site to azure
 
   -move all tool project source code to github
   -move all videos to youtube

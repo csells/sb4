@@ -40,7 +40,8 @@
     </div>
     <div class="rightAds">
       <!-- search, badges and ads -->
-      <% Html.RenderPartial("BingSearchView"); %>
+      <%-- Html.RenderPartial("BingSearchView"); --%>
+      <% Html.RenderPartial("GoogleSearchView"); %>
       <% Html.RenderPartial("BannerAdView"); %>
       <% Html.RenderPartial("BadgesView"); %>
       <% Html.RenderPartial("TextAdsView"); %>
