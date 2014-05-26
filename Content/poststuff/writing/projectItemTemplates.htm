@@ -1,0 +1,152 @@
+<html>
+
+    <head>
+        <title>Adding Custom Project Item Templates to VS.NET</title>
+    </head>
+
+<body>
+
+<h1>Adding Custom Project Item Templates to VS.NET</h1>
+<p>This article describes how to add a custom project item wizard to the Add New 
+Item dialog in Visual Studio .NET. Instead of building a custom implementation 
+of IDTWizard and generating the code ourselves, however, we’re going to leverage 
+Microsoft’s implementation using strategically placed template files and script.</p>
+<h2>The Sample</h2>
+<p><a href="ProjectItemTemplateSample.zip">The sample project item template 
+wizard</a> I built to go along with this article is called My Web Form and adds 
+a custom aspx file along with a custom aspx.cs file (the latter being the hard 
+part), as shown below. It also advertises the <a href="../conference/">Web Services DevCon</a>. 
+Enjoy.</p>
+<p><i><b>NOTE: If you're going to use this sample in VS.NET 2003, you need to 
+append a “.7.1” onto the Wizard = VsWizard.VsWizardEngine line in the .VSZ file 
+located in the CSharpProjectItems directory, other you’ll get a Wizard can’t run 
+error in VS03 (and thanks to Randy Brown for pointing this out).</b></i></p>
+<p><img border="0" src="sample.JPG" width="531" height="399"></p>
+<h2>The Steps</h2>
+<p>Feel free to follow along:</p>
+<ol>
+  <li>Under your VS.NET installation folder, find the ProjectItems folder for 
+  the type of template item you’d like to add, e.g. VC#\CSharpProjectItems is 
+  the directory for C# project items.<br>
+&nbsp;</li>
+  <li>Create a .vsz file to configure your project item wizard, e.g. here’s a 
+  sample CSharpAddMyWebFormWiz.vsz:<br>
+<pre>VSWIZARD 7.0
+Wizard=VsWizard.VsWizardEngine
+Param=&quot;WIZARD_NAME = CSharpAddMyWebFormWiz&quot;
+Param=&quot;WIZARD_UI = FALSE&quot;
+Param=&quot;PROJECT_TYPE = CSPROJ&quot;</pre>
+  Notice that the Wizard value looks like a COM ProgID. It is. Specifically, 
+  it’s VS.NET’s built-in VsWizardEngine. That’s so I can skate by using their 
+  template expansion engine and their script hosting without having to build it 
+  all myself.<br>
+  <br>
+  In the part that says WIZARD_NAME, give that the name of your own custom 
+  template, e.g. CSharpAddMyWebFormWiz. This name will be used later.<br>
+  <br>
+  <a target="_blank" href="ms-help://MS.VSCC/MS.MSDNVS/vsintro7/html/vxconVSZFiles.htm">
+  Click here</a> for more information about .vsz files.<br>
+&nbsp;</li>
+  <li>The directory structure underneath the ProjectItems folder mimics the 
+  folders in the Add New Item dialog. Navigate to the one you like and add a new 
+  .vsdir file to reference the wizard you created in the vsz file above, e.g. 
+  here’s a sample mywiz.vsdir for under ProjectItems\WebProjectItems\UI (this is 
+  all on a single line):<br>
+<pre>..\..\CSharpAddMyWebFormWiz.vsz|{FAE04EC1-301F-11d3-BF4B-00C04F79EFBC}|
+My Web Form|0|A special web form|{FAE04EC1-301F-11d3-BF4B-00C04F79EFBC}|4534|0|
+WebForm.aspx</pre>We've got several fields here, all separated by old fashioned pipes. The 1st 
+  field is the relative path the vsz file we created earlier. The 3rd field is a 
+  short description for the Add New Item dialog. A long description (also shown 
+  in the dialog) can be provided in the 5th field.<br>
+  <br>
+  The 4th field is the sort order, smaller means close to the top. I assume 
+  since you’re going to all the trouble to add a custom project item that you 
+  think it’s important, so we’ve promoted it all the way.<br>
+  <br>
+  Notice also the last field. It shows the general format of the file to be 
+  generated and added to the project. The other fields are GUIDs that we copied 
+  from the VS.NET CSharpAddWebFormWiz.vsz to “leverage” their icon for display.<br>
+  <br>
+  <a target="_blank" href="ms-help://MS.VSCC/MS.MSDNVS/vsintro7/html/vxconVSDirFiles.htm">
+  Click here</a> for more information about .vsdir files.<br>
+&nbsp;</li>
+  <li>The mywiz.vsdir file shown above will show your custom template item under 
+  the folder you picked, but will not show it at the global level. To show it at 
+  the global level, you need to copy your .vsdir file up to the just under 
+  LocalProjectItems or WebProjectItems, remembering to update the relative file 
+  path, e.g.<br>
+  <pre>..\CSharpAddMyWebFormWiz.vsz|{FAE04EC1-…</pre></li>
+  <li>Once you’ve set up the pointers to your new project item template, you 
+  will need the template that will form the output of your wizard. This 
+  information is placed into a folder under the type of template item you’re 
+  building, e.g. VC#\VC#Wizards is where the C# wizards live. The directory 
+  structure for your item will look like this:<br>
+  <br>
+<img src="wizard.jpg" width="372" height="468">
+  <br>
+  <br>
+  The contents of the Template\1033 directory is the manifest for the file to 
+  generate for your project item in a file called templates.inf and the file 
+  that you would like to use as the template. The template file and the 
+  templates.inf file use wizard-provided symbols to example statements like 
+  [!output SAFE_CLASS_NAME] into strings like “MyClass”. 
+  <a target="_blank" href="ms-help://MS.MSDNVS/vccore/html/vcoriTemplateDirectives.htm">
+  Click here</a> for more 
+  information about the template language.<br>
+  <br>
+  The following is an example templates.inf file with a single file in it:<br>
+  <pre>WebForm1.asmx</pre>
+  By default, all project items have a single file as specified in the Add New 
+  Item dialog, which is why we only have a single file in this templates.inf 
+  file. When running, the wizard will expect a file named WebForm1.asmx in the 
+  Template folder to serve as the template.<br>
+&nbsp;</li>
+  <li>The templates.inf file turns out to be a convention and is not at all 
+  required. The default.js file in the Script\1033 directory of your wizard is 
+  what uses the templates.inf file to process each template file. Unfortunately, 
+  even a simple default.js file is too complex to reprint here, so I recommend 
+  that you find one from a wizard that’s close to what you want to do and copy 
+  it. If you just want a single file as determined by the templates.inf file, 
+  you’re all set.<br>
+&nbsp;</li>
+  <li>On the other hand, if you want more, you’re going to be doing some 
+  spelunking. For example, I wanted to produce a project item template wizard 
+  that output a custom aspx file and the corresponding aspx.cs file. I started 
+  by duplicating the CSharpAddWebFormWiz folder, renaming it 
+  CSharpAddMyWebFormWiz and following steps 1-6. Then I added another file to 
+  the templates.inf file and all heck broke loose.<br>
+  <br>
+  First, the default.js file that I duplicated from the Add Wizard Form wizard 
+  assumed that it was generating a single file, e.g. WebForm1.aspx, so when I 
+  added another file to generate, it reused that file name and VS.NET didn’t 
+  like it one bit.<br>
+  <br>
+  Second, the IDE itself generates files when certain kinds of files are added 
+  to a project, e.g. aspx files. For C# projects, those files live in VC#\DesignerTemplates. 
+  Since the aspx.cs file is auto-generated when an aspx file is added to a 
+  project, VS.NET didn’t like it when I tried to generate another one right over 
+  it.<br>
+  <br>
+  Finally, deleting the file in the middle just after the aspx.cs file was 
+  generated didn’t work too well either, because default.js tells VS.NET to open 
+  the aspx file as soon as it is generated, which causes VS.NET to look for the 
+  code behind file, which causes more problems, since we just deleted it.<br>
+  <br>
+  So, after digging through the undocumented common functions in 
+  VC#\VC#Wizards\1033\common.js that the C# default.js uses to do its work [1], I 
+  was able to produce a project item template wizard that produced both an aspx 
+  file and an aspx.cs file. See the default.js
+  <a href="ProjectItemTemplateSample.zip">in the sample</a> for the details.</li>
+</ol>
+
+<p>[1] The VC++ team actually
+<a target="_blank" href="ms-help://MS.MSDNVS/vccore/html/vclrfjscriptfunctionsforcwizards.htm">
+documented the functions in the VC wizard's common.js</a>. Thanks!</p>
+<h1>Acknowledgements</h1>
+<p>Thanks to <a target="_blank" href="http://www.xpsystems.com/">XP Systems</a> for asking me to help them solve this problem. Also, 
+  thanks to <a href="mailto:wells@CS.UTK.EDU">Elton Wells</a> for pointing me at some of the docs and the common.js 
+  files that the wizards use.</p>
+
+</body>
+
+</html>

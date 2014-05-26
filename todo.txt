@@ -1,12 +1,24 @@
 -move to azure
-  -remove web-connections.config from git
+  +backup database to local machine
+  +copy database to azure
+  +don't get approval emails anymore
+  -lots of unapproved comments
+  -can't post new blog posts
   -get SSL cert
-  -remove https URLs in existing content
-  -remove https URLs in new content
+  -reduce # of posts on the home page
   -fix the site search box
+  -add google analytics to my web site	8:52 AM	13 KB	
+  -404 testing on the web site	8:45 AM	13 KB	  -copy site to azure
+
+  -move all tool project source code to github
+  -move all videos to youtube
+  +remove web-connections.config from git
+  +remove https URLs in existing content
+  +remove https URLs in new content
+  +fix the tools tags to only point to my own tools
 
 -I think the categories for the items should be more visible. That would allow people to then drill into the categories more.
--Blog Converstaions
+-Blog conversations
 -clean up imported data
 -Does it do trackbacks and pings? Pings would be easy - just the call to one or more services. The only gotcha is that it's XML-RPC, but that's what Cook Computing is for. I've never managed to get my head fully around trackbacks (that was D's mental level, as he's built it a number of times). However, I think it should be worth it, as it allows you to better track people commenting on your post on their blogs. 
 -put the post title into the URLs

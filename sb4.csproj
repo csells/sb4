@@ -893,7 +893,9 @@
     <Content Include="Content\poststuff\writing\intro2tapi\wosa.htm" />
     <Content Include="Content\poststuff\writing\MsdnMagRussiaInterview.htm" />
     <Content Include="Content\poststuff\writing\MyWebFormTemplateSample.zip" />
+    <Content Include="Content\poststuff\writing\projectItemTemplates.htm" />
     <Content Include="Content\poststuff\writing\ProjectItemTemplateSample.zip" />
+    <Content Include="Content\poststuff\writing\projectItemTemplatesVB.htm" />
     <Content Include="Content\poststuff\writing\refcount_rotor_delta.zip" />
     <Content Include="Content\poststuff\writing\RegistrySettingsProvider2.zip" />
     <Content Include="Content\poststuff\writing\ResourcesAndWinForms.htm" />
@@ -953,6 +955,7 @@
     <Content Include="Sites\dipqueen\page4.htm" />
     <Content Include="Sites\dipqueen\page5.htm" />
     <Content Include="Sites\dipqueen\_blnk.gif" />
+    <Content Include="todo.txt" />
     <Content Include="Views\Mbelle\Index.aspx" />
     <Content Include="Content\images\mb_logo.png" />
     <Content Include="Views\Posts\CommentSubmitted.aspx" />
@@ -985,9 +988,10 @@
     <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
     <Content Include="Scripts\MicrosoftMvcJQueryValidation.js" />
     <Content Include="Views\Shared\Site.Master" />
-    <Content Include="Views\Web.config">
+    <None Include="Properties\PublishProfiles\sellsbrothers %282%29.pubxml" />
+    <None Include="Views\Web.config">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
     <Content Include="wlwmanifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -1115,6 +1119,11 @@
     <Content Include="web-connections.config">
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\azure.pubxml" />
+    <None Include="Properties\PublishProfiles\securewebs.pubxml" />
+    <None Include="Properties\PublishProfiles\sellsbrothers.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

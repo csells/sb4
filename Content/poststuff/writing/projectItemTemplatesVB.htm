@@ -1,0 +1,116 @@
+<html>
+<body>
+    <h1>
+        Adding Custom VB.NET Project Item Template Wizards to VS.NET</h1>
+    <p>
+        <i>by <a href="mailto:MichaelW@serf.com.au">Michael Weinhardt</a></i></p>
+    <p>
+        This article describes how to implement a VB.NET version of <a href="projectitemtemplates.htm">
+            Chris Sells's Project Item Template sample for C#</a>. As with Chris’s sample,
+        we leverage the VB.NET wizard infrastructure using various template files and script.
+        There is a fair degree of crossover between the two approaches. Accordingly, I quote/paraphrase
+        Chris where required.</p>
+    <h2>
+        The Sample</h2>
+    <p>
+        The <a href="MyWebFormTemplateSample.zip">VB.NET Project Item Template Wizard sample</a>
+        used in this article is called MyWebForm. It adds a custom WebForm and Webform codebehind
+        class, over-riding the default wizard behavior of dynamically creating a codebehind
+        class for you. Chris’ sample was the inspiration for the VB.NET version, and it
+        implements the same codebehind over-ride logic by leveraging the Microsoft VB.NET
+        wizard infrastructure.<p>
+            <i><b>NOTE: If you're going to use this sample in VS.NET 2003, you need to append a
+                “.7.1” onto the Wizard = VsWizard.VsWizardEngine line in the .VSZ file located in
+                the VBProjectItems directory, other you’ll get a Wizard can’t run error in VS03
+                (and thanks to Randy Brown for pointing this out).</b></i></p>
+        <p>
+            The following diagram is what we’ll hopefully end up with:
+            <br>
+            <br>
+            <p>
+                <img border="0" src="addnewitemdialog.jpg" width="531" height="392"></p>
+            <h2>
+                How You Do It</h2>
+            <ol>
+                <li>Go to the VB7\VBProjectItems directory beneath your Microsoft Visual Studio.NET
+                    install folder. This is where you’ll add all your wizard files.<br>
+                    &nbsp;</li>
+                <li>Create a .vsz file to configure your project item wizard. There are a bunch of others
+                    you can copy from, or you can create your own. The sample creates MyWebForm.vsz,
+                    and contains the following text:<br>
+                    <br>
+                    <pre>VSWIZARD 7.0
+Wizard=VsWizard.VsWizardEngine
+Param=&quot;<b>WIZARD_NAME = MyWebForm</b>&quot;
+Param=&quot;WIZARD_UI = FALSE&quot;
+Param=&quot;PROJECT_TYPE = VBPROJ&quot;</pre>
+                    As with the C# sample, we’re leveraging VS.NET’s built-in COM-based VsWizardEngine
+                    to do all the work for us. Also, the wizard basically uses the <b>WIZARD_NAME</b>
+                    parameter to map to the \VB7\VBWizards\<wizard_name> directory that contains the template and script 
+  files used to create your project item.<br>
+  <br>
+  See <a target="_blank" href="ms-help://MS.VSCC/MS.MSDNVS/vsintro7/html/vxconVSZFiles.htm">VS.NET’s 
+                MSDN</a> 
+  for more information about .vsz files.  And take a look 
+  <a target="_blank" href="ms-help://MS.VSCC/MS.MSDNVS/vccore/html/vclrfPredefinedCustomWizardSymbols.htm">here</a> 
+  for a list of parameters you can use in the .vsz file.<br>&nbsp;</li>
+                <li>You need to add a .vsdir file to whichever of the subfolders beneath the \VB7\VBProjectItems
+                    folder you’d like to be able to use your wizard from. Once you do this, your project
+                    item wizard will automagically appear in the “Add New Item” dialog. The MyWebForm
+                    sample adds a MyWebForm.vsdir to both the \WebProjectItems and \WebProjectItems\UI
+                    folders.<br>
+                    <br>
+                    <b>\WebProjectItems\MyWebForm.vsdir</b> contains one line:<br>
+                    <br>
+                    <pre>..\MyWebForm.vsz| |My Web Form|1|My Very Own Web Form|{164B10B9-B200-11D0-8C61-00A0C91E29D5}
+  |4533|0|MyWebForm.aspx</pre>
+                    <b>\WebProjectItems\WebProjectItems\UI\MyWebForm.vsdir</b> contains the same line,
+                    apart from an update to the relative file path to MyWebForm.vsz:<br>
+                    <br>
+                    <pre>..\..\MyWebForm.vsz | ...</pre>
+                    Check out <a href="projectitemtemplates.htm">Chris's article</a> or <a target="_blank"
+                        href="ms-help://MS.VSCC/MS.MSDNVS/vsintro7/html/vxconVSDirFiles.htm">VS.NET’s MSDN<a />
+                        for a discussion of the different fields declared in .vsdir files.<br>
+                        <br>
+                        The DLLPath and IconResourceID parameters differ from the C# sample since it appears
+                        the underlying implementation differs.<br>&nbsp;</li>
+                <li>At this point, VS.NET can display your Wizard in the “Add New Item” dialog (.vsdir
+                    files), and you’ve told VS.NET what wizard to call, passing it the information it
+                    needs through a group of parameters (.vsz file). What you’ve got left to do is to
+                    create the templates that the wizard will use, and implement a small script that
+                    does the work of converting those templates into the MyWebForm.aspx and MyWebForm.aspx.vb
+                    (codebehind) files that are finally added to your project. As with C#, the wizard
+                    engine converts symbols like <b>[! Output SAFE_CLASS_NAME]</b> into strings like
+                    <b>NoClass</b>. The <a href="MyWebFormTemplateSample.zip">sample</a> demonstrates
+                    the use of symbols in both the MyWebForm.aspx and MyWebForm.aspx.vb files.<br>
+                    <br>
+                    Navigate to the \VB7\VBWizards folder, which contains the VB.NET wizards. Each wizard
+                    is stored in a group of subfolders that make a home for your templates and script.
+                    The sample creates the MyWebForm folder:<br>
+                    <br>
+                    <p>
+                        <img border="0" src="WizardFolder.jpg" width="502" height="512"></p>
+                    MyWebForm uses two template files: MyWebForm.aspx and MyWebForm.aspx.vb, which reside
+                    in \Templates\1033. The script file, default.js, hangs out in\ Scripts\1033.<br>
+                    <br>
+                    <b>Note:</b> You don’t need a MyWebForm.aspx.vb codebehind template. I started this
+                    exercise by copying the VB.NET default WebForm wizard template and script, changing
+                    the relevant names to MyWebForm. The \Template\1033 directory only contained the
+                    MyWebForm.aspx file. When the wizard runs, it automatically generates the codebehind
+                    class from a default codebehind template file, NewWebFormCode.vb, stored in the
+                    \VB7\DesignerTemplates folder.<br>
+                    &nbsp;</li>
+                <li>We, however, do want to use a custom codebehind. The key to making this work lies
+                    in extending the default WebForm script to delete the auto-generated codebehind
+                    class and replace it with our own, using the same fundamental logic as the C# sample.
+                    When it comes down to it, it’s pretty simple: MyWebForm leverages functionality
+                    contained in \VB7\VBWizards\1033\common.js to make it happen. Take a look at the
+                    sample’s default.js file to see how.</li>
+            </ol>
+            <h1>
+                Acknowledgements</h1>
+            <p>
+                Thanks to <a href="http://www.sellsbrothers.com">Chris Sells</a> for the C# solution,
+                and the chance.</p>
+</body>
+</html>

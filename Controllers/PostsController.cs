@@ -16,15 +16,6 @@ using System.Xml;
 
 namespace sb4.Controllers {
   public class PostsController : SbController {
-    static SmtpClient smtp = new SmtpClient() {
-      Host = ConfigurationManager.AppSettings["SmtpHost"],
-      Port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]),
-      Credentials = new System.Net.NetworkCredential() {
-        UserName = ConfigurationManager.AppSettings["SmtpUser"],
-        Password = ConfigurationManager.AppSettings["SmtpPassword"],
-      }
-    };
-
     public PostsController() : base(new sbdb()) { }
     public PostsController(ISbDatabase db) : base(db) { }
 
@@ -306,7 +297,7 @@ namespace sb4.Controllers {
           Body = body.ToString(),
         };
 
-        try { smtp.Send(message); }
+        try { (new SmtpClient()).Send(message); }
         catch (Exception ex) { System.Diagnostics.Trace.TraceError(ex.Message); }
 
         //Response.Redirect(postLink, true);
@@ -327,6 +318,7 @@ namespace sb4.Controllers {
     string GetIdLink(string action, int id) {
       var link = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) + Url.Action(action, new { id = id });
       //link = link.Replace("localhost:81", "localhost:8080");
+      link = link.Replace("https://", "http://"); // fix the issue with images going in with "https" links
       return link;
     }
 
