@@ -8,16 +8,19 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
   <h1>
-    <a href="<%= Model.GetFeedLink(Request.Url, "odata20") %>">
+<%--    <a href="<%= Model.GetFeedLink(Request.Url, "odata20") %>">
       <img style="width: 28px; height: 28px; float: right; margin: 3px;" src="/content/images/icon-odatafeed-28x28.png"
-        alt="<%= Model.GetFeedTitle("OData 2.0") %>" /></a> <a href="<%= Model.GetFeedLink(Request.Url, "atom10") %>">
-          <img style="width: 28px; height: 28px; float: right; margin: 3px;" src="/content/images/icon-feed-28x28.png"
-            alt="<%= Model.GetFeedTitle("ATOM 1.0") %>" /></a> <a href="http://twitter.com/csells">
-              <img style="width: 28px; height: 28px; float: right; margin: 3px;" src="/content/images/icon-twitter-28x28.png"
-                alt="csells on twitter" /></a>
+        alt="<%= Model.GetFeedTitle("OData 2.0") %>" /></a>--%>
+    <a href="<%= Model.GetFeedLink(Request.Url, "atom10") %>">
+      <img style="width: 28px; height: 28px; float: right; margin: 3px;" src="/content/images/icon-feed-28x28.png"
+        alt="<%= Model.GetFeedTitle("ATOM 1.0") %>" /></a>
+    <a href="http://twitter.com/csells">
+      <img style="width: 28px; height: 28px; float: right; margin: 3px;" src="/content/images/icon-twitter-28x28.png"
+        alt="csells on twitter" /></a>
   </h1>
   <p>
-    <%= Model.About %></p>
+    <%= Model.About %>
+  </p>
   <% var allPostCategories = Model.PostCategories.ToList(); %>
   <% foreach (var post in Model.Posts) {
        int commentsCount = post.Comments.Where(c => c.IsApproved).Count();
@@ -41,9 +44,11 @@
   <h2>
     <%= Html.ActionLink(post.Title, "Details", "Posts", new { id = post.Id }, null) %></h2>
   <p>
-    <%= post.Content %></p>
+    <%= post.Content %>
+  </p>
   <p>
-    <%= Html.ActionLink(commentsTitle, "Details", "Posts", new { id = post.Id }, null) %></p>
+    <%= Html.ActionLink(commentsTitle, "Details", "Posts", new { id = post.Id }, null) %>
+  </p>
   <% } %>
   <br />
   <br />
