@@ -8,12 +8,12 @@
   +fix image URLs
   +add google analytics to my web site	
   +get SSL cert
+  +copy site to azure
   -can't approve comments
   -add google display ads
   -can't post new blog posts
   -404 testing on the web site
   -set up AppVeyor: http://www.computerzen.com/blog/
-  -copy site to azure
 
   -move all tool project source code to github
   -move all videos to youtube
