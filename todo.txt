@@ -2,14 +2,18 @@
   +backup database to local machine
   +copy database to azure
   +don't get approval emails anymore
-  +lots of unapproved comments (95010,95014,95054,95059)
+  +lots of unapproved comments (95010,95014,95054,95059,95073)
   +reduce # of posts on the home page
   +fix the site search box
+  +fix image URLs
+  +add google analytics to my web site	
+  +get SSL cert
+  +copy site to azure
+  -can't approve comments
+  -add google display ads
   -can't post new blog posts
-  -get SSL cert
-  -add google analytics to my web site	
   -404 testing on the web site
-  -copy site to azure
+  -set up AppVeyor: http://www.computerzen.com/blog/
 
   -move all tool project source code to github
   -move all videos to youtube

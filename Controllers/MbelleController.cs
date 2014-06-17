@@ -6,9 +6,7 @@ using System.Web.Mvc;
 
 namespace sb4.Controllers {
   public class MbelleController : Controller {
-    //
     // GET: /Mbelle/
-
     public ActionResult Index() {
       return View();
     }

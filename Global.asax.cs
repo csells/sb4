@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -50,9 +51,21 @@ namespace sb4 {
       );
     }
 
+    public static void RegisterApis(HttpConfiguration config) {
+      // Web API routes
+      config.MapHttpAttributeRoutes();
+
+      config.Routes.MapHttpRoute(
+          name: "ActionApi",
+          routeTemplate: "api/{controller}/{action}/{id}"
+      );
+    }
+
     protected void Application_Start() {
       //ControllerBuilder.Current.SetControllerFactory(new SbControllerFactory());
+      GlobalConfiguration.Configure(RegisterApis);
       RegisterRoutes(RouteTable.Routes);
     }
+
   }
 }

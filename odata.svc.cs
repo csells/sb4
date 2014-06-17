@@ -29,7 +29,7 @@ namespace sb4 {
     public bool RejectComment(int id) {
       BasicAuthSingleAdminUserModule.ForceSslAndBasicAuthAsAdminOData();
 
-      // set the bit
+      // clear the IsApproved bit
       var db = CurrentDataSource;
       var comment = db.Comments.SingleOrDefault(c => c.Id == id);
       if (comment == null) { throw new DataServiceException("comment not found: id= " + id.ToString()); }
@@ -42,7 +42,7 @@ namespace sb4 {
     public bool AcceptComment(int id) {
       BasicAuthSingleAdminUserModule.ForceSslAndBasicAuthAsAdminOData();
 
-      // set the bit
+      // set the IsApproved bit
       var db = CurrentDataSource;
       var comment = db.Comments.SingleOrDefault(c => c.Id == id);
       if (comment == null) { throw new DataServiceException("comment not found: id= " + id.ToString()); }
