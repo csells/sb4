@@ -118,18 +118,11 @@
     <Compile Include="Code\AtomActionResult.cs" />
     <Compile Include="Code\BasicAuthSingleAdminUserModule.cs" />
     <Compile Include="Code\AtomServiceDocumentActionResult.cs" />
-    <Compile Include="Controllers\CommentsController.cs" />
-    <Compile Include="Code\reCAPTCHA\RecaptchaControl.cs" />
-    <Compile Include="Code\reCAPTCHA\RecaptchaControlDesigner.cs" />
-    <Compile Include="Code\reCAPTCHA\RecaptchaResponse.cs" />
-    <Compile Include="Code\reCAPTCHA\RecaptchaValidator.cs" />
     <Compile Include="Code\SimpleActionResult.cs" />
     <Compile Include="Code\excuses.asmx.cs">
       <DependentUpon>excuses.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Code\reCAPTCHA\RecaptchaActionFilter.cs" />
-    <Compile Include="Code\reCAPTCHA\RecaptchaHtmlHelper.cs" />
     <Compile Include="Code\RssActionResult.cs" />
     <Compile Include="Code\SbControllerFactory.cs" />
     <Compile Include="Controllers\MbelleController.cs" />
@@ -986,10 +979,8 @@
     <Content Include="todo.txt" />
     <Content Include="Views\Mbelle\Index.aspx" />
     <Content Include="Content\images\mb_logo.png" />
-    <Content Include="Views\Posts\CommentSubmitted.aspx" />
     <Content Include="Views\Posts\InvalidFormat.aspx" />
     <Content Include="Views\Shared\GoogleSearchView.ascx" />
-    <Content Include="Views\Shared\BingSearchView.ascx" />
     <Content Include="Views\Shared\BadgesView.ascx" />
     <Content Include="Views\Shared\BannerAdView.ascx" />
     <Content Include="Views\Shared\TextAdsView.ascx" />
@@ -1005,24 +996,12 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\jquery-1.3.2.js" />
-    <Content Include="Scripts\jquery-1.3.2.min.js" />
-    <Content Include="Scripts\jquery-1.3.2-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\MicrosoftAjax.js" />
-    <Content Include="Scripts\MicrosoftAjax.debug.js" />
-    <Content Include="Scripts\MicrosoftMvcAjax.js" />
-    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
-    <Content Include="Scripts\MicrosoftMvcJQueryValidation.js" />
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="wlwmanifest.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\poststuff\sb4\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Code\excuses.asmx.resx">

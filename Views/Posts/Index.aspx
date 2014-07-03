@@ -8,7 +8,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
   <h1>
-<%--    <a href="<%= Model.GetFeedLink(Request.Url, "odata20") %>">
+    <%--    <a href="<%= Model.GetFeedLink(Request.Url, "odata20") %>">
       <img style="width: 28px; height: 28px; float: right; margin: 3px;" src="/content/images/icon-odatafeed-28x28.png"
         alt="<%= Model.GetFeedTitle("OData 2.0") %>" /></a>--%>
     <a href="<%= Model.GetFeedLink(Request.Url, "atom10") %>">
@@ -23,8 +23,6 @@
   </p>
   <% var allPostCategories = Model.PostCategories.ToList(); %>
   <% foreach (var post in Model.Posts) {
-       int commentsCount = post.Comments.Where(c => c.IsApproved).Count();
-       var commentsTitle = string.Format("{0} {1}", commentsCount, commentsCount == 1 ? "comment" : "comments");
   %>
   <br />
   <br />
@@ -47,7 +45,7 @@
     <%= post.Content %>
   </p>
   <p>
-    <%= Html.ActionLink(commentsTitle, "Details", "Posts", new { id = post.Id }, null) %>
+    <%= Html.ActionLink("0 comments", "Details", "Posts", null, null, "disqus_thread", new RouteValueDictionary(new { id = post.Id }), new Dictionary<string, object>() { { "data-disqus-identifier", post.Id } }) %>
   </p>
   <% } %>
   <br />
@@ -68,4 +66,16 @@
     No newer posts
     <% } %>
   </p>
+  <script type="text/javascript">
+    // from: https://help.disqus.com/customer/portal/articles/565624
+    var disqus_shortname = "sellsbrothers";
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+      var s = document.createElement('script'); s.async = true;
+      s.type = 'text/javascript';
+      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+  </script>
 </asp:Content>

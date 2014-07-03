@@ -13,9 +13,8 @@ namespace sb4 {
     // TODO: these should be all IObjectSet and return Site.Foos, e.g. Site.Badges
     // The problem is that the generated code produces ICollection instead of IObjectSet and
     // there's no good way to fix that.
-    // TODO: fix up the Posts and Comments properties to do the same as the rest.
+    // TODO: fix up the Posts property to do the same as the rest.
     public IQueryable<Badge> Badges { get { return db.Badges.Where(r => r.SiteId == Site.Id); } }
-    public IQueryable<Comment> ActiveComments { get { return db.Comments.Where(c => c.IsApproved); } }
     public IQueryable<LandingZone> LandingZones { get { return db.LandingZones.Where(r => r.SiteId == Site.Id); } }
     public IQueryable<Post> ActivePosts { get { return db.Posts.Where(p => p.IsActive); } }
     public Post GetPost(int id) { return db.Posts.Single(p=>p.Id == id); }

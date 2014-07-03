@@ -7,12 +7,12 @@
   +fix the site search box
   +fix image URLs
   +add google analytics to my web site	
-  +get SSL cert
   +copy site to azure
-  -can't approve comments
-  -add google display ads
+  +can't approve comments
+  -get SSL cert
   -can't post new blog posts
   -404 testing on the web site
+  -add google display ads
   -set up AppVeyor: http://www.computerzen.com/blog/
 
   -move all tool project source code to github
@@ -23,7 +23,6 @@
   +fix the tools tags to only point to my own tools
 
 -I think the categories for the items should be more visible. That would allow people to then drill into the categories more.
--Blog conversations
 -clean up imported data
 -Does it do trackbacks and pings? Pings would be easy - just the call to one or more services. The only gotcha is that it's XML-RPC, but that's what Cook Computing is for. I've never managed to get my head fully around trackbacks (that was D's mental level, as he's built it a number of times). However, I think it should be worth it, as it allows you to better track people commenting on your post on their blogs. 
 -put the post title into the URLs
@@ -143,6 +142,7 @@ FIXED:
 +comment management
 	+approval
 	+captcha
++Blog conversations
 
 WON'T FIX:
 -file system on top of SQL Server for browsing, editing HTML and images? (use sync services!)

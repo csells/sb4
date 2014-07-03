@@ -88,12 +88,10 @@ namespace sb4.ViewModels {
 
     static Regex spacesRegex = new Regex(@"(?<=^ *) ", RegexOptions.Multiline);
 
-    public string FormatComment(string comment) {
-      return spacesRegex.Replace(comment, "&nbsp;").Replace("\r", "").Replace("\n", "<br \\>\r\n");
-    }
-
-    public string GetCommentFeedLink() {
-      return Controllers.PostsController.GetCommentRssLink(RequestUrl, Post.Id);
+    public object CanonicalUrl {
+      get {
+        return string.Format("http://sellsbrothers.com/posts/details/{0}", Post.Id);
+      }
     }
 
   }

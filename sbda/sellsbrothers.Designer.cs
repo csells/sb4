@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -25,7 +26,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("sellsbrothersModel", "FK__OutputIte__Categ__531856C7", "OutputCategories", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(sb4.OutputCategory), "OutputItems", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(sb4.OutputItem), true)]
 [assembly: EdmRelationshipAttribute("sellsbrothersModel", "FK__OutputIte__SiteI__540C7B00", "Sites", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(sb4.Site), "OutputItems", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(sb4.OutputItem), true)]
 [assembly: EdmRelationshipAttribute("sellsbrothersModel", "FK__PostCateg__SiteI__5224328E", "Sites", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(sb4.Site), "PostCategories", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(sb4.PostCategory), true)]
-[assembly: EdmRelationshipAttribute("sellsbrothersModel", "PostComment", "Post", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(sb4.Post), "Comment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(sb4.Comment), true)]
 [assembly: EdmRelationshipAttribute("sellsbrothersModel", "FK_PostImageSite", "Site", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(sb4.Site), "PostImage", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(sb4.PostImage), true)]
 
 #endregion
@@ -125,22 +125,6 @@ namespace sb4
             }
         }
         private ObjectSet<LandingZone> _LandingZones;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Comment> Comments
-        {
-            get
-            {
-                if ((_Comments == null))
-                {
-                    _Comments = base.CreateObjectSet<Comment>("Comments");
-                }
-                return _Comments;
-            }
-        }
-        private ObjectSet<Comment> _Comments;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -255,6 +239,7 @@ namespace sb4
         private ObjectSet<PostImage> _PostImages;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -279,14 +264,6 @@ namespace sb4
         public void AddToLandingZones(LandingZone landingZone)
         {
             base.AddObject("LandingZones", landingZone);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Comments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToComments(Comment comment)
-        {
-            base.AddObject("Comments", comment);
         }
     
         /// <summary>
@@ -346,11 +323,11 @@ namespace sb4
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -383,6 +360,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -701,6 +679,7 @@ namespace sb4
         partial void OnImagePathChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -743,6 +722,7 @@ namespace sb4
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -777,6 +757,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -951,6 +932,7 @@ namespace sb4
         partial void OnOrderChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -993,278 +975,7 @@ namespace sb4
         }
 
         #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="sellsbrothersModel", Name="Comment")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class Comment : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new Comment object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="creationDate">Initial value of the CreationDate property.</param>
-        /// <param name="isApproved">Initial value of the IsApproved property.</param>
-        /// <param name="shouldEmailNotifications">Initial value of the ShouldEmailNotifications property.</param>
-        /// <param name="postId">Initial value of the PostId property.</param>
-        public static Comment CreateComment(global::System.Int32 id, global::System.DateTime creationDate, global::System.Boolean isApproved, global::System.Boolean shouldEmailNotifications, global::System.Int32 postId)
-        {
-            Comment comment = new Comment();
-            comment.Id = id;
-            comment.CreationDate = creationDate;
-            comment.IsApproved = isApproved;
-            comment.ShouldEmailNotifications = shouldEmailNotifications;
-            comment.PostId = postId;
-            return comment;
-        }
 
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _Id;
-        partial void OnIdChanging(global::System.Int32 value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Author
-        {
-            get
-            {
-                return _Author;
-            }
-            set
-            {
-                OnAuthorChanging(value);
-                ReportPropertyChanging("Author");
-                _Author = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Author");
-                OnAuthorChanged();
-            }
-        }
-        private global::System.String _Author;
-        partial void OnAuthorChanging(global::System.String value);
-        partial void OnAuthorChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Email
-        {
-            get
-            {
-                return _Email;
-            }
-            set
-            {
-                OnEmailChanging(value);
-                ReportPropertyChanging("Email");
-                _Email = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Email");
-                OnEmailChanged();
-            }
-        }
-        private global::System.String _Email;
-        partial void OnEmailChanging(global::System.String value);
-        partial void OnEmailChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Content
-        {
-            get
-            {
-                return _Content;
-            }
-            set
-            {
-                OnContentChanging(value);
-                ReportPropertyChanging("Content");
-                _Content = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Content");
-                OnContentChanged();
-            }
-        }
-        private global::System.String _Content;
-        partial void OnContentChanging(global::System.String value);
-        partial void OnContentChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime CreationDate
-        {
-            get
-            {
-                return _CreationDate;
-            }
-            set
-            {
-                OnCreationDateChanging(value);
-                ReportPropertyChanging("CreationDate");
-                _CreationDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CreationDate");
-                OnCreationDateChanged();
-            }
-        }
-        private global::System.DateTime _CreationDate;
-        partial void OnCreationDateChanging(global::System.DateTime value);
-        partial void OnCreationDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean IsApproved
-        {
-            get
-            {
-                return _IsApproved;
-            }
-            set
-            {
-                OnIsApprovedChanging(value);
-                ReportPropertyChanging("IsApproved");
-                _IsApproved = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsApproved");
-                OnIsApprovedChanged();
-            }
-        }
-        private global::System.Boolean _IsApproved;
-        partial void OnIsApprovedChanging(global::System.Boolean value);
-        partial void OnIsApprovedChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean ShouldEmailNotifications
-        {
-            get
-            {
-                return _ShouldEmailNotifications;
-            }
-            set
-            {
-                OnShouldEmailNotificationsChanging(value);
-                ReportPropertyChanging("ShouldEmailNotifications");
-                _ShouldEmailNotifications = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ShouldEmailNotifications");
-                OnShouldEmailNotificationsChanged();
-            }
-        }
-        private global::System.Boolean _ShouldEmailNotifications;
-        partial void OnShouldEmailNotificationsChanging(global::System.Boolean value);
-        partial void OnShouldEmailNotificationsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 PostId
-        {
-            get
-            {
-                return _PostId;
-            }
-            set
-            {
-                OnPostIdChanging(value);
-                ReportPropertyChanging("PostId");
-                _PostId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PostId");
-                OnPostIdChanged();
-            }
-        }
-        private global::System.Int32 _PostId;
-        partial void OnPostIdChanging(global::System.Int32 value);
-        partial void OnPostIdChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("sellsbrothersModel", "PostComment", "Post")]
-        public Post Post
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Post>("sellsbrothersModel.PostComment", "Post").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Post>("sellsbrothersModel.PostComment", "Post").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Post> PostReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Post>("sellsbrothersModel.PostComment", "Post");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Post>("sellsbrothersModel.PostComment", "Post", value);
-                }
-            }
-        }
-
-        #endregion
     }
     
     /// <summary>
@@ -1299,6 +1010,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1449,6 +1161,7 @@ namespace sb4
         partial void OnHeaderImagePathChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1491,6 +1204,7 @@ namespace sb4
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1521,6 +1235,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1623,6 +1338,7 @@ namespace sb4
         partial void OnOrderChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1687,6 +1403,7 @@ namespace sb4
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1717,6 +1434,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1963,6 +1681,7 @@ namespace sb4
         partial void OnNotesChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2043,6 +1762,7 @@ namespace sb4
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2071,6 +1791,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2341,32 +2062,8 @@ namespace sb4
         partial void OnUuidStringChanged();
 
         #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("sellsbrothersModel", "PostComment", "Comment")]
-        public EntityCollection<Comment> Comments
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Comment>("sellsbrothersModel.PostComment", "Comment");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Comment>("sellsbrothersModel.PostComment", "Comment", value);
-                }
-            }
-        }
 
-        #endregion
+    
     }
     
     /// <summary>
@@ -2395,6 +2092,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2497,6 +2195,7 @@ namespace sb4
         partial void OnDisplayNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2539,6 +2238,7 @@ namespace sb4
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2567,6 +2267,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2693,6 +2394,7 @@ namespace sb4
         partial void OnImageDataChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2735,6 +2437,7 @@ namespace sb4
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2771,6 +2474,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2945,6 +2649,7 @@ namespace sb4
         partial void OnContactNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3103,6 +2808,7 @@ namespace sb4
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3129,6 +2835,7 @@ namespace sb4
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3255,9 +2962,11 @@ namespace sb4
         partial void OnISBNChanged();
 
         #endregion
+
     
     }
 
     #endregion
+
     
 }

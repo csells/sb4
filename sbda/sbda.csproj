@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommentPlus.cs" />
     <Compile Include="PostPlus.cs" />
     <Compile Include="ISbDatabase.cs" />
     <Compile Include="IValidate.cs" />
@@ -66,6 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <Content Include="web-connections.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

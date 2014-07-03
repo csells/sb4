@@ -6,7 +6,6 @@ using System.Text;
 namespace sb4 {
   public interface ISbDatabase {
     IQueryable<Badge> Badges { get; }
-    IQueryable<Comment> ActiveComments { get; }
     IQueryable<LandingZone> LandingZones { get; }
     Post GetPost(int id);
     IQueryable<Post> ActivePosts { get; }

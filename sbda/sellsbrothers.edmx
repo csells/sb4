@@ -10,7 +10,6 @@
           <EntitySet Name="Badges" EntityType="sellsbrothersModel.Store.Badges" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="fref_link" EntityType="sellsbrothersModel.Store.fref_link" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LandingZones" EntityType="sellsbrothersModel.Store.LandingZones" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="mbPosts" EntityType="sellsbrothersModel.Store.mbPosts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="mbTopics" EntityType="sellsbrothersModel.Store.mbTopics" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OutputCategories" EntityType="sellsbrothersModel.Store.OutputCategories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OutputItems" EntityType="sellsbrothersModel.Store.OutputItems" store:Type="Tables" Schema="dbo" />
@@ -100,20 +99,6 @@
           <Property Name="RelativeUrl" Type="nvarchar" Nullable="false" MaxLength="128" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="HeaderImagePath" Type="nvarchar" Nullable="false" MaxLength="128" />
-        </EntityType>
-        <EntityType Name="mbPosts">
-          <Key>
-            <PropertyRef Name="PostKey" />
-          </Key>
-          <Property Name="PostKey" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ParentTopicKey" Type="int" />
-          <Property Name="Name" Type="nvarchar" MaxLength="255" />
-          <Property Name="Email" Type="nvarchar" MaxLength="255" />
-          <Property Name="Message" Type="ntext" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="upsize_ts" Type="timestamp" StoreGeneratedPattern="Computed" />
-          <Property Name="Approved" Type="bit" Nullable="false" />
-          <Property Name="ShouldEmailNotifications" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="mbTopics">
           <Key>
@@ -291,7 +276,6 @@
           <EntitySet Name="Ads" EntityType="sellsbrothersModel.Ad" />
           <EntitySet Name="Badges" EntityType="sellsbrothersModel.Badge" />
           <EntitySet Name="LandingZones" EntityType="sellsbrothersModel.LandingZone" />
-          <EntitySet Name="Comments" EntityType="sellsbrothersModel.Comment" />
           <EntitySet Name="Posts" EntityType="sellsbrothersModel.Post" />
           <EntitySet Name="OutputCategories" EntityType="sellsbrothersModel.OutputCategory" />
           <EntitySet Name="OutputItems" EntityType="sellsbrothersModel.OutputItem" />
@@ -326,10 +310,6 @@
             <End Role="PostCategories" EntitySet="PostCategories" />
           </AssociationSet>
           <EntitySet Name="TinyLinks" EntityType="sellsbrothersModel.TinyLink" />
-          <AssociationSet Name="PostComment" Association="sellsbrothersModel.PostComment">
-            <End Role="Post" EntitySet="Posts" />
-            <End Role="Comment" EntitySet="Comments" />
-          </AssociationSet>
           <EntitySet Name="PostImages" EntityType="sellsbrothersModel.PostImage" />
           <AssociationSet Name="FK_PostImageSite" Association="sellsbrothersModel.FK_PostImageSite">
             <End Role="Site" EntitySet="Sites" />
@@ -380,20 +360,6 @@
           <Property Name="HeaderImagePath" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Site" Relationship="sellsbrothersModel.FK__LandingZo__SiteI__503BEA1C" FromRole="LandingZones" ToRole="Sites" />
         </EntityType>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Author" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
-          <Property Name="Email" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
-          <Property Name="Content" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" />
-          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
-          <Property Name="ShouldEmailNotifications" Type="Boolean" Nullable="false" />
-          <Property Type="Int32" Name="PostId" Nullable="false" />
-          <NavigationProperty Name="Post" Relationship="sellsbrothersModel.PostComment" FromRole="Comment" ToRole="Post" />
-        </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="Id" />
@@ -408,7 +374,6 @@
           <Property Name="PostName" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
           <Property Name="Content" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Comments" Relationship="sellsbrothersModel.PostComment" FromRole="Post" ToRole="Comment" />
           <Property Type="String" Name="UuidString" MaxLength="36" Nullable="true" />
         </EntityType>
         <EntityType Name="OutputCategory">
@@ -562,18 +527,6 @@
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
           <Property Type="String" Name="ISBN" MaxLength="16" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="PostComment">
-          <End Type="sellsbrothersModel.Post" Role="Post" Multiplicity="1" />
-          <End Type="sellsbrothersModel.Comment" Role="Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Post">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="PostId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="PostImage" m:HasStream="true" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
           <Key>
             <PropertyRef Name="Id" />
@@ -634,16 +587,6 @@
             <ScalarProperty Name="RelativeUrl" ColumnName="RelativeUrl" />
             <ScalarProperty Name="IsActive" ColumnName="IsActive" />
             <ScalarProperty Name="HeaderImagePath" ColumnName="HeaderImagePath" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="Comments"><EntityTypeMapping TypeName="sellsbrothersModel.Comment"><MappingFragment StoreEntitySet="mbPosts">
-                <ScalarProperty Name="PostId" ColumnName="ParentTopicKey" />
-                <ScalarProperty Name="Id" ColumnName="PostKey" />
-            <ScalarProperty Name="Author" ColumnName="Name" />
-            <ScalarProperty Name="Email" ColumnName="Email" />
-            <ScalarProperty Name="Content" ColumnName="Message" />
-            <ScalarProperty Name="CreationDate" ColumnName="CreateDate" />
-            <ScalarProperty Name="IsApproved" ColumnName="Approved" />
-            <ScalarProperty Name="ShouldEmailNotifications" ColumnName="ShouldEmailNotifications" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Posts"><EntityTypeMapping TypeName="sellsbrothersModel.Post"><MappingFragment StoreEntitySet="mbTopics">
             <ScalarProperty Name="UuidString" ColumnName="TopicID" />
@@ -737,7 +680,6 @@
         <EntityTypeShape EntityType="sellsbrothersModel.Ad" Width="1.5" PointX="3" PointY="2.25" Height="3.7109993489583322" IsExpanded="true" />
         <EntityTypeShape EntityType="sellsbrothersModel.Badge" Width="1.5" PointX="3" PointY="6.75" Height="2.5571907552083317" IsExpanded="true" />
         <EntityTypeShape EntityType="sellsbrothersModel.LandingZone" Width="1.5" PointX="3" PointY="10" Height="2.3648893229166674" IsExpanded="true" />
-        <EntityTypeShape EntityType="sellsbrothersModel.Comment" Width="2.125" PointX="5.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
         <EntityTypeShape EntityType="sellsbrothersModel.Post" Width="1.5" PointX="8.5" PointY="6.375" Height="3.3263964843749996" IsExpanded="true" />
         <EntityTypeShape EntityType="sellsbrothersModel.OutputCategory" Width="1.5" PointX="3" PointY="13.125" Height="2.1725878906249996" IsExpanded="true" />
         <EntityTypeShape EntityType="sellsbrothersModel.OutputItem" Width="1.5" PointX="5.25" PointY="10.125" Height="3.3263964843749996" IsExpanded="true" />
@@ -778,11 +720,6 @@
           <ConnectorPoint PointX="3" PointY="16.990143229166666" />
         </AssociationConnector>
         <EntityTypeShape EntityType="sellsbrothersModel.TinyLink" Width="1.5" PointX="9.25" PointY="3.75" Height="1.9802864583333388" />
-        <AssociationConnector Association="sellsbrothersModel.PostComment">
-          <ConnectorPoint PointX="8.84375" PointY="6.375" />
-          <ConnectorPoint PointX="8.84375" PointY="2.12474609375" />
-          <ConnectorPoint PointX="7.875" PointY="2.12474609375" />
-        </AssociationConnector>
         <EntityTypeShape EntityType="sellsbrothersModel.PostImage" Width="1.5" PointX="3" PointY="19.25" Height="1.9802864583333317" />
         <AssociationConnector Association="sellsbrothersModel.FK_PostImageSite" >
           <ConnectorPoint PointX="0.97512617431640625" PointY="12.085999348958332" />

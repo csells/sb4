@@ -230,90 +230,6 @@ namespace sb4.Controllers {
       return new SimpleActionResult() { ResponseOut = sb.ToString(), ContentType = "application/xml" };
     }
 
-    // e.g.
-    // GET: /Posts/CommentRss/5
-    public ActionResult CommentRss(int id) {
-      var vm = new PostDetailsViewModel(db, id, Request.Url);
-      if (vm.Post == null) {
-        ViewData["id"] = id;
-        return View("NotFound", vm);
-      }
-
-      return new RssActionResult(GetCommentFeed(vm));
-    }
-
-    // POST: /Posts/CreateComment/5
-    [Recaptcha.Mvc.RecaptchaFilter()]
-    [AcceptVerbs(HttpVerbs.Post)]
-    [ValidateInput(false)]
-    public ActionResult CommentSubmitted(int? id, FormCollection formValues) {
-      Post post = db.ActivePosts.SingleOrDefault(p => p.Id == id);
-      if (post == null) {
-        ViewData["id"] = id;
-        return View("NotFound");
-      }
-
-      // If CAPTCHA is invalid, bail
-      if (!ModelState.IsValid) {
-        return View("Details", new PostDetailsViewModel(db, (int)id, Request.Url));
-      }
-
-      // Create the comment
-      var comment = new Comment() {
-        Author = Server.HtmlEncode(formValues["Author"] ?? ""),
-        Content = Server.HtmlEncode(formValues["Content"] ?? ""),
-        // TODO: Blog Conversations
-        //Email = Server.HtmlEncode(formValues["Email"] ?? ""),
-        //ShouldEmailNotifications = bool.Parse(formValues["ShouldEmailNotifications"]),
-        CreationDate = DateTime.Now
-      };
-      post.Comments.Add(comment);
-
-      try {
-        // Even though we're using reCAPTCHA, comments should not be pre-approved
-        comment.IsApproved = false;
-
-        db.SaveChanges();
-
-        // Send the notification email
-        var postLink = GetPostLink((int)id);
-        //var rejectCommentLink = GetRejectCommentLink(comment.Id);
-        var acceptCommentLink = GetAcceptCommentLink(comment.Id);
-        string emailTo = db.Site.ContactEmail;
-        string emailFrom = (new Regex("^(?<user>[^@]+)@")).Replace(emailTo, "noreply@");
-        string subject = string.Format("Comment from: {0}{1}", comment.Author, string.IsNullOrWhiteSpace(comment.Email) ? "" : string.Format(" [{0}]", comment.Email));
-
-        var body = new StringBuilder();
-        // TODO: put in link to send Blog Conversation emails
-        //body.AppendFormat("REJECT comment: {0}\r\n\r\n", rejectCommentLink);
-        body.AppendFormat("ACCEPT comment: {0}\r\n\r\n", acceptCommentLink);
-        body.AppendFormat("View post: {0}\r\n\r\n", postLink);
-        body.Append(Server.HtmlDecode(comment.Content));
-
-        var message = new MailMessage() {
-          To = { new MailAddress(emailTo) },
-          From = new MailAddress(emailFrom),
-          Subject = subject,
-          Body = body.ToString(),
-        };
-
-        try { (new SmtpClient()).Send(message); }
-        catch (Exception ex) { System.Diagnostics.Trace.TraceError(ex.Message); }
-
-        //Response.Redirect(postLink, true);
-        //return null;
-        ViewData["postLink"] = postLink;
-        return View("CommentSubmitted", new MasterViewModel(db));
-      }
-      catch /*(Exception ex)*/ {
-        foreach (RuleViolation violation in comment.GetRuleViolations()) {
-          ModelState.AddModelError(violation.Property, violation.Error);
-        }
-
-        return View("Details", new PostDetailsViewModel(db, (int)id, Request.Url));
-      }
-    }
-
     // Helpers
     string GetIdLink(string action, int id) {
       var link = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) + Url.Action(action, new { id = id });
@@ -336,23 +252,6 @@ namespace sb4.Controllers {
 
     internal string GetAtomImageLink(int id) {
       return GetIdLink("AtomImage", id);
-    }
-
-    internal static string GetCommentRssLink(Uri requestUrl, int postId) {
-      return string.Format("{0}/posts/commentrss/{1}", requestUrl.GetLeftPart(UriPartial.Authority), postId);
-      //return Url.Action("CommentRss", new { id = postId }); // need to have a shared implementation to go with the view model
-    }
-
-    internal string GetCommentLink(int postId, int commentId) {
-      return GetPostLink(postId) + "#" + commentId.ToString();
-    }
-
-    internal string GetRejectCommentLink(int commentId) {
-      return string.Format("{0}/odata.svc/RejectComment?id={1}", HttpContext.Request.Url.GetLeftPart(UriPartial.Authority).ToLower().Replace("http://", "https://"), commentId);
-    }
-
-    internal string GetAcceptCommentLink(int commentId) {
-      return string.Format("{0}/odata.svc/AcceptComment?id={1}", HttpContext.Request.Url.GetLeftPart(UriPartial.Authority).ToLower().Replace("http://", "https://"), commentId);
     }
 
     ServiceDocument GetServiceDocument() {
@@ -393,7 +292,6 @@ namespace sb4.Controllers {
     }
 
     SyndicationItem GetEntry(Post post) {
-      string wfw = "http://wellformedweb.org/CommentAPI/";
       string authorEmail = post.Email;
       string authorName = post.Author;
       if (string.IsNullOrWhiteSpace(authorEmail) && string.IsNullOrWhiteSpace(authorName)) {
@@ -412,7 +310,6 @@ namespace sb4.Controllers {
         PublishDate = post.CreationDate,
         Title = new TextSyndicationContent(post.Title),
         Authors = { new SyndicationPerson(authorEmail, authorName, null) },
-        ElementExtensions = { new SyndicationElementExtension("commentRss", wfw, GetCommentRssLink(HttpContext.Request.Url, post.Id)) }, // <wfw:commentsRss>http://sellsbrothers.com/posts/commentsrss/452</wfw:commentsRss>
       };
 
       // Split each item category with embedded commas
@@ -436,29 +333,6 @@ namespace sb4.Controllers {
       };
 
       return entry;
-    }
-
-    SyndicationFeed GetCommentFeed(PostDetailsViewModel vm) {
-      var comments = vm.Post.Comments.Where(c => c.IsApproved).ToList();
-      var feed = new SyndicationFeed() {
-        Authors = { new SyndicationPerson(vm.ContactEmail, vm.ContactName, Request.Url.GetLeftPart(UriPartial.Authority)) },
-        Copyright = new TextSyndicationContent(vm.CopyrightNotice),
-        Description = new TextSyndicationContent("Comments"),
-        Id = string.Format("uuid:{0};{1}", ((GuidAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(GuidAttribute), false)[0]).Value.ToString(), vm.Post.Id),
-        Language = "en-us",
-        LastUpdatedTime = comments.Count == 0 ? DateTime.Now : comments.First().CreationDate,
-        Title = new TextSyndicationContent("Comments"),
-        Items = comments.Select(c => new SyndicationItem() {
-          Authors = { new SyndicationPerson("", c.Author, "") },
-          Content = new TextSyndicationContent(c.Content, TextSyndicationContentKind.Plaintext),
-          Id = GetCommentLink(vm.Post.Id, c.Id),
-          LastUpdatedTime = c.CreationDate,
-          Links = { new SyndicationLink(new Uri(GetCommentLink(vm.Post.Id, c.Id)), "alternate", null, null, 0) },
-          PublishDate = c.CreationDate,
-        }),
-      };
-
-      return feed;
     }
 
   }
