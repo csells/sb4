@@ -9,8 +9,8 @@
   +add google analytics to my web site	
   +copy site to azure
   +can't approve comments
-  -get SSL cert
-  -can't post new blog posts
+  +get SSL cert
+  +can't post new blog posts
   -404 testing on the web site
   -add google display ads
   -set up AppVeyor: http://www.computerzen.com/blog/

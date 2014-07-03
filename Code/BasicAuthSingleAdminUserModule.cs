@@ -10,10 +10,6 @@ using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Data.Services;
 using System.Security.Cryptography;
-using System.Web.Http;
-using System.Net.Http;
-using System.Net;
-using System.Web.Http.Controllers;
 
 namespace sb4 {
   public class BasicAuthSingleAdminUserModule : IHttpModule {
@@ -25,14 +21,6 @@ namespace sb4 {
     void context_AuthenticateRequest(object sender, EventArgs e) {
       HttpApplication application = (HttpApplication)sender;
       bool isAuthenticated = Authenticate(application.Context);
-
-      // NOTE: not all calls need to be authenticated
-      //if (!isAuthenticated) {
-      //  application.Context.Response.Status = "401 Unauthorized";
-      //  application.Context.Response.StatusCode = 401;
-      //  application.Context.Response.AddHeader("WWW-Authenticate", "Basic realm=\"sellsbrothers.com\"");
-      //  application.CompleteRequest();
-      //}
     }
 
     public void Dispose() { }
@@ -70,7 +58,7 @@ namespace sb4 {
 
       if (credentials.Length != 2 || string.IsNullOrEmpty(credentials[0]) || string.IsNullOrEmpty(credentials[0])) { return null; }
 
-      // Okay this is the credentials 
+      // Okay these are the credentials 
       return credentials;
     }
 
@@ -89,32 +77,17 @@ namespace sb4 {
       return false;
     }
 
-    static Regex httpRegex = new Regex("^http://", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-    static Regex sbRegex = new Regex("^https://sellsbrothers.com", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-    //public static bool ForceSslAndBasicAuthAsAdmin() {
-    //  try {
-    //    ForceSslAndBasicAuthAsAdminOData();
-    //  }
-    //  catch (DataServiceException ex) {
-    //    HttpResponse response = HttpContext.Current.Response;
-    //    response.Status = ex.Message;
-    //    response.StatusCode = ex.StatusCode;
-    //    response.End();
-    //    return false;
-    //  }
-
-    //  return true;
-    //}
+    static Regex httpRegex = new Regex("^http://", RegexOptions.IgnoreCase);
+    static Regex sbRegex = new Regex("^https://sellsbrothers.com", RegexOptions.IgnoreCase);
 
     public static bool ForceSslAndBasicAuthAsAdmin() {
       try {
-        ForceSslAndBasicAuthAsAdminCore();
+        ForceSslAndBasicAuthAsAdminOData();
       }
-      catch (HttpException ex) {
+      catch (DataServiceException ex) {
         HttpResponse response = HttpContext.Current.Response;
         response.Status = ex.Message;
-        response.StatusCode = ex.ErrorCode;
+        response.StatusCode = ex.StatusCode;
         response.End();
         return false;
       }
@@ -122,16 +95,7 @@ namespace sb4 {
       return true;
     }
 
-    public static void ForceSslAndBasicAuthAsAdminWebApi(HttpRequestMessage request) {
-      try {
-        ForceSslAndBasicAuthAsAdminCore();
-      }
-      catch (HttpException ex) {
-        throw new HttpResponseException(request.CreateErrorResponse((HttpStatusCode)ex.WebEventCode, ex));
-      }
-    }
-
-    static void ForceSslAndBasicAuthAsAdminCore() {
+    public static bool ForceSslAndBasicAuthAsAdminOData() {
       HttpRequest request = HttpContext.Current.Request;
       HttpResponse response = HttpContext.Current.Response;
 
@@ -142,13 +106,13 @@ namespace sb4 {
         url = httpRegex.Replace(url, "https://"); // Replace http with https
         url = sbRegex.Replace(url, "https://www.sellsbrothers.com"); // Replace sellsbrothers.com with www.sellsbrothers.com to make cert work
         response.RedirectPermanent(url, true);
-        throw new HttpException(301, "Object moved to " + url.ToString());
+        throw new DataServiceException(301, "Object moved to " + url.ToString());
       }
 
       Action Unauthorized = delegate() {
         response.AddHeader("WWW-Authenticate", "Basic realm=\"sellsbrothers.com\"");
         HttpContext.Current.ApplicationInstance.CompleteRequest();
-        throw new HttpException(401, "401 Unauthorized");
+        throw new DataServiceException(401, "401 Unauthorized");
       };
 
       // redirect to basic auth if none is provided
@@ -168,6 +132,8 @@ namespace sb4 {
 
         Unauthorized();
       }
+
+      return true;
     }
 
     static string GetMD5String(string s) {
