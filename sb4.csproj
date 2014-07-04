@@ -976,7 +976,6 @@
     <Content Include="Sites\dipqueen\page4.htm" />
     <Content Include="Sites\dipqueen\page5.htm" />
     <Content Include="Sites\dipqueen\_blnk.gif" />
-    <Content Include="todo.txt" />
     <Content Include="Views\Mbelle\Index.aspx" />
     <Content Include="Content\images\mb_logo.png" />
     <Content Include="Views\Posts\InvalidFormat.aspx" />

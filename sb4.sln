@@ -1,13 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4A0041A-E54C-4045-8B62-70A1F23866B9}"
-	ProjectSection(SolutionItems) = preProject
-		todo.txt = todo.txt
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sb4", "sb4.csproj", "{770F76A9-8130-408E-98E5-67D97DC8EAD9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sb4.Tests", "..\sbtools\sb4.Tests\sb4.Tests.csproj", "{A3972B78-C3C4-4C58-B061-95EEA35BB475}"
