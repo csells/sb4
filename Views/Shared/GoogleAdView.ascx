@@ -1,10 +1,10 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
-<script type="text/javascript"><!--
-  google_ad_client = "pub-0195826554798451";
-  /* 160x600, created 1/8/10 */
-  google_ad_slot = "2664321098";
-  google_ad_width = 160;
-  google_ad_height = 600;
-//-->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- sb.com - rhs -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-0195826554798451"
+     data-ad-slot="9858941217"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
