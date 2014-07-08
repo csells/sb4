@@ -1126,6 +1126,7 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\securewebs.pubxml" />
     <None Include="Properties\PublishProfiles\sellsbrothers.pubxml" />
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

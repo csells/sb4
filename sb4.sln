@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sb4", "sb4.csproj", "{770F76A9-8130-408E-98E5-67D97DC8EAD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sb4.Tests", "..\sbtools\sb4.Tests\sb4.Tests.csproj", "{A3972B78-C3C4-4C58-B061-95EEA35BB475}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sbda", "sbda\sbda.csproj", "{7ACFB754-BF54-451D-9F05-FE57738CF412}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataBlog", "..\ODataBlogging\ODataBlog\ODataBlog\ODataBlog.csproj", "{72D5F9EA-2868-471A-944A-7C2FF7396BAE}"
@@ -21,10 +19,6 @@ Global
 		{770F76A9-8130-408E-98E5-67D97DC8EAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{770F76A9-8130-408E-98E5-67D97DC8EAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{770F76A9-8130-408E-98E5-67D97DC8EAD9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3972B78-C3C4-4C58-B061-95EEA35BB475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3972B78-C3C4-4C58-B061-95EEA35BB475}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3972B78-C3C4-4C58-B061-95EEA35BB475}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3972B78-C3C4-4C58-B061-95EEA35BB475}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7ACFB754-BF54-451D-9F05-FE57738CF412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7ACFB754-BF54-451D-9F05-FE57738CF412}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ACFB754-BF54-451D-9F05-FE57738CF412}.Release|Any CPU.ActiveCfg = Release|Any CPU
