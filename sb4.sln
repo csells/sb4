@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataBlog", "..\ODataBloggi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E16B2B23-5058-4B27-9788-E20CDD2FD1C2}"
 	ProjectSection(SolutionItems) = preProject
-		C:\Users\Chris\Dropbox\utility\linqpad\queries\sb-com creating WXR file for Disqus comment export.linq = C:\Users\Chris\Dropbox\utility\linqpad\queries\sb-com creating WXR file for Disqus comment export.linq
+		Solution Items\sb-com creating WXR file for Disqus comment export.linq = Solution Items\sb-com creating WXR file for Disqus comment export.linq
 	EndProjectSection
 EndProject
 Global

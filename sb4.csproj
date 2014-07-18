@@ -979,6 +979,7 @@
     <Content Include="Views\Mbelle\Index.aspx" />
     <Content Include="Content\images\mb_logo.png" />
     <Content Include="Views\Posts\InvalidFormat.aspx" />
+    <Content Include="Views\Shared\DevMediaAdView.ascx" />
     <Content Include="Views\Shared\GoogleSearchView.ascx" />
     <Content Include="Views\Shared\BadgesView.ascx" />
     <Content Include="Views\Shared\BannerAdView.ascx" />

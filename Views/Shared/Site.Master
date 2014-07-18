@@ -44,7 +44,8 @@
       <%-- Html.RenderPartial("BannerAdView"); --%>
       <%-- Html.RenderPartial("BadgesView"); --%>
       <%-- Html.RenderPartial("TextAdsView"); --%>
-      <% Html.RenderPartial("GoogleAdView"); %>
+      <%-- Html.RenderPartial("GoogleAdView"); --%>
+      <% Html.RenderPartial("DevMediaAdView"); %>
     </div>
   </div>
   <!-- NOTE: the "overflow: auto" on the footer is to keep the padding inside the footer div -->
