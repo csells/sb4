@@ -1125,7 +1125,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\securewebs.pubxml" />
+    <Content Include="Content\poststuff\samples\Win8-TypeScript-Templates-v1.zip" />
     <None Include="Properties\PublishProfiles\sellsbrothers.pubxml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
